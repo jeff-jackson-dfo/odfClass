@@ -28,7 +28,7 @@ class ParameterHeader:
         self.Code = ""
         self.WmoCode = ""
         self.NullValue = None
-        self.PrintFieldOrder = None  # Data column associated with this parameter header
+        self.PrintFieldOrder = None
         self.PrintFieldWidth = None
         self.PrintDecimalPlaces = None
         self.AngleOfSection = None
@@ -48,6 +48,7 @@ class ParameterHeader:
 
     def set_type(self, dtype):
         print("Setting Type...")
+        print("The TYPE for Parameter " + self.Code + " has been modified from " + self.Type + " to " + dtype + ".")
         self.Type = dtype
 
     def get_name(self):
@@ -56,6 +57,7 @@ class ParameterHeader:
 
     def set_name(self, name):
         print("Setting Name...")
+        print("The NAME for Parameter " + self.Code + " has been modified from " + self.Name + " to " + name + ".")
         self.Name = name
 
     def get_units(self):
@@ -64,6 +66,11 @@ class ParameterHeader:
 
     def set_units(self, units):
         print("Setting Units...")
+        if not self.Units:
+            print("Setting the UNITS for Parameter " + self.Code + " to " + units + ".")
+        else:
+            print("The UNITS for Parameter " + self.Code + " has been modified from " + self.Units + " to " + units
+                  + ".")
         self.Units = units
 
     def get_code(self):
@@ -72,6 +79,7 @@ class ParameterHeader:
 
     def set_code(self, code):
         print("Setting Code...")
+        print("The CODE for Parameter " + self.Code + " has been modified from " + self.Code + " to " + code + ".")
         self.Code = code
 
     def get_wmo_code(self):
@@ -80,6 +88,8 @@ class ParameterHeader:
 
     def set_wmo_code(self, wmo_code):
         print("Setting WMO Code...")
+        print("The WMO_CODE for Parameter " + self.Code + " has been modified from " + self.WmoCode + " to " + wmo_code
+              + ".")
         self.WmoCode = wmo_code
 
     def get_null_value(self):
@@ -88,6 +98,8 @@ class ParameterHeader:
 
     def set_null_value(self, null_value):
         print("Setting Null Value...")
+        print("The NULL_VALUE for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.NullValue)) + " to " + null_value + ".")
         self.NullValue = null_value
 
     def get_print_field_order(self):
@@ -96,6 +108,8 @@ class ParameterHeader:
 
     def set_print_field_order(self, print_field_order):
         print("Setting Print Field Order...")
+        print("The PRINT_FIELD_ORDER for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.PrintFieldOrder)) + " to " + str(print_field_order) + ".")
         self.PrintFieldOrder = print_field_order
 
     def get_print_field_width(self):
@@ -104,6 +118,8 @@ class ParameterHeader:
 
     def set_print_field_width(self, print_field_width):
         print("Setting Print Field Width...")
+        print("The PRINT_FIELD_WIDTH for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.PrintFieldWidth)) + " to " + str(print_field_width) + ".")
         self.PrintFieldWidth = print_field_width
 
     def get_print_decimal_places(self):
@@ -112,6 +128,8 @@ class ParameterHeader:
 
     def set_print_decimal_places(self, print_decimal_places):
         print("Setting Print Decimal Places...")
+        print("The PRINT_DECIMAL_PLACES for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.PrintDecimalPlaces)) + " to " + str(print_decimal_places) + ".")
         self.PrintDecimalPlaces = print_decimal_places
 
     def get_angle_of_section(self):
@@ -120,15 +138,19 @@ class ParameterHeader:
 
     def set_angle_of_section(self, angle_of_section):
         print("Setting Angle of Section...")
+        print("The ANGLE_OF_SECTION for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.AngleOfSection)) + " to " + str(angle_of_section) + ".")
         self.AngleOfSection = angle_of_section
 
-    def get_magnitude_variation(self):
+    def get_magnetic_variation(self):
         print("Getting Magnetic Variation...")
         return self.MagneticVariation
 
-    def set_magnitude_variation(self, magnitude_variation):
+    def set_magnetic_variation(self, magnetic_variation):
         print("Setting Magnetic Variation...")
-        self.MagneticVariation = magnitude_variation
+        print("The MAGNETIC_VARIATION for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.MagneticVariation)) + " to " + str(magnetic_variation) + ".")
+        self.MagneticVariation = magnetic_variation
 
     def get_depth(self):
         print("Getting Depth...")
@@ -136,6 +158,8 @@ class ParameterHeader:
 
     def set_depth(self, depth):
         print("Setting Depth...")
+        print("The DEPTH for Parameter " + self.Code + " has been modified from " + str(check_value(self.Depth))
+              + " to " + str(depth) + ".")
         self.Depth = depth
 
     def get_minimum_value(self):
@@ -144,6 +168,8 @@ class ParameterHeader:
 
     def set_minimum_value(self, minimum_value):
         print("Setting Minimum Value...")
+        print("The MINIMUM_VALUE for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.MinimumValue)) + " to " + str(minimum_value) + ".")
         self.MinimumValue = minimum_value
 
     def get_maximum_value(self):
@@ -152,6 +178,8 @@ class ParameterHeader:
 
     def set_maximum_value(self, maximum_value):
         print("Setting Maximum Value...")
+        print("The MAXIMUM_VALUE for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.MaximumValue)) + " to " + str(maximum_value) + ".")
         self.MaximumValue = maximum_value
 
     def get_number_valid(self):
@@ -160,6 +188,8 @@ class ParameterHeader:
 
     def set_number_valid(self, number_valid):
         print("Setting Number Valid...")
+        print("The NUMBER_VALID for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.NumberValid)) + " to " + str(number_valid) + ".")
         self.NumberValid = number_valid
 
     def get_number_null(self):
@@ -168,6 +198,8 @@ class ParameterHeader:
 
     def set_number_null(self, number_null):
         print("Setting Number Null...")
+        print("The NUMBER_NULL for Parameter " + self.Code + " has been modified from " +
+              str(check_value(self.NumberNull)) + " to " + str(number_null) + ".")
         self.NumberNull = number_null
 
     def print_header(self):

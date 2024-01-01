@@ -45,5 +45,5 @@ class EventHeader:
         print("  DepthOffBottom = " + "{:.2f}".format(misc_functions.check_value(self.DepthOffBottom)))
         print("  STATION_NAME = '" + self.StationName + "'")
         print("  SET_NUMBER = '" + self.SetNumber + "'")
-        for x in self.EventComments:
-            print("  EVENT_COMMENTS = '" + self.EventComments[x])
+        for event_comment in self.EventComments:
+            print("  EVENT_COMMENTS = '" + event_comment)

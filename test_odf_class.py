@@ -21,11 +21,9 @@ odf.CruiseHeader = ch
 eh = eventHeader.EventHeader()
 eh.EventNumber = '039'
 eh.DataType = 'CTD'
+eh.EventComments.append("This file contains CTD data.")
+eh.EventComments.append("This is the second event comment for testing purposes.")
 odf.EventHeader = eh
-
-odf.print_header()
-odf.CruiseHeader.print_header()
-odf.EventHeader.print_header()
 
 p1 = parameterHeader.ParameterHeader()
 p1.set_name("Pressure")
@@ -39,6 +37,7 @@ p1.set_number_null(0)
 p1.set_number_valid(10)
 p1.set_minimum_value(1)
 p1.set_maximum_value(10)
+odf.ParameterHeader.append(p1)
 
 rh = recordHeader.RecordHeader()
 rh.NumHistory = 1
@@ -46,9 +45,11 @@ rh.NumCalibration = 0
 rh.NumSwing = 0
 rh.NumParam = 10
 rh.NumCycle = 250
+odf.RecordHeader = rh
 
-p1.print_header()
-rh.print_header()
-
-print(odf.HistoryHeader[0].CreationDate)
-print(odf.HistoryHeader[0].Process)
+print("\n")
+print("--------------------------------------------------------------------------------------------------------")
+print("Printing the ODF file ...")
+print("--------------------------------------------------------------------------------------------------------")
+print("\n")
+odf.print_header()
