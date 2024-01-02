@@ -2,6 +2,33 @@ import misc_functions
 
 
 class QualityHeader:
+    """
+    A class to represent a Quality Header in an ODF object.
+
+    Attributes:
+    -----------
+    QualityDate : string
+        the date time when the Quality Header was added to the ODF object
+    QualityTests : list of strings
+        list of quality control tests run on the ODF object's data
+    QualityTests : list of strings
+        list of comments regarding the quality control carried out on the ODF object's data
+
+    Methods:
+    -------
+    __init__ :
+        initialize a QualityHeader class object
+    get_quality_date : string
+    set_quality_date : None
+    get_quality_tests : list of strings
+    set_quality_tests : None
+    add_quality_tests : None
+    get_quality_comments : list of strings
+    set_quality_comments : None
+    add_quality_comments : None
+
+    """
+
     def __init__(self):
         self.QualityDate = None
         self.QualityTests = list()

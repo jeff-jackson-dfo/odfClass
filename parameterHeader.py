@@ -3,7 +3,7 @@ import misc_functions
 
 class ParameterHeader:
     """
-    A class to represent a parameter in an ODF object.
+    A class to represent a Parameter Header in an ODF object.
 
     Attributes:
     -----------
