@@ -25,7 +25,7 @@ class OdfHeader:
         dt = datetime.datetime.now()
         dts = dt.strftime("%d-%b-%Y %H:%M:%S.%f").upper()
         hh.CreationDate = dts[:-4]
-        hh.Process.append("Creation of ODF file.")
+        hh.Process.append("Initial creation of this ODF file.")
         self.HistoryHeader.append(hh)
 
     def print_header(self):
