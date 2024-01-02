@@ -305,4 +305,4 @@ class EventHeader:
         print("  STATION_NAME = '" + self.StationName + "'")
         print("  SET_NUMBER = '" + self.SetNumber + "'")
         for event_comment in self.EventComments:
-            print("  EVENT_COMMENTS = '" + event_comment)
+            print("  EVENT_COMMENTS = '" + event_comment + "'")

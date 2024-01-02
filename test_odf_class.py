@@ -1,6 +1,7 @@
 import odfHeader
 import cruiseHeader
 import eventHeader
+import qualityHeader
 import parameterHeader
 import recordHeader
 
@@ -29,6 +30,23 @@ odf = odf.EventHeader.set_creation_date(odf, "02-JAN-2023 07:56:35.00")
 odf.EventHeader.EventComments.append("This file contains CTD data.")
 odf.EventHeader.EventComments.append("This is the second event comment for testing purposes.")
 odf.EventHeader.set_event_comments(odf, "The revised second event comment.", 2)
+
+odf.QualityHeader = qualityHeader.QualityHeader()
+odf = odf.QualityHeader.set_quality_date(odf, None)
+odf = odf.QualityHeader.add_quality_tests(odf, 'QUALITY CONTROL TESTS RUN')
+odf = odf.QualityHeader.add_quality_tests(odf, 'Test 2.1: GTSPP Global Impossible Parameter Values (4)')
+odf = odf.QualityHeader.add_quality_tests(odf, 'Test 2.2: GTSPP Regional Impossible Parameter Values (8)')
+odf = odf.QualityHeader.add_quality_tests(odf, 'Test 2.3: GTSPP Increasing Depth (16)')
+odf = odf.QualityHeader.set_quality_tests(odf, 'Test 2.3: GTSPP Decreasing Depth (16)', 4)
+odf = odf.QualityHeader.add_quality_comments(odf, 'QUALITY CODES')
+odf = odf.QualityHeader.add_quality_comments(odf, '0: Value has not been quality controlled')
+odf = odf.QualityHeader.add_quality_comments(odf, '1: Value seems to be correct')
+odf = odf.QualityHeader.add_quality_comments(odf, '2: Value appears inconsistent with other values')
+odf = odf.QualityHeader.add_quality_comments(odf, '3: Value seems doubtful')
+odf = odf.QualityHeader.add_quality_comments(odf, '4: Value seems erroneous')
+odf = odf.QualityHeader.add_quality_comments(odf, '5: Value was modified')
+odf = odf.QualityHeader.add_quality_comments(odf, '9: Value is missing')
+odf = odf.QualityHeader.set_quality_comments(odf, '7: Unknown issue', 7)
 
 # Add a parameter
 odf.ParameterHeader.append(parameterHeader.ParameterHeader())

@@ -1,3 +1,12 @@
+import datetime
+
+
+def get_current_date_time():
+    dt = datetime.datetime.now()
+    dts = dt.strftime("%d-%b-%Y %H:%M:%S.%f").upper()
+    return dts[:-4]
+
+
 def check_value(value):
     if value is None:
         value = -99

@@ -3,7 +3,8 @@ import eventHeader
 import instrumentHeader
 import historyHeader
 import recordHeader
-import datetime
+import misc_functions
+
 class OdfHeader:
     def __init__(self):
         self.FileSpecification = None
@@ -22,9 +23,7 @@ class OdfHeader:
 
         # Add history header to start logging file modifications.
         hh = historyHeader.HistoryHeader()
-        dt = datetime.datetime.now()
-        dts = dt.strftime("%d-%b-%Y %H:%M:%S.%f").upper()
-        hh.CreationDate = dts[:-4]
+        hh.CreationDate = misc_functions.get_current_date_time()
         hh.Process.append("Initial creation of this ODF file.")
         self.HistoryHeader.append(hh)
 
@@ -34,6 +33,7 @@ class OdfHeader:
         self.CruiseHeader.print_header()
         self.EventHeader.print_header()
         self.InstrumentHeader.print_header()
+        self.QualityHeader.print_header()
         for hist in self.HistoryHeader:
             hist.print_header()
         for param in self.ParameterHeader:
