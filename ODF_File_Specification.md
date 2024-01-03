@@ -20,7 +20,8 @@ such as information about the cruise, event, instrument, and data quality.
 
 The following document presents the details of the ODF file format specification. 
 
-> [!NOTE] Please note that the exact content of the fields are not defined in this document; but examples will be 
+> [!NOTE]
+> Please note that the exact content of the fields are not defined in this document; but examples will be 
 > given to show what is often used to fill in the fields.
 
 
