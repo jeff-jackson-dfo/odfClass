@@ -1,7 +1,8 @@
 from collections import OrderedDict
 
 
-def getODFHeader():
+def get_odf_header():
+
     odf_header = OrderedDict()
 
     odf_header['ODF_HEADER'] = OrderedDict({'ODF_HEADER': ('char', 'mandatory', 'single'),

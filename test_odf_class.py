@@ -2,8 +2,11 @@ import odfHeader
 import cruiseHeader
 import eventHeader
 import qualityHeader
+import meteoHeader
 import parameterHeader
 import recordHeader
+
+import odfUtils
 
 odf = odfHeader.OdfHeader()
 odf.FileSpecification = "CTD_CAR2023573_039_1_DN.ODF"
@@ -48,6 +51,8 @@ odf = odf.QualityHeader.add_quality_comments(odf, '5: Value was modified')
 odf = odf.QualityHeader.add_quality_comments(odf, '9: Value is missing')
 odf = odf.QualityHeader.set_quality_comments(odf, '7: Unknown issue', 7)
 
+odf.MeteoHeader = meteoHeader.MeteoHeader()
+
 # Add a parameter
 odf.ParameterHeader.append(parameterHeader.ParameterHeader())
 odf = odf.ParameterHeader[0].set_name(odf, "Pressure")
@@ -75,3 +80,6 @@ print("Printing the ODF file ...")
 print("--------------------------------------------------------------------------------------------------------")
 print("\n")
 odf.print_header()
+
+# A = odfUtils.read_odf("C:/DEV/pythonProjects/odfClass/test-files/XBT_HUD2005016_58_1_016.ODF")
+# print(A)

@@ -27,7 +27,7 @@ def check_datetime(value):
 
 def check_string(string):
     if string is None:
-        string = '""'
+        string = ' '
     if not string:
-        string = '""'
+        string = ' '
     return string
