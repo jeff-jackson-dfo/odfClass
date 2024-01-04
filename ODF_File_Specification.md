@@ -155,9 +155,40 @@ EVENT_HEADER
   EVENT_COMMENTS = '04-JUN-1999 14:47:40.00 - NOTE THERE IS BAD DATA FROM SURFACE TO 10 DBARS'
 </pre>
 
-@TODO : Sampling_Interval must always be in seconds but this is not specified within the ODF file but it should be. 
-This could be flexible if the data format is moved away from ODF.
+> [!WARNING]
+> 
+> Sampling_Interval must always be in seconds. 
 
-The EVENT_HEADER block is mandatory. All fields in the EVENT_HEADER block are mandatory. The fields are also order dependent and must conform to the above order.
+The EVENT_HEADER block is mandatory. 
 
-Multiple EVENT_COMMENTS are permitted within the EVENT_HEADER block. All other fields have a single occurrence. 
+All fields in the EVENT_HEADER block are mandatory. 
+
+The fields are also order dependent and must conform to the above order.
+
+Multiple EVENT_COMMENTS are permitted within the EVENT_HEADER block. 
+
+All other fields have a single occurrence.
+
+Further details outlining the EVENT_HEADER specification follows in the table below.
+
+| Block name   | Field Name         | Restricted values | Type   | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | Null Value              |
+| ------------ | ------------------ | ----------------- | ------ | --------------- | ----------------- | --------------------- | ------------- | ----------------------- |
+| EVENT_HEADER | DATA_TYPE          | n                 | string | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | EVENT_NUMBER       | n                 | string | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | EVENT_QUALIFIER1   | n                 | string | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | EVENT_QUALIFIER2   | n                 | string | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | CREATION_DATE      | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| EVENT_HEADER | ORIG_CREATION_DATE | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| EVENT_HEADER | START_DATE_TIME    | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| EVENT_HEADER | END_DATE_TIME      | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| EVENT_HEADER | INITIAL_LATITUDE   | n                 | number | y               | n                 | 1                     | empty         | \-99                    |
+| EVENT_HEADER | INITIAL_LONGITUDE  | n                 | number | y               | n                 | 1                     | empty         | \-999                   |
+| EVENT_HEADER | END_LATITUDE       | n                 | number | y               | n                 | 1                     | empty         | \-99                    |
+| EVENT_HEADER | END_LONGITUDE      | n                 | number | y               | n                 | 1                     | empty         | \-999                   |
+| EVENT_HEADER | MIN_DEPTH          | n                 | number | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | MAX_DEPTH          | n                 | number | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | SAMPLING_INTERVAL  | n                 | number | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | SOUNDING           | n                 | number | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | DEPTH_OFF_BOTTOM   | n                 | number | y               | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | EVENT_COMMENTS     | n                 | string | y               | n                 | 1+                    | empty         | none                    |
+
