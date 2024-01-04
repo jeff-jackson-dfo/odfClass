@@ -1,31 +1,31 @@
 # ODF File Format Specification
 
-## Version 3.0
-
-Authors: Jeff Jackson and Yongcun Hu
+author : Jeff Jackson
 
 Created: 03-JAN-2024 
 
 Last updated: 03-JAN-2024
 
+version : 3.0
+
 &copy; 2024, Fisheries and Oceans Canada (DFO).
 
-### Introduction
-
 The Oceans Data Format (ODF) is an ASCII text file format used for the primary storage of an oceanographic data series. 
-It consists of a set of header blocks that contain various types of metadata followed by rows of data records.
+It consists of a set of header blocks that contain the metadata followed by rows of data records.
 
-The header blocks capture various types of metadata associated with the data file; 
-such as information about the cruise, event, instrument, and data quality. 
 
-The following document presents the details of the ODF file format specification. 
+## Introduction
+
+The following document presents the details of the ODF file format specification.
 
 > [!NOTE]
-> Please note that the exact content of the fields are not defined in this document; but examples will be 
-> given to show what is often used to fill in the fields.
+> Please note that the exact content of the fields are not defined in this document; but the content types are 
+> specified.
+> 
+> Examples will also be given to show what is often used to fill in the fields.
 
 
-### ODF Version 3.0
+## ODF Version 3.0
 
 This specification details both the ODF Header section and the ODF Data section.
 
@@ -36,9 +36,9 @@ The specification underwent a major revision for this version. The major reasons
 This major revision coincided with the creation of a new ODF toolbox using the Python programming language to replace
 an older toolbox that was written with expensive and restrictive proprietary software.
 
-#### ODF Header Section
+### ODF Header Section
 
-##### Indents, Commas, Capitalisation and Strings
+#### Indents, Commas, Capitalisation and Strings
 
 It is common to have indents on field lines (normally two spaces) but this is not a strict requirement. 
 However, indents are recommended because they increase human readability.
@@ -49,7 +49,7 @@ Uppercase block and field names are mandatory in the ODF file format specificati
 
 All values in string fields are enclosed by single quotes.
 
-##### Date/Time Fields in the Header Blocks
+#### Date/Time Fields in the Header Blocks
 
 Date/Time information is stored as a text string in this specification. 
 The format of the system had its beginnings in the CMSYS system in the mid-1980s. 
@@ -73,7 +73,7 @@ This field always consists of 23 characters.
 > This null value was chosen because it corresponded to time = 0 on the early ODF computing platform (VAX / VMS). 
 > Once placed into a field, the value carries forward as a valid date.
 
-##### ODF_HEADER Block (mandatory)
+#### ODF_HEADER Block (mandatory)
 
 The ODF_HEADER block consists of the following:
 
@@ -91,7 +91,7 @@ An empty string is the default null value for the FILE_SPECIFICATION field.
 Normally the ODF formatted filename is entered in this field; which may or may not include the full path to the 
 file's location.
 
-##### CRUISE_HEADER Block (mandatory)
+#### CRUISE_HEADER Block (mandatory)
 
 The CRUISE_HEADER block consists of metadata that relates to the entire cruise. 
 
@@ -127,7 +127,7 @@ If a number field is empty, the record would be terminated with the = sign.
 
 The START_DATE and END_DATE fields are given in SYTM format. 
 
-##### EVENT_HEADER Block (mandatory)
+#### EVENT_HEADER Block (mandatory)
 
 The EVENT_HEADER block consists of the following:
 

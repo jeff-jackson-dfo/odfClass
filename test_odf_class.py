@@ -81,5 +81,5 @@ print("-------------------------------------------------------------------------
 print("\n")
 odf.print_header()
 
-# A = odfUtils.read_odf("C:/DEV/pythonProjects/odfClass/test-files/XBT_HUD2005016_58_1_016.ODF")
+new_odf = odfUtils.read_odf("C:/DEV/pythonProjects/odfClass/test-files/XBT_HUD2005016_58_1_016.ODF")
 # print(A)

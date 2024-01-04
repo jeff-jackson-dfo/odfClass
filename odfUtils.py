@@ -165,13 +165,12 @@ def convert_number_exponent(integer_value):
 '''
 
 
-def read_odf(in_file):
+def read_odf(odf_file_path):
     # IMPORT: following lines define some strings according to odf file
     #         definition (see the last sub-function in this file), if these
     #         strings are changed in that definition, they must be changed
     #         here accordingly.
 
-    data_line = '-- DATA --'
     type = "TYPE"
     general_cal_header = "GENERAL_CAL_HEADER"
     polynomial_cal_header = "POLYNOMIAL_CAL_HEADER"
@@ -183,11 +182,12 @@ def read_odf(in_file):
     integer = "integer"
     numeric = "numeric"
 
-    if not os.path.isfile(in_file):
+    if not os.path.isfile(odf_file_path):
         raise FileNotFoundError("File does not exist")
 
     # Read input ODF File and strip leading and trailing whitespace.
-    lines = list(line.strip() for line in open(in_file, "r"))
+    lines = list(line.strip() for line in open(odf_file_path, "r"))
+    lines = odfHeader.OdfHeader.read_header(odf, )
 
     # Count the lines in the file if the file is empty raise an exception.
     if len(lines) <= 0:
@@ -208,11 +208,10 @@ def read_odf(in_file):
     #odf_header = odfSpecification.get_odf_header()
     
     # Create an odfClass object
-    odf = odfHeader.OdfHeader()
+    odf = odfHeader
 
     # Read the ODF_HEADER
     odf = odf.read_header(odf, lines)
-
 
     # Get the ODF header keys. At the moment this is a dictionary and I don't think the order
     # of the keys is going to matter, but can be changed if it does.
