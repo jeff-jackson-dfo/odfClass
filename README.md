@@ -1,5 +1,6 @@
 The ocean data group at the Bedford Institute of Oceanography is responsible for archiving oceanographic data and assisting with its data management and processing.
 
-For a few decades it has been using an in-house data file format specification called ODF (Ocean Data Format). This specification needed to be revised. You can find version 3.0 of this specification here: https://github.com/jeff-jackson-dfo/odfClass/blob/main/ODF_File_Specification.md
+For a few decades it has been using an in-house data file format specification called ODF (Ocean Data Format). This specification needed to be revised. You can find version 3.0 of this specification here: 
+[ODF Specification Verion 3.0](./ODF_File_Specification.md)!
 
 The goal of this project is to replace structured code that was written in a proprietary language with object oriented code written in Python.
