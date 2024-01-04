@@ -412,5 +412,6 @@ A list of the changes to the ODF file format specification for version 3.0 follo
 - Added the field ODF_SPECIFICATION_VERSION to the ODF_HEADER to identify which version of the ODF specification the file follows. Default value is 3.0.
 - Commas at the end of header lines are no longer required or expected.
 - Added the field PRINT_FIELD_ORDER to the PARAMETER_HEADER to identify its corresponding column in the data section.
+- The order of the PARAMETER_HEADER blocks is no longer restricted by the order of the data columns in the data section.
 - The data section in an ODF file now starts with a column header line that is a list of column names delimited by commas.
 - The data records are no longer delimited by whitespace; instead they are now comma delimited records. 
