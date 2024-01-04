@@ -1,7 +1,4 @@
 import pandas
-# noinspection PyMethodMayBeStatic
-
-import pandas as pd
 
 
 class OdfReader:
@@ -37,7 +34,6 @@ class OdfReader:
         return result_dicts
 
     def search_dictionaries(self, search_text, dictionaries):
-        # dictionaries = self.split_lines_into_dict()
         matching_results = []
 
         for string_index, dictionary in enumerate(dictionaries):
@@ -48,7 +44,6 @@ class OdfReader:
         return matching_results
 
     def split_lines_after_data(self, all_data_lines) -> pandas.DataFrame:
-        found_data_line = False
         result_lines = []
 
         for data_line in all_data_lines:
@@ -57,7 +52,7 @@ class OdfReader:
             result_lines.append(parts)
 
         # Convert the list of lists to a Pandas DataFrame
-        df = pd.DataFrame(result_lines)
+        df = pandas.DataFrame(result_lines)
 
         return df
 

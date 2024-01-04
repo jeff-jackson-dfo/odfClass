@@ -12,6 +12,7 @@ import historyHeader
 import recordHeader
 import misc_functions
 import re
+import pandas
 
 
 # noinspection PyMethodMayBeStatic
@@ -116,69 +117,104 @@ class OdfHeader:
         self.RecordHeader.print_header()
 
     # def read_header(odf: Type[newOdfHeader], lines: list) -> newOdfHeader:
-    def read_odf(self, odf: odfHeader, file_path: str) -> odfHeader:
+    def read_odf(self, odf_object: odfHeader, odf_file_path: str) -> odfHeader:
         """
         Reads an ODF file and puts it into an OdfHeader class object.
 
         Parameters
         ----------
-        odf: OdfHeader object
+        odf_object : OdfHeader object
             a copy of an OdfHeader object to be modified
-        lines : list
-            A list of strings which are the lines from the ODF file that was read.
+        odf_file_path : str
+            The full path and filename to the ODF file to be read.
 
         Returns
         -------
-        odf: OdfHeader object
+        odf_object : OdfHeader object
             the modified OdfHeader object now containing the information from the ODF file that was read.
+
+        Args:
+            odf_file_path:
+            file_path:
         """
 
-        data_line = '-- DATA --'
-
-        file_reader = odfReader.OdfReader(file_path)
+        file_reader = odfReader.OdfReader(odf_file_path)
         file_lines = file_reader.read_file_lines()
 
-        text_to_find = "-- DATA --"
+        text_to_find = "_HEADER"
         header_lines_with_indices = file_reader.find_lines_with_text(text_to_find)
-        data_line_start = None
+        # print(f"\nLines containing '{text_to_find}':")
+        header_starts_list = list()
+        header_indices = list()
+        header_names = list()
         for index, line in header_lines_with_indices:
-            # print(f"Line {index + 1}: {line.strip()}")  # Adding 1 to the index to match line numbers in the file
+            header_indices.append(index)
+            header_names.append(line.strip(" ,"))
+            header_starts_list.append([index, line.strip(" ,")])
+        header_blocks_df = pandas.DataFrame(header_starts_list, columns=["index", "name"])
+        # print(f"\n{header_blocks_df}")
+
+        data_line = '-- DATA --'
+        data_lines_with_indices = file_reader.find_lines_with_text(data_line)
+        data_line_start = None
+        for index, line in data_lines_with_indices:
             data_line_start = index + 1
+        # print(f"\nData records begin at line number: {data_line_start}")
 
         # Separate the header and data lines
         header_lines = file_lines[:data_line_start - 1]
         data_lines = file_lines[data_line_start:]
-        print(f"\nData records begin at line number: {data_line_start}\n")
 
-        header_lines_as_dicts = file_reader.split_lines_into_dict(header_lines)
-        print("\nHeader lines as dictionaries:")
-        for header_line_dict in header_lines_as_dicts:
-            print(header_line_dict)
+        # Get the line range for the list of fields in each header block
+        ndf = len(header_blocks_df)
+        header_field_range = pandas.DataFrame(columns=["Name", "Start", "End"])
+        for i in range(ndf):
+            header_field_range._set_value(i, 'Name', header_blocks_df._get_value(i, 'name'))
+            header_field_range._set_value(i, 'Start', header_blocks_df._get_value(i, 'index') + 1)
+        # print(header_field_range)
+        for i in range(ndf):
+            if 0 < i < ndf - 1:
+                header_field_range._set_value(i - 1, 'End', header_blocks_df._get_value(i, 'index') - 1)
+            elif i == ndf - 1:
+                header_field_range._set_value(i - 1, 'End', header_blocks_df._get_value(i, 'index') - 1)
+                header_field_range._set_value(i, 'End', data_line_start - 1)
+        # print(header_field_range)
 
-        data_lines_df = file_reader.split_lines_after_data(data_lines)
-        print("\nDataFrame with lines after '--DATA--' split by whitespace:")
-        print(data_lines_df)
+        # Loop through the header lines, populating the OdfHeader object as it goes.
+        for i in range(ndf):
+            x = header_field_range._get_value(i, 'Start')
+            y = header_field_range._get_value(i, 'End')
+            field_lines = header_lines[x:y + 1]
+            # print(field_lines)
+            lines_as_dicts = file_reader.split_lines_into_dict(field_lines)
+            print("\nLines as dictionaries:")
+            for line_dict in lines_as_dicts:
+                print(line_dict)
 
         # Find the ODF_HEADER line, there must be one and only one; otherwise raise an exception indicating if there
         # are too many or too few.
-        head_lines = [i for i, header_line in enumerate(data_lines_df) if re.match('ODF_HEADER', header_line)]
-        if len(head_lines) <= 0:
-            raise Exception(" -- The input odf file does NOT have a proper ODF_HEADER section")
-        elif len(head_lines) > 1:
-            raise Exception(" -- The input odf file has more than one ODF_HEADER section")
+        # head_lines = [i for i, header_line in enumerate(header_lines) if re.match('ODF_HEADER', header_line)]
+        # if len(head_lines) <= 0:
+        #     raise Exception(" -- The input odf file does NOT have a proper ODF_HEADER section")
+        # elif len(head_lines) > 1:
+        #     raise Exception(" -- The input odf file has more than one ODF_HEADER section")
 
-        # self.set_file_specification()
+        # print(f"The range of lines for the fields of the {header_blocks_df['name'][ind]} are: "
+        #       f"{row['index'] + 1} : {row['index'] - 1} \n")
 
-        return odf
+        # lines_as_dicts = file_reader.split_lines_into_dict(header_lines)
+        # search_results = file_reader.search_dictionaries('CRUISE_HEADER', lines_as_dicts)
+        # print(search_results)
+
+        return odf_object
 
 
 if __name__ == "__main__":
-
-    odfHeader = OdfHeader()
+    odf = odfHeader.OdfHeader()
 
     my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/XBT_HUD2005016_58_1_016.ODF'
 
-    odfHeader.read_odf(my_file_path)
+    odf.read_odf(odf, my_file_path)
 
     # search_string = input("\nEnter text to search for in dictionaries: ")
     # while search_string:

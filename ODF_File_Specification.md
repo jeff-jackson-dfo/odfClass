@@ -75,10 +75,10 @@ This field always consists of 23 characters.
 
 #### ODF_HEADER Block (mandatory)
 
-| Block name | Field Name                | Restricted values | Type   | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | Null Value |
-|------------|---------------------------|-------------------|--------|-----------------|-------------------|-----------------------|---------------|------------|
-| ODF_HEADER | FILE_SPECIFICATION        | n                 | string | y               | n                 | 1                     | empty         | none       |
-| ODF_HEADER | ODF_SPECIFICATION_VERSION | n                 | string | y               | y                 | 1                     | 3.0           | none       |
+| Block name | Field Name                | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value |
+|------------|---------------------------|-------------------|--------|-------------------|-----------------------|---------------|------------|
+| ODF_HEADER | FILE_SPECIFICATION        | n                 | string | n                 | 1                     | empty         | none       |
+| ODF_HEADER | ODF_SPECIFICATION_VERSION | n                 | string | y                 | 1                     | 3.0           | none       |
 
 The ODF_HEADER block is mandatory.
 
@@ -98,17 +98,18 @@ ODF_HEADER
 
 #### CRUISE_HEADER Block (mandatory)
 
-| Block name    | Field Name             | Restricted values | Type   | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | Null Value              |
-|---------------|------------------------|-------------------|--------|-----------------|-------------------|-----------------------|---------------|-------------------------|
-| CRUISE_HEADER | COUNTRY_INSTITUTE_CODE | n                 | number | y               | n                 | 1                     | empty         | none                    |
-| CRUISE_HEADER | CRUISE_NUMBER          | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| CRUISE_HEADER | ORGANIZATION           | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| CRUISE_HEADER | CHIEF_SCIENTIST        | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| CRUISE_HEADER | START_DATE             | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| CRUISE_HEADER | END_DATE               | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| CRUISE_HEADER | PLATFORM               | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| CRUISE_HEADER | CRUISE_NAME            | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| CRUISE_HEADER | CRUISE_DESCRIPTION     | n                 | string | y               | n                 | 1                     | empty         | none                    |
+| Block name    | Field Name             | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value              |
+|---------------|------------------------|-------------------|--------|-------------------|-----------------------|---------------|-------------------------|
+| CRUISE_HEADER | COUNTRY_INSTITUTE_CODE | n                 | number | n                 | 1                     | empty         | none                    |
+| CRUISE_HEADER | CRUISE_NUMBER          | n                 | string | n                 | 1                     | empty         | none                    |
+| CRUISE_HEADER | ORGANIZATION           | n                 | string | n                 | 1                     | empty         | none                    |
+| CRUISE_HEADER | CHIEF_SCIENTIST        | n                 | string | n                 | 1                     | empty         | none                    |
+| CRUISE_HEADER | START_DATE             | n                 | SYTM   | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| CRUISE_HEADER | END_DATE               | n                 | SYTM   | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| CRUISE_HEADER | PLATFORM               | n                 | string | n                 | 1                     | empty         | none                    |
+| CRUISE_HEADER | AREA_OF_OPERATION      | n                 | string | n                 | 1                     | empty         | none                    |
+| CRUISE_HEADER | CRUISE_NAME            | n                 | string | n                 | 1                     | empty         | none                    |
+| CRUISE_HEADER | CRUISE_DESCRIPTION     | n                 | string | n                 | 1                     | empty         | none                    |
 
 The CRUISE_HEADER block consists of metadata that relates to the entire cruise. 
 
@@ -145,26 +146,26 @@ CRUISE_HEADER
 
 #### EVENT_HEADER Block (mandatory)
 
-| Block name   | Field Name         | Restricted values | Type   | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | Null Value              |
-|--------------|--------------------|-------------------|--------|-----------------|-------------------|-----------------------|---------------|-------------------------|
-| EVENT_HEADER | DATA_TYPE          | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | EVENT_NUMBER       | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | EVENT_QUALIFIER1   | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | EVENT_QUALIFIER2   | n                 | string | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | CREATION_DATE      | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| EVENT_HEADER | ORIG_CREATION_DATE | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| EVENT_HEADER | START_DATE_TIME    | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| EVENT_HEADER | END_DATE_TIME      | n                 | SYTM   | y               | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| EVENT_HEADER | INITIAL_LATITUDE   | n                 | number | y               | n                 | 1                     | empty         | \-99                    |
-| EVENT_HEADER | INITIAL_LONGITUDE  | n                 | number | y               | n                 | 1                     | empty         | \-999                   |
-| EVENT_HEADER | END_LATITUDE       | n                 | number | y               | n                 | 1                     | empty         | \-99                    |
-| EVENT_HEADER | END_LONGITUDE      | n                 | number | y               | n                 | 1                     | empty         | \-999                   |
-| EVENT_HEADER | MIN_DEPTH          | n                 | number | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | MAX_DEPTH          | n                 | number | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | SAMPLING_INTERVAL  | n                 | number | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | SOUNDING           | n                 | number | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | DEPTH_OFF_BOTTOM   | n                 | number | y               | n                 | 1                     | empty         | none                    |
-| EVENT_HEADER | EVENT_COMMENTS     | n                 | string | y               | n                 | 1+                    | empty         | none                    |
+| Block name   | Field Name         | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value              |
+|--------------|--------------------|-------------------|--------|-------------------|-----------------------|---------------|-------------------------|
+| EVENT_HEADER | DATA_TYPE          | n                 | string | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | EVENT_NUMBER       | n                 | string | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | EVENT_QUALIFIER1   | n                 | string | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | EVENT_QUALIFIER2   | n                 | string | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | CREATION_DATE      | n                 | SYTM   | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| EVENT_HEADER | ORIG_CREATION_DATE | n                 | SYTM   | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| EVENT_HEADER | START_DATE_TIME    | n                 | SYTM   | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| EVENT_HEADER | END_DATE_TIME      | n                 | SYTM   | n                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| EVENT_HEADER | INITIAL_LATITUDE   | n                 | number | n                 | 1                     | empty         | \-99                    |
+| EVENT_HEADER | INITIAL_LONGITUDE  | n                 | number | n                 | 1                     | empty         | \-999                   |
+| EVENT_HEADER | END_LATITUDE       | n                 | number | n                 | 1                     | empty         | \-99                    |
+| EVENT_HEADER | END_LONGITUDE      | n                 | number | n                 | 1                     | empty         | \-999                   |
+| EVENT_HEADER | MIN_DEPTH          | n                 | number | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | MAX_DEPTH          | n                 | number | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | SAMPLING_INTERVAL  | n                 | number | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | SOUNDING           | n                 | number | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | DEPTH_OFF_BOTTOM   | n                 | number | n                 | 1                     | empty         | none                    |
+| EVENT_HEADER | EVENT_COMMENTS     | n                 | string | n                 | 1+                    | empty         | none                    |
 
 The EVENT_HEADER block is mandatory.
 
@@ -208,12 +209,12 @@ EVENT_HEADER
 
 #### INSTRUMENT_HEADER Block (mandatory)
 
-| Block name        | Field Name    | Restricted values | Type   | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | Null Value |
-|-------------------|---------------|-------------------|--------|-----------------|-------------------|-----------------------|---------------|------------|
-| INSTRUMENT_HEADER | INST_TYPE     | n                 | string | y               | n                 | 1                     | empty         | none       |
-| INSTRUMENT_HEADER | MODEL         | n                 | string | y               | n                 | 1                     | empty         | none       |
-| INSTRUMENT_HEADER | SERIAL_NUMBER | n                 | string | y               | n                 | 1                     | empty         | none       |
-| INSTRUMENT_HEADER | DESCRIPTION   | n                 | string | y               | n                 | 1                     | empty         | none       |
+| Block name        | Field Name    | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value |
+|-------------------|---------------|-------------------|--------|-------------------|-----------------------|---------------|------------|
+| INSTRUMENT_HEADER | INST_TYPE     | n                 | string | n                 | 1                     | empty         | none       |
+| INSTRUMENT_HEADER | MODEL         | n                 | string | n                 | 1                     | empty         | none       |
+| INSTRUMENT_HEADER | SERIAL_NUMBER | n                 | string | n                 | 1                     | empty         | none       |
+| INSTRUMENT_HEADER | DESCRIPTION   | n                 | string | n                 | 1                     | empty         | none       |
 
 The INSTRUMENT_HEADER block is mandatory. 
 
@@ -235,13 +236,13 @@ INSTRUMENT_HEADER
 
 #### POLYNOMIAL_CAL_HEADER Block (optional)
 
-| Block name            | Field Name             | Restricted values | Type      | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | #### Null Value         |
-|-----------------------|------------------------|-------------------|-----------|-----------------|-------------------|-----------------------|---------------|-------------------------|
-| POLYNOMIAL_CAL_HEADER | PARAMETER_CODE         | y                 | string    | y               | y                 | 1                     | empty         | none                    |
-| POLYNOMIAL_CAL_HEADER | CALIBRATION_DATE       | n                 | SYTM      | y               | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| POLYNOMIAL_CAL_HEADER | APPLICATION_DATE       | n                 | SYTM      | y               | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| POLYNOMIAL_CAL_HEADER | NUMBER_OF_COEFFICIENTS | n                 | number    | y               | y                 | 1                     | empty         | none                    |
-| POLYNOMIAL_CAL_HEADER | COEFFICIENTS           | n                 | number(s) | y               | y                 | 1…n                   | empty         | none                    |
+| Block name            | Field Name             | Restricted values | Type      | Content Mandatory | Number of Occurrences | Default Value | #### Null Value         |
+|-----------------------|------------------------|-------------------|-----------|-------------------|-----------------------|---------------|-------------------------|
+| POLYNOMIAL_CAL_HEADER | PARAMETER_CODE         | y                 | string    | y                 | 1                     | empty         | none                    |
+| POLYNOMIAL_CAL_HEADER | CALIBRATION_DATE       | n                 | SYTM      | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| POLYNOMIAL_CAL_HEADER | APPLICATION_DATE       | n                 | SYTM      | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| POLYNOMIAL_CAL_HEADER | NUMBER_OF_COEFFICIENTS | n                 | number    | y                 | 1                     | empty         | none                    |
+| POLYNOMIAL_CAL_HEADER | COEFFICIENTS           | n                 | number(s) | y                 | 1…n                   | empty         | none                    |
 
 The POLYNOMIAL_CAL_HEADER block is not mandatory.
 
@@ -266,17 +267,17 @@ An example POLYNOMIAL_CAL_HEADER block follows:
 
 #### COMPASS_CAL_HEADER Block (optional)
 
-| Block name         | Field Name       | Restricted values | Type      | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | ##### Null Value |
-|--------------------|------------------|-------------------|-----------|-----------------|-------------------|-----------------------|---------------|------------------|
-| COMPASS_CAL_HEADER | PARAMETER_CODE   | n                 | string    | y               | y                 | 1                     | empty         | none             |
-| COMPASS_CAL_HEADER | CALIBRATION_DATE | n                 | SYTM      | y               | y                 | 1                     | empty         | none             |
-| COMPASS_CAL_HEADER | APPLICATION_DATE | n                 | SYTM      | y               | y                 | 1                     | empty         | none             |
-| COMPASS_CAL_HEADER | DIRECTIONS       | y                 | number(s) | y               | y                 | 1…n                   | empty         | none             |
-| COMPASS_CAL_HEADER | CORRECTIONS      | y                 | number(s) | y               | y                 | 1…n                   | empty         | none             |
+| Block name         | Field Name       | Restricted values | Type      | Content Mandatory | Number of Occurrences | Default Value | ##### Null Value |
+|--------------------|------------------|-------------------|-----------|-------------------|-----------------------|---------------|------------------|
+| COMPASS_CAL_HEADER | PARAMETER_CODE   | n                 | string    | y                 | 1                     | empty         | none             |
+| COMPASS_CAL_HEADER | CALIBRATION_DATE | n                 | SYTM      | y                 | 1                     | empty         | none             |
+| COMPASS_CAL_HEADER | APPLICATION_DATE | n                 | SYTM      | y                 | 1                     | empty         | none             |
+| COMPASS_CAL_HEADER | DIRECTIONS       | y                 | number(s) | y                 | 1…n                   | empty         | none             |
+| COMPASS_CAL_HEADER | CORRECTIONS      | y                 | number(s) | y                 | 1…n                   | empty         | none             |
 
 The COMPASS_CAL_HEADER block is not mandatory in an ODF file.
 
-All fields in the COMPASS_CAL_HEADER block are mandatory (only applies when the block is present).
+All fields in the COMPASS_CAL_HEADER block are mandatory when the block is present.
 
 The fields are also order dependent and must conform to the above order.
 
@@ -284,10 +285,10 @@ Multiple COMPASS_CAL_HEADER blocks can exist in one ODF file. However, the last 
 
 #### HISTORY_HEADER Block (mandatory)
 
-| Block name     | Field Name    | Restricted values | Type   | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | Null Value              |
-|----------------|---------------|-------------------|--------|-----------------|-------------------|-----------------------|---------------|-------------------------|
-| HISTORY_HEADER | CREATION_DATE | n                 | SYTM   | y               | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
-| HISTORY_HEADER | PROCESS       | n                 | string | n               | n                 | 0…n                   | empty         | none                    |
+| Block name     | Field Name    | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value              |
+|----------------|---------------|-------------------|--------|-------------------|-----------------------|---------------|-------------------------|
+| HISTORY_HEADER | CREATION_DATE | n                 | SYTM   | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| HISTORY_HEADER | PROCESS       | n                 | string | n                 | 0…n                   | empty         | none                    |
 
 The HISTORY_HEADER block is mandatory.
 
@@ -307,29 +308,29 @@ HISTORY_HEADER
 
 #### PARAMETER_HEADER Block (mandatory)
 
-| Block name       | Field Name           | Restricted values | Type   | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | Null Value |
-|------------------|----------------------|-------------------|--------|-----------------|-------------------|-----------------------|---------------|------------|
-| PARAMETER_HEADER | TYPE                 | n                 | string | y               | n                 | 1                     | empty         | none       |
-| PARAMETER_HEADER | NAME                 | n                 | string | n               | n                 | 1                     | empty         | none       |
-| PARAMETER_HEADER | UNITS                | n                 | string | y               | y                 | 1                     | empty         | none       |
-| PARAMETER_HEADER | CODE                 | y                 | string | y               | y                 | 1                     | empty         | none       |
-| PARAMETER_HEADER | NULL_VALUE           | n                 | string | y               | y                 | 1                     | empty         | none       |
-| PARAMETER_HEADER | PRINT_FIELD_ORDER    | n                 | number | y               | y                 | 1                     | empty         | none       |
-| PARAMETER_HEADER | PRINT_FIELD_WIDTH    | n                 | number | n               | n                 | 1                     | empty         | none       |
-| PARAMETER_HEADER | PRINT_DECIMAL_PLACES | n                 | number | n               | n                 | 1                     | empty         | none       |
-| PARAMETER_HEADER | ANGLE_OF_SECTION     | n                 | number | y               | n                 | 1                     | empty         | \-99       |
-| PARAMETER_HEADER | MAGNETIC_VARIATION   | n                 | number | y               | n                 | 1                     | empty         | \-99       |
-| PARAMETER_HEADER | DEPTH                | n                 | number | y               | n                 | 1                     | empty         | \-99       |
-| PARAMETER_HEADER | MINIMUM_VALUE        | n                 | number | y               | n                 | 1                     | empty         | \-99       |
-| PARAMETER_HEADER | MAXIMUM_VALUE        | n                 | number | y               | n                 | 1                     | empty         | \-99       |
-| PARAMETER_HEADER | NUMBER_VALID         | n                 | number | y               | y                 | 1                     | empty         | \-99       |
-| PARAMETER_HEADER | NUMBER_NULL          | n                 | number | y               | y                 | 1                     | empty         | \-99       |
+| Block name       | Field Name           | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value |
+|------------------|----------------------|-------------------|--------|-------------------|-----------------------|---------------|------------|
+| PARAMETER_HEADER | TYPE                 | n                 | string | n                 | 1                     | empty         | none       |
+| PARAMETER_HEADER | NAME                 | n                 | string | n                 | 1                     | empty         | none       |
+| PARAMETER_HEADER | UNITS                | n                 | string | y                 | 1                     | empty         | none       |
+| PARAMETER_HEADER | CODE                 | y                 | string | y                 | 1                     | empty         | none       |
+| PARAMETER_HEADER | NULL_VALUE           | n                 | string | y                 | 1                     | empty         | none       |
+| PARAMETER_HEADER | PRINT_FIELD_ORDER    | n                 | number | y                 | 1                     | empty         | none       |
+| PARAMETER_HEADER | PRINT_FIELD_WIDTH    | n                 | number | n                 | 1                     | empty         | none       |
+| PARAMETER_HEADER | PRINT_DECIMAL_PLACES | n                 | number | n                 | 1                     | empty         | none       |
+| PARAMETER_HEADER | ANGLE_OF_SECTION     | n                 | number | n                 | 1                     | empty         | \-99       |
+| PARAMETER_HEADER | MAGNETIC_VARIATION   | n                 | number | n                 | 1                     | empty         | \-99       |
+| PARAMETER_HEADER | DEPTH                | n                 | number | n                 | 1                     | empty         | \-99       |
+| PARAMETER_HEADER | MINIMUM_VALUE        | n                 | number | n                 | 1                     | empty         | \-99       |
+| PARAMETER_HEADER | MAXIMUM_VALUE        | n                 | number | n                 | 1                     | empty         | \-99       |
+| PARAMETER_HEADER | NUMBER_VALID         | n                 | number | y                 | 1                     | empty         | \-99       |
+| PARAMETER_HEADER | NUMBER_NULL          | n                 | number | y                 | 1                     | empty         | \-99       |
 
 At least one PARAMETER_HEADER block is mandatory.
 
 Multiple PARAMETER_HEADER blocks are permitted within the ODF file. 
 
-Only some fields in the PARAMETER_HEADER block are mandatory. 
+All fields in the PARAMETER_HEADER block are mandatory. 
 
 The mandatory fields are:
   - TYPE
@@ -349,19 +350,19 @@ All data parameters in an ODF file must have a valid parameter code.
 
 #### RECORD_HEADER Block (mandatory)
 
-| Block name    | Field Name      | Restricted values | Type   | Field Mandatory | Content Mandatory | Number of Occurrences | Default Value | Null Value |
-|---------------|-----------------|-------------------|--------|-----------------|-------------------|-----------------------|---------------|------------|
-| RECORD_HEADER | NUM_CALIBRATION | n                 | number | n               | n                 | 1                     | empty         | none       |
-| RECORD_HEADER | NUM_SWING       | n                 | number | n               | n                 | 1                     | empty         | none       |
-| RECORD_HEADER | NUM_HISTORY     | n                 | number | y               | y                 | 1                     | empty         | none       |
-| RECORD_HEADER | NUM_CYCLE       | n                 | number | y               | y                 | 1                     | empty         | none       |
-| RECORD_HEADER | NUM_PARAM       | n                 | number | y               | y                 | 1                     | empty         | none       |
+| Block name    | Field Name      | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value |
+|---------------|-----------------|-------------------|--------|-------------------|-----------------------|---------------|------------|
+| RECORD_HEADER | NUM_CALIBRATION | n                 | number | y                 | 1                     | empty         | none       |
+| RECORD_HEADER | NUM_SWING       | n                 | number | y                 | 1                     | empty         | none       |
+| RECORD_HEADER | NUM_HISTORY     | n                 | number | y                 | 1                     | empty         | none       |
+| RECORD_HEADER | NUM_CYCLE       | n                 | number | y                 | 1                     | empty         | none       |
+| RECORD_HEADER | NUM_PARAM       | n                 | number | y                 | 1                     | empty         | none       |
 
 One RECORD_HEADER block must exist in an ODF file.
 
-The fields NUM_CYCLES, NUM_HISTORY, NUM_PARAM are mandatory in the RECORD_HEADER block; the remaining fields are mandatory if at least one corresponding header exists for that header type.
+All fields are mandatory.
 
-The fields do not have any required order.
+The fields do not have a required order.
 
 The RECORD_HEADER block identifies the number of calibration (polynomial or general) blocks, swing (compass) blocks, history blocks, data cycles (records or rows) and parameters in the ODF file.
 
@@ -411,7 +412,9 @@ A list of the changes to the ODF file format specification for version 3.0 follo
 
 - Added the field ODF_SPECIFICATION_VERSION to the ODF_HEADER to identify which version of the ODF specification the file follows. Default value is 3.0.
 - Commas at the end of header lines are no longer required or expected.
+- Added the field AREA_OF_OPERATION to the CRUISE_HEADER instead of using the practice of using CRUISE_NAME to hold that information.
 - Added the field PRINT_FIELD_ORDER to the PARAMETER_HEADER to identify its corresponding column in the data section.
+- All fields in the PARAMETER_HEADER and RECORD_HEADER are now mandatory.
 - The order of the PARAMETER_HEADER blocks is no longer restricted by the order of the data columns in the data section.
 - The data section in an ODF file now starts with a column header line that is a list of column names delimited by commas.
 - The data records are no longer delimited by whitespace; instead they are now comma delimited records. 

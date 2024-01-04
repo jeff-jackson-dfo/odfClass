@@ -6,7 +6,8 @@ def get_odf_header():
     odf_header = OrderedDict()
 
     odf_header['ODF_HEADER'] = OrderedDict({'ODF_HEADER': ('char', 'mandatory', 'single'),
-                                            'FILE_SPECIFICATION': ('char', 'mandatory', 'single')})
+                                            'FILE_SPECIFICATION': ('char', 'mandatory', 'single')
+                                            'ODF_SPECIFICATION_VERSION': ('char', 'mandatory', 'single')})
 
     odf_header['CRUISE_HEADER'] = OrderedDict({'CRUISE_HEADER': ('char', 'mandatory', 'single'),
                                                'COUNTRY_INSTITUTE_CODE': ('integer', 'mandatory', 'single'),
@@ -16,6 +17,7 @@ def get_odf_header():
                                                'START_DATE': ('char', 'mandatory', 'single'),
                                                'END_DATE': ('char', 'mandatory', 'single'),
                                                'PLATFORM': ('char', 'mandatory', 'single'),
+                                               'AREA_OF_OPERATION': ('char', 'mandatory', 'single'),
                                                'CRUISE_NAME': ('char', 'mandatory', 'single'),
                                                'CRUISE_DESCRIPTION': ('char', 'mandatory', 'single')})
 
@@ -97,6 +99,7 @@ def get_odf_header():
                                                   'CODE': ('char', 'mandatory', 'single'),
                                                   'WMO_CODE': ('char', 'optional', 'single'),
                                                   'NULL_VALUE': ('char', 'optional', 'single'),
+                                                  'PRINT_FIELD_ORDER': ('integer', 'mandatory', 'single'),
                                                   'PRINT_FIELD_WIDTH': ('integer', 'optional', 'single'),
                                                   'PRINT_DECIMAL_PLACES': ('integer', 'optional', 'single'),
                                                   'ANGLE_OF_SECTION': ('numeric', 'mandatory', 'single'),
@@ -108,10 +111,10 @@ def get_odf_header():
                                                   'NUMBER_NULL': ('integer', 'optional', 'single')})
 
     odf_header['RECORD_HEADER'] = OrderedDict({'RECORD_HEADER': ('char', 'mandatory', 'single'),
-                                               'NUM_CALIBRATION': ('integer', 'optional', 'single'),
-                                               'NUM_SWING': ('integer', 'optional', 'single'),
-                                               'NUM_HISTORY': ('integer', 'optional', 'single'),
-                                               'NUM_CYCLE': ('integer', 'optional', 'single'),
-                                               'NUM_PARAM': ('integer', 'optional', 'single')})
+                                               'NUM_CALIBRATION': ('integer', 'mandatory', 'single'),
+                                               'NUM_SWING': ('integer', 'mandatory', 'single'),
+                                               'NUM_HISTORY': ('integer', 'mandatory', 'single'),
+                                               'NUM_CYCLE': ('integer', 'mandatory', 'single'),
+                                               'NUM_PARAM': ('integer', 'mandatory', 'single')})
 
     return odf_header
