@@ -341,9 +341,7 @@ The mandatory fields are:
 
 The fields in the PARAMETER_HEADER block are not order dependent.
 
-> [!WARNING]
-> 
-> The order of the individual PARAMETER_HEADER blocks must have the same order as the data channels within the data section of the ODF file.
+The order of the individual PARAMETER_HEADER blocks is independent of the order of the data channels within the data section of the ODF file.
 
 All data parameters in an ODF file must have a valid parameter code.
 
