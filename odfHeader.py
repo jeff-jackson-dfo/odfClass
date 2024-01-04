@@ -95,6 +95,7 @@ class OdfHeader:
 
         print("ODF_HEADER")
         print("  FILE_SPECIFICATION = '" + misc_functions.check_string(self.FileSpecification) + "'")
+        print("  ODF_SPECIFICATION_VERSION = '3.0'")
         self.CruiseHeader.print_header()
         self.EventHeader.print_header()
         if self.MeteoHeader is not None:
