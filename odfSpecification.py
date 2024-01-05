@@ -39,8 +39,8 @@ def get_odf_header():
                                               'SAMPLING_INTERVAL': ('numeric', 'mandatory', 'single'),
                                               'SOUNDING': ('numeric', 'mandatory', 'single'),
                                               'DEPTH_OFF_BOTTOM': ('numeric', 'mandatory', 'single'),
-                                              'STATION_NAME': ('char', 'optional', 'single'),
-                                              'SET_NUMBER': ('char', 'optional', 'single'),
+                                              'STATION_NAME': ('char', 'mandatory', 'single'),
+                                              'SET_NUMBER': ('char', 'mandatory', 'single'),
                                               'EVENT_COMMENTS': ('char', 'mandatory', 'multiple')})
 
     odf_header['METEO_HEADER'] = OrderedDict({'METEO_HEADER': ('char', 'optional', 'single'),
@@ -88,27 +88,27 @@ def get_odf_header():
                                                     'DIRECTIONS': ('numeric', 'mandatory', 'multiple'),
                                                     'CORRECTIONS': ('numeric', 'mandatory', 'multiple')})
 
-    odf_header['HISTORY_HEADER'] = OrderedDict({'HISTORY_HEADER': ('char', 'optional', 'multiple'),
+    odf_header['HISTORY_HEADER'] = OrderedDict({'HISTORY_HEADER': ('char', 'mandatory', 'multiple'),
                                                 'CREATION_DATE': ('char', 'mandatory', 'single'),
                                                 'PROCESS': ('char', 'mandatory', 'multiple')})
 
     odf_header['PARAMETER_HEADER'] = OrderedDict({'PARAMETER_HEADER': ('char', 'mandatory', 'multiple'),
                                                   'TYPE': ('char', 'mandatory', 'single'),
-                                                  'NAME': ('char', 'optional', 'single'),
-                                                  'UNITS': ('char', 'optional', 'single'),
+                                                  'NAME': ('char', 'mandatory', 'single'),
+                                                  'UNITS': ('char', 'mandatory', 'single'),
                                                   'CODE': ('char', 'mandatory', 'single'),
-                                                  'WMO_CODE': ('char', 'optional', 'single'),
-                                                  'NULL_VALUE': ('char', 'optional', 'single'),
+                                                  'WMO_CODE': ('char', 'mandatory', 'single'),
+                                                  'NULL_VALUE': ('char', 'mandatory', 'single'),
                                                   'PRINT_FIELD_ORDER': ('integer', 'mandatory', 'single'),
-                                                  'PRINT_FIELD_WIDTH': ('integer', 'optional', 'single'),
-                                                  'PRINT_DECIMAL_PLACES': ('integer', 'optional', 'single'),
+                                                  'PRINT_FIELD_WIDTH': ('integer', 'mandatory', 'single'),
+                                                  'PRINT_DECIMAL_PLACES': ('integer', 'mandatory', 'single'),
                                                   'ANGLE_OF_SECTION': ('numeric', 'mandatory', 'single'),
                                                   'MAGNETIC_VARIATION': ('numeric', 'mandatory', 'single'),
                                                   'DEPTH': ('numeric', 'mandatory', 'single'),
-                                                  'MINIMUM_VALUE': ('numeric', 'optional', 'single'),
-                                                  'MAXIMUM_VALUE': ('numeric', 'optional', 'single'),
-                                                  'NUMBER_VALID': ('integer', 'optional', 'single'),
-                                                  'NUMBER_NULL': ('integer', 'optional', 'single')})
+                                                  'MINIMUM_VALUE': ('numeric', 'mandatory', 'single'),
+                                                  'MAXIMUM_VALUE': ('numeric', 'mandatory', 'single'),
+                                                  'NUMBER_VALID': ('integer', 'mandatory', 'single'),
+                                                  'NUMBER_NULL': ('integer', 'mandatory', 'single')})
 
     odf_header['RECORD_HEADER'] = OrderedDict({'RECORD_HEADER': ('char', 'mandatory', 'single'),
                                                'NUM_CALIBRATION': ('integer', 'mandatory', 'single'),
