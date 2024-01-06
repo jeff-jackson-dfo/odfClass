@@ -25,263 +25,150 @@ class EventHeader:
         self.EventComments = list()
 
     def get_data_type(self):
-        print("Getting the Data Type ...")
         return self.DataType
 
-    def set_data_type(self, odf, data_type):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: DATA_TYPE for this ODF object has been "
-                                                 "modified from " +
-                                                 misc_functions.check_string(self.DataType) + " to " + data_type + ".")
+    def set_data_type(self, data_type: str):
         self.DataType = data_type
-        return odf
+        return self
 
     def get_event_number(self):
-        print("Getting the Event Number ...")
         return self.EventNumber
 
-    def set_event_number(self, odf, event_number):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: EVENT_NUMBER for this ODF object has been "
-                                                 "modified from " +
-                                                 misc_functions.check_string(self.EventNumber) + " to " +
-                                                 event_number + ".")
+    def set_event_number(self, event_number: str):
         self.EventNumber = event_number
-        return odf
+        return self
 
     def get_event_qualifier1(self):
-        print("Getting the Event Qualifier1 ...")
         return self.EventQualifier1
 
-    def set_event_qualifier1(self, odf, event_qualifier1):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: EVENT_QUALIFIER1 for this ODF object has been "
-                                                 "modified from " +
-                                                 misc_functions.check_string(self.EventQualifier1) + " to " +
-                                                 event_qualifier1 + ".")
+    def set_event_qualifier1(self, event_qualifier1: str):
         self.EventQualifier1 = event_qualifier1
-        return odf
+        return self
 
     def get_event_qualifier2(self):
-        print("Getting the Event Qualifier2 ...")
         return self.EventQualifier2
 
-    def set_event_qualifier2(self, odf, event_qualifier2):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: EVENT_QUALIFIER2 for this ODF object has been "
-                                                 "modified from " +
-                                                 misc_functions.check_string(self.EventQualifier2) + " to " +
-                                                 event_qualifier2 + ".")
+    def set_event_qualifier2(self, event_qualifier2: str):
         self.EventQualifier2 = event_qualifier2
-        return odf
+        return self
 
     def get_creation_date(self):
-        print("Getting the Creation Date ...")
         return self.CreationDate
 
-    def set_creation_date(self, odf, creation_date):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: CREATION_DATE for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_datetime(self.CreationDate) + "' to '" +
-                                                 creation_date + "'.")
+    def set_creation_date(self, creation_date: str):
         self.CreationDate = creation_date
-        return odf
+        return self
 
     def get_original_creation_date(self):
-        print("Getting the Original Creation Date ...")
         return self.OriginalCreationDate
 
-    def set_original_creation_date(self, odf, original_creation_date):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: ORIGINAL_CREATION_DATE for this ODF object has "
-                                                 "been modified from '" +
-                                                 misc_functions.check_datetime(self.OriginalCreationDate) +
-                                                 "' to '" + original_creation_date + "'.")
+    def set_original_creation_date(self, original_creation_date: str):
         self.OriginalCreationDate = original_creation_date
-        return odf
+        return self
 
     def get_start_date_time(self):
-        print("Getting the Start Date Time ...")
         return self.StartDateTime
 
-    def set_start_date_time(self, odf, start_date_time):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: START_DATE_TIME for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_datetime(self.StartDateTime) + "' to '" +
-                                                 start_date_time + "'.")
+    def set_start_date_time(self, start_date_time: str):
         self.StartDateTime = start_date_time
-        return odf
+        return self
 
     def get_end_date_time(self):
-        print("Getting the End Date Time ...")
         return self.EndDateTime
 
-    def set_end_date_time(self, odf, end_date_time):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: END_DATE_TIME for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_datetime(self.EndDateTime) + "' to '" +
-                                                 end_date_time + "'.")
+    def set_end_date_time(self, end_date_time: str):
         self.EndDateTime = end_date_time
-        return odf
+        return self
 
     def get_initial_latitude(self):
-        print("Getting the Initial Latitude ...")
         return self.InitialLatitude
 
-    def set_initial_latitude(self, odf, initial_latitude):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: INITIAL_LATITUDE for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_long_value(self.InitialLatitude) + "' to '" +
-                                                 initial_latitude + "'.")
+    def set_initial_latitude(self, initial_latitude: float):
         self.InitialLatitude = initial_latitude
-        return odf
+        return self
 
     def get_initial_longitude(self):
-        print("Getting the Initial Longitude ...")
         return self.InitialLongitude
 
-    def set_initial_longitude(self, odf, initial_longitude):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: INITIAL_LONGITUDE for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_long_value(self.InitialLongitude) + "' to '" +
-                                                 initial_longitude + "'.")
+    def set_initial_longitude(self, initial_longitude: float):
         self.InitialLongitude = initial_longitude
-        return odf
+        return self
 
     def get_end_latitude(self):
-        print("Getting the End Latitude ...")
         return self.EndLatitude
 
-    def set_end_latitude(self, odf, end_latitude):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: END_LATITUDE for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_long_value(self.EndLatitude) + "' to '" +
-                                                 end_latitude + "'.")
+    def set_end_latitude(self, end_latitude: float):
         self.EndLatitude = end_latitude
-        return odf
+        return self
 
     def get_end_longitude(self):
-        print("Getting the End Longitude ...")
         return self.EndLongitude
 
-    def set_end_longitude(self, odf, end_longitude):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: END_LONGITUDE for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_long_value(self.EndLongitude) + "' to '" +
-                                                 end_longitude + "'.")
+    def set_end_longitude(self, end_longitude: float):
         self.EndLongitude = end_longitude
-        return odf
+        return self
 
     def get_min_depth(self):
-        print("Getting the Min Depth ...")
         return self.MinDepth
 
-    def set_min_depth(self, odf, min_depth):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: MIN_DEPTH for this ODF object has been modified "
-                                                 "from '" +
-                                                 misc_functions.check_value(self.MinDepth) + "' to '" +
-                                                 min_depth + "'.")
+    def set_min_depth(self, min_depth: float):
         self.MinDepth = min_depth
-        return odf
+        return self
 
     def get_max_depth(self):
-        print("Getting the Max Depth ...")
         return self.MaxDepth
 
-    def set_max_depth(self, odf, max_depth):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: MAX_DEPTH for this ODF object has been modified "
-                                                 "from '" +
-                                                 misc_functions.check_value(self.MaxDepth) + "' to '" +
-                                                 max_depth + "'.")
+    def set_max_depth(self, max_depth: float):
         self.MaxDepth = max_depth
-        return odf
+        return self
 
     def get_sampling_interval(self):
-        print("Getting the Sampling Interval ...")
         return self.SamplingInterval
 
-    def set_sampling_interval(self, odf, sampling_interval):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: SAMPLING_INTERVAL for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_value(self.SamplingInterval) + "' to '" +
-                                                 sampling_interval + "'.")
+    def set_sampling_interval(self, sampling_interval: float):
         self.SamplingInterval = sampling_interval
-        return odf
+        return self
 
     def get_sounding(self):
-        print("Getting the Sounding ...")
         return self.Sounding
 
-    def set_sounding(self, odf, sounding):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: SOUNDING for this ODF object has been modified "
-                                                 "from '" +
-                                                 misc_functions.check_value(self.Sounding) + "' to '" + sounding + "'.")
+    def set_sounding(self, sounding: float):
         self.Sounding = sounding
-        return odf
+        return self
 
     def get_depth_off_bottom(self):
-        print("Getting the Depth Off Bottom ...")
         return self.DepthOffBottom
 
-    def set_depth_off_bottom(self, odf, depth_off_bottom):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: DEPTH_OFF_BOTTOM for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_value(self.DepthOffBottom) + "' to '" +
-                                                 depth_off_bottom + "'.")
+    def set_depth_off_bottom(self, depth_off_bottom: float):
         self.DepthOffBottom = depth_off_bottom
-        return odf
+        return self
 
     def get_station_name(self):
-        print("Getting the Station Name ...")
         return self.StationName
 
-    def set_station_name(self, odf, station_name):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: STATION_NAME for this ODF object has been "
-                                                 "modified from " +
-                                                 misc_functions.check_string(self.StationName) + " to " +
-                                                 station_name + ".")
+    def set_station_name(self, station_name: str):
         self.StationName = station_name
-        return odf
+        return self
 
     def get_set_number(self):
-        print("Getting the Set Number ...")
         return self.SetNumber
 
-    def set_set_number(self, odf, set_number):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: SET_NUMBER for this ODF object has been "
-                                                 "modified from " +
-                                                 misc_functions.check_string(self.SetNumber) + " to " +
-                                                 set_number + ".")
+    def set_set_number(self, set_number: str):
         self.SetNumber = set_number
-        return odf
+        return self
 
     def get_event_comments(self):
-        print("Getting the Event Comments ...")
         return self.EventComments
 
-    def set_event_comments(self, odf, event_comment, comment_number):
-        nh = len(odf.HistoryHeader)
-        cn = comment_number - 1
-        odf.HistoryHeader[nh - 1].Process.append("EVENT_HEADER Update: Comment [" + str(comment_number) + "] in " +
-                                                 "EVENT_COMMENTS for this ODF object has been modified from '" +
-                                                 misc_functions.check_string(self.EventComments[cn]) + "' to '" +
-                                                 event_comment + "'.")
-        self.EventComments[cn] = event_comment
-        return odf
+    def set_event_comments(self, event_comment: str, comment_number: int = 0):
+        number_of_comments = len(self.EventComments)
+        if comment_number == 0:
+            self.EventComments.append(event_comment)
+        if comment_number <= number_of_comments:
+            self.EventComments[comment_number] = event_comment
+        else:
+            raise ValueError("Event comment number does not match the number of comments.")
+        return self
 
     def print_header(self):
         print("EVENT_HEADER")
@@ -306,3 +193,62 @@ class EventHeader:
         print("  SET_NUMBER = '" + self.SetNumber + "'")
         for event_comment in self.EventComments:
             print("  EVENT_COMMENTS = '" + event_comment + "'")
+
+    def populate_header(self, event_dict: dict):
+        for key, value in event_dict.items():
+            match key:
+                case 'DATA_TYPE':
+                    self.set_data_type(value)
+                    print(f"  DATA_TYPE = {self.get_data_type()}")
+                case 'EVENT_NUMBER':
+                    self.set_event_number(value)
+                    print(f"  EVENT_NUMBER = {self.get_event_number()}")
+                case 'EVENT_QUALIFIER1':
+                    self.set_event_qualifier1(value)
+                    print(f"  EVENT_QUALIFIER1 = {self.get_event_qualifier1()}")
+                case 'EVENT_QUALIFIER2':
+                    self.set_event_qualifier2(value)
+                    print(f"  EVENT_QUALIFIER2 = {self.get_event_qualifier2()}")
+                case 'CREATION_DATE':
+                    self.set_creation_date(value)
+                    print(f"  CREATION_DATE = {self.get_creation_date()}")
+                case 'ORIGINAL_CREATION_DATE':
+                    self.set_original_creation_date(value)
+                    print(f"  ORIGINAL_CREATION_DATE = {self.get_original_creation_date()}")
+                case 'START_DATE_TIME':
+                    self.set_start_date_time(value)
+                    print(f"  START_DATE_TIME = {self.get_start_date_time()}")
+                case 'END_DATE_TIME':
+                    self.set_end_date_time(value)
+                    print(f"  END_DATE_TIME = {self.get_end_date_time()}")
+                case 'INITIAL_LATITUDE':
+                    self.set_initial_latitude(value)
+                    print(f"  INITIAL_LATITUDE = {self.get_initial_latitude()}")
+                case 'INITIAL_LONGITUDE':
+                    self.set_initial_longitude(value)
+                    print(f"  INITIAL_LONGITUDE = {self.get_initial_longitude()}")
+                case 'END_LATITUDE':
+                    self.set_end_latitude(value)
+                    print(f"  END_LATITUDE = {self.get_end_latitude()}")
+                case 'END_LONGITUDE':
+                    self.set_end_longitude(value)
+                    print(f"  END_LONGITUDE = {self.get_end_longitude()}")
+                case 'MIN_DEPTH':
+                    self.set_min_depth(value)
+                    print(f"  MIN_DEPTH = {self.get_min_depth()}")
+                case 'MAX_DEPTH':
+                    self.set_max_depth(value)
+                    print(f"  MAX_DEPTH = {self.get_max_depth()}")
+                case 'SAMPLING_INTERVAL':
+                    self.set_sampling_interval(value)
+                    print(f"  SAMPLING_INTERVAL = {self.get_sampling_interval()}")
+                case 'SOUNDING':
+                    self.set_sounding(value)
+                    print(f"  SOUNDING = {self.get_sounding()}")
+                case 'DEPTH_OFF_BOTTOM':
+                    self.set_depth_off_bottom(value)
+                    print(f"  DEPTH_OFF_BOTTOM = {self.get_depth_off_bottom()}")
+                case 'EVENT_COMMENTS':
+                    self.set_event_comments(value)
+                    print(f"  EVENT_COMMENTS = {self.get_event_comments()}")
+        return self

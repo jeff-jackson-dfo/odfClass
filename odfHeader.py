@@ -1,21 +1,19 @@
 import cruiseHeader
 import eventHeader
-import meteoHeader
+# import meteoHeader
 import instrumentHeader
 import odfHeader
 import odfReader
-import qualityHeader
-import generalCalHeader
-import compassCalHeader
-import polynomialCalHeader
+# import qualityHeader
+# import generalCalHeader
+# import compassCalHeader
+# import polynomialCalHeader
 import historyHeader
 import recordHeader
 import misc_functions
-import re
 import pandas
 
 
-# noinspection PyMethodMayBeStatic
 class OdfHeader:
     """
     Odf Header Class
@@ -32,7 +30,7 @@ class OdfHeader:
         """
 
         self.FileSpecification = None
-        self.Version = None
+        self.OdfSpecificationVersion = None
         self.CruiseHeader = cruiseHeader.CruiseHeader()
         self.EventHeader = eventHeader.EventHeader()
         self.MeteoHeader = None
@@ -64,7 +62,7 @@ class OdfHeader:
         print("Getting the File Specification ...")
         return self.FileSpecification
 
-    def set_file_specification(self, odf, file_specification):
+    def set_file_specification(self, file_specification):
         """
         Returns the file specification from the ODF_HEADER of an OdfHeader class object.
 
@@ -82,12 +80,12 @@ class OdfHeader:
         """
 
         nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("ODF_HEADER Update: FILE_SPECIFICATION for this ODF object has "
-                                                 "been modified from " +
-                                                 misc_functions.check_string(self.FileSpecification) +
-                                                 " to " + file_specification + ".")
+        self.HistoryHeader[nh - 1].Process.append("ODF_HEADER Update: FILE_SPECIFICATION for this ODF object has "
+                                                  "been modified from " +
+                                                  misc_functions.check_string(self.FileSpecification) +
+                                                  " to " + file_specification + ".")
         self.FileSpecification = file_specification
-        return odf
+        return self
 
     def print_header(self):
         """
@@ -116,8 +114,24 @@ class OdfHeader:
             param.print_header()
         self.RecordHeader.print_header()
 
+    def populate_header(self, odf_dict: dict):
+        for key, value in odf_dict.items():
+            match key:
+                case 'FILE_SPECIFICATION':
+                    self.FileSpecification = value
+                    print(f"  FILE_SPECIFICATION = {self.FileSpecification}")
+                case 'ODF_SPECIFICATION_VERSION':
+                    self.OdfSpecificationVersion = value
+                    print(f"  ODF_SPECIFICATION_VERSION = {self.OdfSpecificationVersion}")
+        return self
+
+    def add_to_history(self, header: str, field: str, value: str, new_value: str):
+        nh = len(self.HistoryHeader)
+        self.HistoryHeader[nh - 1].Process.append(f"{header} Update: field {field} was modified from {str(misc_functions.check_value(value))} to {new_value} .")
+        return self
+
     # def read_header(odf: Type[newOdfHeader], lines: list) -> newOdfHeader:
-    def read_odf(self, odf_object: odfHeader, odf_file_path: str) -> odfHeader:
+    def read_odf(self, odf_file_path: str):
         """
         Reads an ODF file and puts it into an OdfHeader class object.
 
@@ -171,55 +185,63 @@ class OdfHeader:
         for i in range(ndf):
             header_field_range._set_value(i, 'Name', header_blocks_df._get_value(i, 'name'))
             header_field_range._set_value(i, 'Start', header_blocks_df._get_value(i, 'index') + 1)
-        # print(header_field_range)
         for i in range(ndf):
             if 0 < i < ndf - 1:
                 header_field_range._set_value(i - 1, 'End', header_blocks_df._get_value(i, 'index') - 1)
             elif i == ndf - 1:
                 header_field_range._set_value(i - 1, 'End', header_blocks_df._get_value(i, 'index') - 1)
                 header_field_range._set_value(i, 'End', data_line_start - 1)
-        # print(header_field_range)
 
         # Loop through the header lines, populating the OdfHeader object as it goes.
+        print("\nLines as dictionaries:")
         for i in range(ndf):
+            header_block = str(header_blocks_df._get_value(i, 'name'))
+            print(f"\n{header_block}")
             x = header_field_range._get_value(i, 'Start')
             y = header_field_range._get_value(i, 'End')
-            field_lines = header_lines[x:y + 1]
-            # print(field_lines)
-            lines_as_dicts = file_reader.split_lines_into_dict(field_lines)
-            print("\nLines as dictionaries:")
-            for line_dict in lines_as_dicts:
-                print(line_dict)
-
-        # Find the ODF_HEADER line, there must be one and only one; otherwise raise an exception indicating if there
-        # are too many or too few.
-        # head_lines = [i for i, header_line in enumerate(header_lines) if re.match('ODF_HEADER', header_line)]
-        # if len(head_lines) <= 0:
-        #     raise Exception(" -- The input odf file does NOT have a proper ODF_HEADER section")
-        # elif len(head_lines) > 1:
-        #     raise Exception(" -- The input odf file has more than one ODF_HEADER section")
-
-        # print(f"The range of lines for the fields of the {header_blocks_df['name'][ind]} are: "
-        #       f"{row['index'] + 1} : {row['index'] - 1} \n")
-
-        # lines_as_dicts = file_reader.split_lines_into_dict(header_lines)
-        # search_results = file_reader.search_dictionaries('CRUISE_HEADER', lines_as_dicts)
-        # print(search_results)
-
-        return odf_object
+            for header_line in header_lines[x:y + 1]:
+                tokens = header_line.split('=', maxsplit=1)
+                header_fields = file_reader.split_lines_into_dict(tokens)
+                match header_block:
+                    case "COMPASS_CAL_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_compass_cal_header(header_fields)
+                    case "CRUISE_HEADER":
+                        self.CruiseHeader = self.CruiseHeader.populate_header(header_fields)
+                    case "EVENT_HEADER":
+                        self.EventHeader = self.EventHeader.populate_header(header_fields)
+                    case "GENERAL_CAL_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_general_cal_header(header_fields)
+                    case "HISTORY_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_history_header(header_fields)
+                    case "INSTRUMENT_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_instrument_header(header_fields)
+                    case "METEO_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_meteo_header(header_fields)
+                    case "ODF_HEADER":
+                        self.populate_header(header_fields)
+                    case "PARAMETER_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_parameter_header(header_fields)
+                    case "POLYNOMIAL_CAL_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_polynomial_cal_header(header_fields)
+                    case "QUALITY_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_quality_header(header_fields)
+                    case "RECORD_HEADER":
+                        print(f"{header_fields}\n")
+                        # self.populate_record_header(header_fields)
+        return self
 
 
 if __name__ == "__main__":
     odf = odfHeader.OdfHeader()
 
-    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/XBT_HUD2005016_58_1_016.ODF'
+    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/MCM_HUD2010014_1771_1039_3600.ODF'
 
-    odf.read_odf(odf, my_file_path)
-
-    # search_string = input("\nEnter text to search for in dictionaries: ")
-    # while search_string:
-    #     search_results = file_reader.search_dictionaries(search_string, lines_as_dicts)
-    #     print(f"\nSearch results for '{search_string}':")
-    #     for index, result in search_results:
-    #         print(f"Dictionary at line {index}: {result}")
-    #     search_string = input("\nEnter text to search for in dictionaries: ")
+    odf.read_odf(my_file_path)
