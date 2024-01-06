@@ -6,7 +6,7 @@ def get_odf_header():
     odf_header = OrderedDict()
 
     odf_header['ODF_HEADER'] = OrderedDict({'ODF_HEADER': ('char', 'mandatory', 'single'),
-                                            'FILE_SPECIFICATION': ('char', 'mandatory', 'single')
+                                            'FILE_SPECIFICATION': ('char', 'mandatory', 'single'),
                                             'ODF_SPECIFICATION_VERSION': ('char', 'mandatory', 'single')})
 
     odf_header['CRUISE_HEADER'] = OrderedDict({'CRUISE_HEADER': ('char', 'mandatory', 'single'),

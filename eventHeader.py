@@ -162,12 +162,12 @@ class EventHeader:
 
     def set_event_comments(self, event_comment: str, comment_number: int = 0):
         number_of_comments = len(self.EventComments)
-        if comment_number == 0:
+        if comment_number == 0 and number_of_comments == 0:
             self.EventComments.append(event_comment)
-        if comment_number <= number_of_comments:
-            self.EventComments[comment_number] = event_comment
+        elif comment_number <= number_of_comments and number_of_comments > 0:
+            self.EventComments[comment_number-1] = event_comment
         else:
-            raise ValueError("Event comment number does not match the number of comments.")
+            raise ValueError("The EVENT_COMMENTS number does not match the number of EVENT_COMMENTS lines.")
         return self
 
     def print_header(self):
