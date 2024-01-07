@@ -1,5 +1,7 @@
 import pandas
 
+import misc_functions
+
 
 class OdfReader:
     def __init__(self, file_path_string: str) -> None:
@@ -20,18 +22,8 @@ class OdfReader:
         matching_lines = [(text_index, text_line) for text_index, text_line in enumerate(lines) if text in text_line]
         return matching_lines
 
-    def split_lines_into_dict(self, lines: list) -> list:
-        # lines = self.read_file_lines()
-        result_dicts = []
-
-        for head_line in lines:
-            # Split each line into key-value pairs using the first '=' as the separator
-            parts = head_line.split('=', 1)
-            # Create a dictionary with the key-value pair
-            line_dict = {parts[0].strip(): parts[1].strip()} if len(parts) == 2 else {'line': head_line.strip()}
-            result_dicts.append(line_dict)
-
-        return result_dicts
+    def split_lines_into_dict(self, lines: list) -> dict:
+        return misc_functions.list_to_dict(lines)
 
     def search_dictionaries(self, search_text, dictionaries):
         matching_results = []

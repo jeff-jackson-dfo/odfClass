@@ -2,7 +2,6 @@ import cruiseHeader
 import eventHeader
 # import meteoHeader
 import instrumentHeader
-import odfHeader
 import odfReader
 # import qualityHeader
 # import generalCalHeader
@@ -179,6 +178,8 @@ class OdfHeader:
         header_lines = file_lines[:data_line_start - 1]
         data_lines = file_lines[data_line_start:]
 
+        header_lines = misc_functions.remove_trailing_commas_and_whitespace(header_lines)
+
         # Get the line range for the list of fields in each header block
         ndf = len(header_blocks_df)
         header_field_range = pandas.DataFrame(columns=["Name", "Start", "End"])
@@ -196,51 +197,55 @@ class OdfHeader:
         print("\nLines as dictionaries:")
         for i in range(ndf):
             header_block = str(header_blocks_df._get_value(i, 'name'))
-            print(f"\n{header_block}")
             x = header_field_range._get_value(i, 'Start')
             y = header_field_range._get_value(i, 'End')
-            for header_line in header_lines[x:y + 1]:
-                tokens = header_line.split('=', maxsplit=1)
-                header_fields = file_reader.split_lines_into_dict(tokens)
-                match header_block:
-                    case "COMPASS_CAL_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.populate_compass_cal_header(header_fields)
-                    case "CRUISE_HEADER":
-                        self.CruiseHeader = self.CruiseHeader.populate_header(header_fields)
-                    case "EVENT_HEADER":
-                        self.EventHeader = self.EventHeader.populate_header(header_fields)
-                    case "GENERAL_CAL_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.populate_general_cal_header(header_fields)
-                    case "HISTORY_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.HistoryHeader = self.HistoryHeader.populate_header(header_fields)
-                    case "INSTRUMENT_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.populate_instrument_header(header_fields)
-                    case "METEO_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.populate_meteo_header(header_fields)
-                    case "ODF_HEADER":
+            block_lines = header_lines[x:y + 1]
+            match header_block:
+                case "COMPASS_CAL_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.populate_compass_cal_header(block_lines)
+                case "CRUISE_HEADER":
+                    self.CruiseHeader = self.CruiseHeader.populate_header(block_lines)
+                    self.CruiseHeader.print_header()
+                case "EVENT_HEADER":
+                    self.EventHeader = self.EventHeader.populate_header(block_lines)
+                    self.EventHeader.print_header()
+                case "GENERAL_CAL_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.populate_general_cal_header(block_lines)
+                case "HISTORY_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.HistoryHeader = self.HistoryHeader.populate_header(block_lines)
+                case "INSTRUMENT_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.populate_instrument_header(block_lines)
+                case "METEO_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.populate_meteo_header(block_lines)
+                case "ODF_HEADER":
+                    print("ODF_HEADER")
+                    for header_line in block_lines:
+                        tokens = header_line.split('=', maxsplit=1)
+                        header_fields = file_reader.split_lines_into_dict(tokens)
                         self.populate_header(header_fields)
-                    case "PARAMETER_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.populate_parameter_header(header_fields)
-                    case "POLYNOMIAL_CAL_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.populate_polynomial_cal_header(header_fields)
-                    case "QUALITY_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.populate_quality_header(header_fields)
-                    case "RECORD_HEADER":
-                        print(f"{header_fields}\n")
-                        # self.populate_record_header(header_fields)
+                case "PARAMETER_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.populate_parameter_header(block_lines)
+                case "POLYNOMIAL_CAL_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.populate_polynomial_cal_header(block_lines)
+                case "QUALITY_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.populate_quality_header(block_lines)
+                case "RECORD_HEADER":
+                    print(f"{block_lines}\n")
+                    # self.populate_record_header(block_lines)
         return self
 
 
 if __name__ == "__main__":
-    odf = odfHeader.OdfHeader()
+
+    odf = OdfHeader()
 
     my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/MCM_HUD2010014_1771_1039_3600.ODF'
 

@@ -1,18 +1,17 @@
 import misc_functions
 
-
 class CruiseHeader:
     def __init__(self):
         self.CountryInstituteCode = None
-        self.CruiseNumber = ""
-        self.Organization = ""
-        self.ChiefScientist = ""
+        self.CruiseNumber = "''"
+        self.Organization = "''"
+        self.ChiefScientist = "''"
         self.StartDate = None
         self.EndDate = None
-        self.Platform = ""
-        self.AreaOfOperation = ""
-        self.CruiseName = ""
-        self.CruiseDescription = ""
+        self.Platform = "''"
+        self.AreaOfOperation = "''"
+        self.CruiseName = "''"
+        self.CruiseDescription = "''"
 
     def get_country_institute_code(self):
         return self.CountryInstituteCode
@@ -86,49 +85,42 @@ class CruiseHeader:
 
     def print_header(self):
         print("CRUISE_HEADER")
-        print("  COUNTRY_INSTITUTE_CODE = " + str(misc_functions.check_value(self.CountryInstituteCode)))
-        print("  CRUISE_NUMBER = '" + self.CruiseNumber + "'")
-        print("  ORGANIZATION = '" + self.Organization + "'")
-        print("  CHIEF_SCIENTIST = '" + self.ChiefScientist + "'")
-        print("  START_DATE = '" + misc_functions.check_datetime(self.StartDate) + "'")
-        print("  END_DATE = '" + misc_functions.check_datetime(self.EndDate) + "'")
-        print("  PLATFORM = '" + self.Platform + "'")
-        print("  AREA_OF_OPERATION = '" + self.AreaOfOperation + "'")
-        print("  CRUISE_NAME = '" + self.CruiseName + "'")
-        print("  CRUISE_DESCRIPTION = '" + self.CruiseDescription + "'")
+        print(f"  COUNTRY_INSTITUTE_CODE = {misc_functions.check_value(self.get_country_institute_code())}")
+        print(f"  CRUISE_NUMBER = {self.get_cruise_number()}")
+        print(f"  ORGANIZATION = {self.get_chief_scientist()}")
+        print(f"  CHIEF_SCIENTIST = {self.get_organization()}")
+        print(f"  START_DATE = {misc_functions.check_datetime(self.get_start_date())}")
+        print(f"  END_DATE = {misc_functions.check_datetime(self.get_end_date())}")
+        print(f"  PLATFORM = {self.get_platform()}")
+        print(f"  AREA_OF_OPERATION = {self.get_area_of_operation()}")
+        print(f"  CRUISE_NAME = {self.get_cruise_name()}")
+        print(f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}")
 
-    def populate_header(self, cruise_dict: dict):
-        for key, value in cruise_dict.items():
-            match key:
-                case 'COUNTRY_INSTITUTE_CODE':
-                    self.set_country_institute_code(value)
-                    print(f"  COUNTRY_INSTITUTE_CODE = {self.get_country_institute_code()}")
-                case 'CRUISE_NUMBER':
-                    self.set_cruise_number(value)
-                    print(f"  CRUISE_NUMBER = {self.get_cruise_number()}")
-                case 'ORGANIZATION':
-                    self.set_chief_scientist(value)
-                    print(f"  ORGANIZATION = {self.get_chief_scientist()}")
-                case 'CHIEF_SCIENTIST':
-                    self.set_organization(value)
-                    print(f"  CHIEF_SCIENTIST = {self.get_organization()}")
-                case 'START_DATE':
-                    self.set_start_date(value)
-                    print(f"  START_DATE = {self.get_start_date()}")
-                case 'END_DATE':
-                    self.set_end_date(value)
-                    print(f"  END_DATE = {self.get_end_date()}")
-                case 'PLATFORM':
-                    self.set_platform(value)
-                    print(f"  PLATFORM = {self.get_platform()}")
-                case 'AREA_OF_OPERATION':
-                    self.set_area_of_operation(value)
-                    print(f"  AREA_OF_OPERATION = {self.get_area_of_operation()}")
-                case 'CRUISE_NAME':
-                    self.set_cruise_name(value)
-                    print(f"  CRUISE_NAME = {self.get_cruise_name()}")
-                case 'CRUISE_DESCRIPTION':
-                    self.set_cruise_description(value)
-                    print(f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}")
+    def populate_header(self, cruise_fields: list):
+        for header_line in cruise_fields:
+            tokens = header_line.split('=', maxsplit=1)
+            cruise_dict = misc_functions.list_to_dict(tokens)
+            for key, value in cruise_dict.items():
+                match key:
+                    case 'COUNTRY_INSTITUTE_CODE':
+                        self.set_country_institute_code(value)
+                    case 'CRUISE_NUMBER':
+                        self.set_cruise_number(value)
+                    case 'ORGANIZATION':
+                        self.set_chief_scientist(value)
+                    case 'CHIEF_SCIENTIST':
+                        self.set_organization(value)
+                    case 'START_DATE':
+                        self.set_start_date(value)
+                    case 'END_DATE':
+                        self.set_end_date(value)
+                    case 'PLATFORM':
+                        self.set_platform(value)
+                    case 'AREA_OF_OPERATION':
+                        self.set_area_of_operation(value)
+                    case 'CRUISE_NAME':
+                        self.set_cruise_name(value)
+                    case 'CRUISE_DESCRIPTION':
+                        self.set_cruise_description(value)
         return self
 
