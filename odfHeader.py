@@ -1,12 +1,12 @@
 import cruiseHeader
 import eventHeader
-# import meteoHeader
+import meteoHeader
 import instrumentHeader
 import odfReader
-# import qualityHeader
-# import generalCalHeader
-# import compassCalHeader
-# import polynomialCalHeader
+import qualityHeader
+import generalCalHeader
+import compassCalHeader
+import polynomialCalHeader
 import historyHeader
 import recordHeader
 import misc_functions
@@ -29,15 +29,15 @@ class OdfHeader:
         """
 
         self.FileSpecification = None
-        self.OdfSpecificationVersion = None
+        self.OdfSpecificationVersion = '3.0'
         self.CruiseHeader = cruiseHeader.CruiseHeader()
         self.EventHeader = eventHeader.EventHeader()
-        self.MeteoHeader = None
+        self.MeteoHeader = meteoHeader.MeteoHeader()
         self.InstrumentHeader = instrumentHeader.InstrumentHeader()
-        self.QualityHeader = None
-        self.GeneralCalHeader = None
-        self.CompassCalHeader = None
-        self.PolynomialCalHeader = None
+        self.QualityHeader = qualityHeader.QualityHeader()
+        self.GeneralCalHeader = list()
+        self.CompassCalHeader = list()
+        self.PolynomialCalHeader = list()
         self.HistoryHeader = list()
         self.ParameterHeader = list()
         self.RecordHeader = recordHeader.RecordHeader()
@@ -92,8 +92,8 @@ class OdfHeader:
         """
 
         print("ODF_HEADER")
-        print("  FILE_SPECIFICATION = '" + misc_functions.check_string(self.FileSpecification) + "'")
-        print("  ODF_SPECIFICATION_VERSION = '3.0'")
+        print(f"  FILE_SPECIFICATION = ' {misc_functions.check_string(self.FileSpecification)}'")
+        print(f"  ODF_SPECIFICATION_VERSION = ' {misc_functions.check_string(self.OdfSpecificationVersion)}'")
         self.CruiseHeader.print_header()
         self.EventHeader.print_header()
         if self.MeteoHeader is not None:
@@ -101,12 +101,12 @@ class OdfHeader:
         self.InstrumentHeader.print_header()
         if self.QualityHeader is not None:
             self.QualityHeader.print_header()
-        if self.GeneralCalHeader is not None:
-            self.GeneralCalHeader.print_header()
-        if self.CompassCalHeader is not None:
-            self.CompassCalHeader.print_header()
-        if self.PolynomialCalHeader is not None:
-            self.PolynomialCalHeader.print_header()
+        for general in self.GeneralCalHeader:
+            general.print_header()
+        for compass in self.CompassCalHeader:
+            compass.print_header()
+        for poly in self.PolynomialCalHeader:
+            poly.print_header()
         for hist in self.HistoryHeader:
             hist.print_header()
         for param in self.ParameterHeader:
@@ -202,8 +202,13 @@ class OdfHeader:
             block_lines = header_lines[x:y + 1]
             match header_block:
                 case "COMPASS_CAL_HEADER":
-                    print(f"{block_lines}\n")
-                    # self.populate_compass_cal_header(block_lines)
+                    compass_cal_header = compassCalHeader.CompassCalHeader()
+                    compass_cal_header.populate_header(block_lines)
+                    mylist = list()
+                    mylist.append(9999.999E+000)
+                    compass_cal_header.set_directions(mylist, 1)
+                    compass_cal_header.print_header()
+                    self.CompassCalHeader.append(compass_cal_header)
                 case "CRUISE_HEADER":
                     self.CruiseHeader = self.CruiseHeader.populate_header(block_lines)
                     self.CruiseHeader.print_header()
@@ -214,8 +219,10 @@ class OdfHeader:
                     print(f"{block_lines}\n")
                     # self.populate_general_cal_header(block_lines)
                 case "HISTORY_HEADER":
-                    print(f"{block_lines}\n")
-                    # self.HistoryHeader = self.HistoryHeader.populate_header(block_lines)
+                    history_header = historyHeader.HistoryHeader()
+                    history_header.populate_header(block_lines)
+                    history_header.print_header()
+                    self.HistoryHeader.append(history_header)
                 case "INSTRUMENT_HEADER":
                     print(f"{block_lines}\n")
                     # self.populate_instrument_header(block_lines)
@@ -232,8 +239,10 @@ class OdfHeader:
                     print(f"{block_lines}\n")
                     # self.populate_parameter_header(block_lines)
                 case "POLYNOMIAL_CAL_HEADER":
-                    print(f"{block_lines}\n")
-                    # self.populate_polynomial_cal_header(block_lines)
+                    polynomial_cal_header = polynomialCalHeader.PolynomialCalHeader()
+                    polynomial_cal_header.populate_header(block_lines)
+                    polynomial_cal_header.print_header()
+                    self.PolynomialCalHeader.append(polynomial_cal_header)
                 case "QUALITY_HEADER":
                     print(f"{block_lines}\n")
                     # self.populate_quality_header(block_lines)

@@ -18,7 +18,7 @@ class HistoryHeader:
 
     def set_process(self, process: str, process_number: int = 0):
         number_of_processes = len(self.Process)
-        if process_number == 0 and number_of_processes == 0:
+        if process_number == 0 and number_of_processes >= 0:
             self.Process.append(process)
         elif process_number <= number_of_processes and number_of_processes > 0:
             self.Process[process_number-1] = process
@@ -28,16 +28,20 @@ class HistoryHeader:
 
     def print_header(self):
         print("HISTORY_HEADER")
-        print("  CREATION_DATE = '" + misc_functions.check_datetime(self.CreationDate) + "'")
-        for process_line in self.Process:
-            print("  PROCESS = '" + process_line)
+        print("  CREATION_DATE = " + misc_functions.check_datetime(self.CreationDate))
+        if self.Process:
+            for process in self.Process:
+                print(f"  PROCESS = {process}")
+        else:
+            print("  PROCESS = ''")
 
-    def populate_header(self, history_dict: dict):
-        for key, value in history_dict.items():
-            match key:
-                case 'CREATION_DATE':
-                    self.set_creation_date(value)
-                    print(f"  CREATION_DATE = {self.get_creation_date()}")
-                case 'PROCESS':
-                    self.set_process(value)
-                    print(f"  PROCESS = {self.get_process()}")
+    def populate_header(self, history_fields: list):
+        for header_line in history_fields:
+            tokens = header_line.split('=', maxsplit=1)
+            history_dict = misc_functions.list_to_dict(tokens)
+            for key, value in history_dict.items():
+                match key:
+                    case 'CREATION_DATE':
+                        self.set_creation_date(value)
+                    case 'PROCESS':
+                        self.set_process(value)
