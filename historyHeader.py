@@ -26,16 +26,7 @@ class HistoryHeader:
             raise ValueError("The PROCESS number does not match the number of PROCESS lines.")
         return self
 
-    def print_header(self):
-        print("HISTORY_HEADER")
-        print("  CREATION_DATE = " + misc_functions.check_datetime(self.CreationDate))
-        if self.Process:
-            for process in self.Process:
-                print(f"  PROCESS = {process}")
-        else:
-            print("  PROCESS = ''")
-
-    def populate_header(self, history_fields: list):
+    def populate_object(self, history_fields: list):
         for header_line in history_fields:
             tokens = header_line.split('=', maxsplit=1)
             history_dict = misc_functions.list_to_dict(tokens)
@@ -45,3 +36,12 @@ class HistoryHeader:
                         self.set_creation_date(value)
                     case 'PROCESS':
                         self.set_process(value)
+
+    def print_object(self):
+        print("HISTORY_HEADER")
+        print("  CREATION_DATE = " + misc_functions.check_datetime(self.CreationDate))
+        if self.Process:
+            for process in self.Process:
+                print(f"  PROCESS = {process}")
+        else:
+            print("  PROCESS = ''")

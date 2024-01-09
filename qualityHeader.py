@@ -129,7 +129,7 @@ class QualityHeader:
         self.QualityComments.append(quality_comment)
         return odf
 
-    def print_header(self):
+    def print_object(self):
         print("QUALITY_HEADER")
         print("  QUALITY_DATE = '" + misc_functions.check_string(self.QualityDate) + "'")
         for quality_test in self.QualityTests:

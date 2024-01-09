@@ -1,5 +1,6 @@
 import misc_functions
 
+
 class CruiseHeader:
     def __init__(self):
         self.CountryInstituteCode = None
@@ -83,20 +84,7 @@ class CruiseHeader:
         self.CruiseDescription = cruise_description
         return self
 
-    def print_header(self):
-        print("CRUISE_HEADER")
-        print(f"  COUNTRY_INSTITUTE_CODE = {misc_functions.check_value(self.get_country_institute_code())}")
-        print(f"  CRUISE_NUMBER = {self.get_cruise_number()}")
-        print(f"  ORGANIZATION = {self.get_chief_scientist()}")
-        print(f"  CHIEF_SCIENTIST = {self.get_organization()}")
-        print(f"  START_DATE = {misc_functions.check_datetime(self.get_start_date())}")
-        print(f"  END_DATE = {misc_functions.check_datetime(self.get_end_date())}")
-        print(f"  PLATFORM = {self.get_platform()}")
-        print(f"  AREA_OF_OPERATION = {self.get_area_of_operation()}")
-        print(f"  CRUISE_NAME = {self.get_cruise_name()}")
-        print(f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}")
-
-    def populate_header(self, cruise_fields: list):
+    def populate_object(self, cruise_fields: list):
         for header_line in cruise_fields:
             tokens = header_line.split('=', maxsplit=1)
             cruise_dict = misc_functions.list_to_dict(tokens)
@@ -124,3 +112,15 @@ class CruiseHeader:
                         self.set_cruise_description(value)
         return self
 
+    def print_object(self):
+        print("CRUISE_HEADER")
+        print(f"  COUNTRY_INSTITUTE_CODE = {misc_functions.check_value(self.get_country_institute_code())}")
+        print(f"  CRUISE_NUMBER = {self.get_cruise_number()}")
+        print(f"  ORGANIZATION = {self.get_chief_scientist()}")
+        print(f"  CHIEF_SCIENTIST = {self.get_organization()}")
+        print(f"  START_DATE = {misc_functions.check_datetime(self.get_start_date())}")
+        print(f"  END_DATE = {misc_functions.check_datetime(self.get_end_date())}")
+        print(f"  PLATFORM = {self.get_platform()}")
+        print(f"  AREA_OF_OPERATION = {self.get_area_of_operation()}")
+        print(f"  CRUISE_NAME = {self.get_cruise_name()}")
+        print(f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}")

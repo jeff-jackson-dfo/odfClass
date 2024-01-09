@@ -62,7 +62,7 @@ class CompassCalHeader:
             raise ValueError("The 'correction_number' does not match the number of CORRECTIONS.")
         return self
 
-    def populate_header(self, compass_cal_fields: list):
+    def populate_object(self, compass_cal_fields: list):
         for header_line in compass_cal_fields:
             tokens = header_line.split('=', maxsplit=1)
             compass_dict = misc_functions.list_to_dict(tokens)
@@ -86,7 +86,7 @@ class CompassCalHeader:
                         self.set_corrections(correction_floats)
         return self
 
-    def print_header(self):
+    def print_object(self):
         print("COMPASS_CAL_HEADER")
         print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
         print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")

@@ -53,7 +53,7 @@ class PolynomialCalHeader:
             raise ValueError("The 'coefficient_number' does not match the number of COEFFICIENTS.")
         return self
 
-    def populate_header(self, polynomial_cal_fields: list):
+    def populate_object(self, polynomial_cal_fields: list):
         for header_line in polynomial_cal_fields:
             tokens = header_line.split('=', maxsplit=1)
             poly_dict = misc_functions.list_to_dict(tokens)
@@ -75,7 +75,7 @@ class PolynomialCalHeader:
                         self.set_coefficients(coefficient_floats)
         return self
 
-    def print_header(self):
+    def print_object(self):
         print("POLYNOMIAL_CAL_HEADER")
         print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
         print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")

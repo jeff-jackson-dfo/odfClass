@@ -49,11 +49,11 @@ class ParameterHeader:
     """
 
     def __init__(self):
-        self.Type = ""
-        self.Name = ""
-        self.Units = ""
-        self.Code = ""
-        self.WmoCode = ""
+        self.Type = "''"
+        self.Name = "''"
+        self.Units = "''"
+        self.Code = "''"
+        self.WmoCode = "''"
         self.NullValue = None
         self.PrintFieldOrder = None
         self.PrintFieldWidth = None
@@ -69,230 +69,178 @@ class ParameterHeader:
     def __str__(self):
         return f'Parameter named "{self.Name}" has code "{self.Code}", type "{self.Type}", and units "{self.Units}".'
 
-    def get_type(self):
-        print("Getting the Type ...")
+    def get_type(self) -> str:
         return self.Type
 
-    def set_type(self, odf, data_type):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: TYPE for Parameter " + self.Code +
-                                                 " has been modified from " +
-                                                 misc_functions.check_string(self.Type) + " to " + data_type + ".")
+    def set_type(self, data_type):
         self.Type = data_type
-        return odf
+        return self
 
-    def get_name(self):
-        print("Getting the Name ...")
+    def get_name(self) -> str:
         return self.Name
 
-    def set_name(self, odf, name):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: NAME for Parameter " + self.Code +
-                                                 " has been modified from " +
-                                                 misc_functions.check_string(self.Name) + " to " + name + ".")
+    def set_name(self, name):
         self.Name = name
-        return odf
+        return self
 
-    def get_units(self):
-        print("Getting the Units ...")
+    def get_units(self) -> str:
         return self.Units
 
-    def set_units(self, odf, units):
-        nh = len(odf.HistoryHeader)
-        if not self.Units:
-            odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: UNITS for Parameter " + self.Code +
-                                                     " set to " + units + ".")
-        else:
-            odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: UNITS for Parameter " + self.Code +
-                                                     " has been modified from " +
-                                                     misc_functions.check_string(self.Units) + " to " + units + ".")
+    def set_units(self, units):
         self.Units = units
-        return odf
+        return self
 
-    def get_code(self):
-        print("Getting the Code ...")
+    def get_code(self) -> str:
         return self.Code
 
     '''
     TODO: this function may have to update other headers that reference the parameter code. Write the code to handle 
     these situations.
     '''
-    def set_code(self, odf, code):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: CODE for Parameter " + self.Code +
-                                                 " has been modified from " +
-                                                 misc_functions.check_string(self.Code) + " to " + code + ".")
+    def set_code(self, code):
         self.Code = code
-        return odf
+        return self
 
-    def get_wmo_code(self):
-        print("Getting the WMO Code ...")
+    def get_wmo_code(self) -> str:
         return self.WmoCode
 
-    def set_wmo_code(self, odf, wmo_code):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: WMO_CODE for Parameter " + self.Code +
-                                                 " has been modified from "
-                                                 + misc_functions.check_string(self.WmoCode) + " to " + wmo_code + ".")
+    def set_wmo_code(self, wmo_code):
         self.WmoCode = wmo_code
-        return odf
+        return self
 
-    def get_null_value(self):
-        print("Getting Null Value ...")
+    def get_null_value(self) -> float:
         return self.NullValue
 
-    def set_null_value(self, odf, null_value):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: NULL_VALUE for Parameter " + self.Code +
-                                                 " has been modified from "
-                                                 + str(misc_functions.check_value(self.NullValue)) + " to " +
-                                                 null_value + ".")
+    def set_null_value(self, null_value):
         self.NullValue = null_value
-        return odf
+        return self
 
-    def get_print_field_order(self):
-        print("Getting Print Field Order ...")
+    def get_print_field_order(self) -> int:
         return self.PrintFieldOrder
 
-    def set_print_field_order(self, odf, print_field_order):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: PRINT_FIELD_ORDER for Parameter " +
-                                                 self.Code + " has been modified from " +
-                                                 str(misc_functions.check_value(self.PrintFieldOrder)) + " to " +
-                                                 str(print_field_order) + ".")
+    def set_print_field_order(self, print_field_order):
         self.PrintFieldOrder = print_field_order
-        return odf
+        return self
 
-    def get_print_field_width(self):
-        print("Getting Print Field Width ...")
+    def get_print_field_width(self) -> int:
         return self.PrintFieldWidth
 
-    def set_print_field_width(self, odf, print_field_width):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: PRINT_FIELD_WIDTH for Parameter " +
-                                                 self.Code + " has been modified from " +
-                                                 str(misc_functions.check_value(self.PrintFieldWidth)) + " to " +
-                                                 str(print_field_width) + ".")
+    def set_print_field_width(self, print_field_width):
         self.PrintFieldWidth = print_field_width
-        return odf
+        return self
 
-    def get_print_decimal_places(self):
-        print("Getting Print Decimal Places ...")
+    def get_print_decimal_places(self) -> int:
         return self.PrintDecimalPlaces
 
-    def set_print_decimal_places(self, odf, print_decimal_places):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: PRINT_DECIMAL_PLACES for Parameter " +
-                                                 self.Code + " has been modified from " +
-                                                 str(misc_functions.check_value(self.PrintDecimalPlaces)) + " to " +
-                                                 str(print_decimal_places) + ".")
+    def set_print_decimal_places(self, print_decimal_places):
         self.PrintDecimalPlaces = print_decimal_places
-        return odf
+        return self
 
-    def get_angle_of_section(self):
-        print("Getting Angle of Section ...")
+    def get_angle_of_section(self) -> float:
         return self.AngleOfSection
 
-    def set_angle_of_section(self, odf, angle_of_section):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: ANGLE_OF_SECTION for Parameter " +
-                                                 self.Code + " has been modified from " +
-                                                 str(misc_functions.check_value(self.AngleOfSection)) + " to " +
-                                                 str(angle_of_section) + ".")
+    def set_angle_of_section(self, angle_of_section):
         self.AngleOfSection = angle_of_section
-        return odf
+        return self
 
-    def get_magnetic_variation(self):
-        print("Getting Magnetic Variation ...")
+    def get_magnetic_variation(self) -> float:
         return self.MagneticVariation
 
-    def set_magnetic_variation(self, odf, magnetic_variation):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: MAGNETIC_VARIATION for Parameter " +
-                                                 self.Code + " has been modified from " +
-                                                 str(misc_functions.check_value(self.MagneticVariation)) + " to " +
-                                                 str(magnetic_variation) + ".")
+    def set_magnetic_variation(self, magnetic_variation):
         self.MagneticVariation = magnetic_variation
-        return odf
+        return self
 
-    def get_depth(self):
-        print("Getting Depth ...")
+    def get_depth(self) -> float:
         return self.Depth
 
-    def set_depth(self, odf, depth):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: DEPTH for Parameter " + self.Code +
-                                                 " has been modified from " +
-                                                 str(misc_functions.check_value(self.Depth)) + " to " +
-                                                 str(depth) + ".")
+    def set_depth(self, depth):
         self.Depth = depth
-        return odf
+        return self
 
-    def get_minimum_value(self):
-        print("Getting Minimum Value ...")
+    def get_minimum_value(self) -> float:
         return self.MinimumValue
 
-    def set_minimum_value(self, odf, minimum_value):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: MINIMUM_VALUE for Parameter " + self.Code +
-                                                 " has been modified from " +
-                                                 str(misc_functions.check_value(self.MinimumValue)) + " to " +
-                                                 str(minimum_value) + ".")
+    def set_minimum_value(self, minimum_value):
         self.MinimumValue = minimum_value
-        return odf
+        return self
 
-    def get_maximum_value(self):
-        print("Getting Maximum Value ...")
+    def get_maximum_value(self) -> float:
         return self.MaximumValue
 
-    def set_maximum_value(self, odf, maximum_value):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: MAXIMUM_VALUE for Parameter " + self.Code +
-                                                 " has been modified from " +
-                                                 str(misc_functions.check_value(self.MaximumValue)) + " to " +
-                                                 str(maximum_value) + ".")
+    def set_maximum_value(self, maximum_value):
         self.MaximumValue = maximum_value
-        return odf
+        return self
 
-    def get_number_valid(self):
-        print("Getting Number Valid ...")
+    def get_number_valid(self) -> int:
         return self.NumberValid
 
-    def set_number_valid(self, odf, number_valid):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: NUMBER_VALID for Parameter " + self.Code +
-                                                 " has been modified from " +
-                                                 str(misc_functions.check_value(self.NumberValid)) + " to " +
-                                                 str(number_valid) + ".")
+    def set_number_valid(self, number_valid):
         self.NumberValid = number_valid
-        return odf
+        return self
 
-    def get_number_null(self):
-        print("Getting Number Null ...")
+    def get_number_null(self) -> int:
         return self.NumberNull
 
-    def set_number_null(self, odf, number_null):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("PARAMETER_HEADER Update: NUMBER_NULL for Parameter " + self.Code +
-                                                 " has been modified from " +
-                                                 str(misc_functions.check_value(self.NumberNull)) + " to " +
-                                                 str(number_null) + ".")
+    def set_number_null(self, number_null):
         self.NumberNull = number_null
-        return odf
+        return self
 
-    def print_header(self):
+    def populate_object(self, parameter_fields: list):
+        for header_line in parameter_fields:
+            tokens = header_line.split('=', maxsplit=1)
+            parameter_dict = misc_functions.list_to_dict(tokens)
+            for key, value in parameter_dict.items():
+                match key:
+                    case 'TYPE':
+                        self.set_type(value)
+                    case 'NAME':
+                        self.set_name(value)
+                    case 'UNITS':
+                        self.set_units(value)
+                    case 'CODE':
+                        self.set_code(value)
+                    case 'NULL_VALUE':
+                        self.set_null_value(value)
+                    case 'PRINT_FIELD_ORDER':
+                        self.set_print_field_order(value)
+                    case 'PRINT_FIELD_WIDTH':
+                        self.set_print_field_width(value)
+                    case 'PRINT_DECIMAL_PLACES':
+                        self.set_print_decimal_places(value)
+                    case 'ANGLE_OF_SECTION':
+                        self.set_angle_of_section(value)
+                    case 'MAGNETIC_VARIATION':
+                        self.set_magnetic_variation(value)
+                    case 'DEPTH':
+                        self.set_depth(value)
+                    case 'MINIMUM_VALUE':
+                        self.set_minimum_value(value)
+                    case 'MAXIMUM_VALUE':
+                        self.set_maximum_value(value)
+                    case 'NUMBER_VALID':
+                        self.set_null_value(value)
+                    case 'NUMBER_NULL':
+                        self.set_number_null(value)
+        return self
+
+    def print_object(self):
         print("PARAMETER_HEADER")
-        print("  TYPE = '" + self.Type + "'")
-        print("  NAME = '" + self.Name + "'")
-        print("  UNITS = '" + self.Units + "'")
-        print("  CODE = '" + self.Code + "'")
-        print("  NULL_VALUE = " + eval("\"{:." + str(self.PrintDecimalPlaces) + "f}\".format(-99)"))
-        print("  PRINT_FIELD_WIDTH = " + str(self.PrintFieldWidth))
-        print("  PRINT_DECIMAL_PLACES = " + str(self.PrintDecimalPlaces))
-        print("  ANGLE_OF_SECTION = " + str(misc_functions.check_value(self.AngleOfSection)))
-        print("  MAGNETIC_VARIATION = " + str(misc_functions.check_value(self.MagneticVariation)))
-        print("  DEPTH = " + str(misc_functions.check_value(self.Depth)))
-        print("  MINIMUM_VALUE = " + str(self.MinimumValue))
-        print("  MAXIMUM_VALUE = " + str(self.MaximumValue))
-        print("  NUMBER_VALID = " + str(self.NumberValid))
-        print("  NUMBER_NULL = " + str(self.NumberNull))
+        print(f"  TYPE = {self.get_type()}")
+        print(f"  NAME = {self.get_name()}")
+        print(f"  UNITS = {self.get_units()}")
+        print(f"  CODE = {self.get_code()}")
+        print(f"  NULL_VALUE = {misc_functions.check_value(float(self.get_null_value())):.2f}")
+        print(f"  PRINT_FIELD_ORDER = {misc_functions.check_value(self.get_print_field_order())}")
+        print(f"  PRINT_FIELD_WIDTH = {misc_functions.check_value(self.get_print_field_width())}")
+        print(f"  PRINT_DECIMAL_PLACES = {misc_functions.check_value(self.get_print_decimal_places())}")
+        print(f"  ANGLE_OF_SECTION = {misc_functions.check_value(float(self.get_angle_of_section())):.6f}")
+        print(f"  MAGNETIC_VARIATION = {misc_functions.check_value(float(self.get_magnetic_variation())):.6f}")
+        print(f"  DEPTH = {misc_functions.check_value(float(self.get_depth())):.6f}")
+        if self.get_type() == "'SYTM'":
+            print(f"  MINIMUM_VALUE = {misc_functions.check_value(self.get_minimum_value())}")
+            print(f"  MAXIMUM_VALUE = {misc_functions.check_value(self.get_maximum_value())}")
+        else:
+            print(f"  MINIMUM_VALUE = {misc_functions.check_value(float(self.get_minimum_value())):.1f}")
+            print(f"  MAXIMUM_VALUE = {misc_functions.check_value(float(self.get_maximum_value())):.1f}")
+        print(f"  NUMBER_VALID = {misc_functions.check_value(self.get_number_valid())}")
+        print(f"  NUMBER_NULL = {misc_functions.check_value(self.get_number_null())}")
