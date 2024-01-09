@@ -122,7 +122,7 @@ class OdfHeader:
                     self.OdfSpecificationVersion = value
         return self
 
-    def print_object(self):
+    def print_object(self, file_version: str):
         """
         Prints the ODF_HEADER of the OdfHeader object
         """
@@ -148,8 +148,10 @@ class OdfHeader:
         for param in self.ParameterHeader:
             param.print_object()
         self.RecordHeader.print_object()
-        # self.Data.print_object()
-        self.Data.print_object_old_style()
+        if file_version == 'new':
+            self.Data.print_object()
+        else:
+            self.Data.print_object_old_style()
 
     def add_to_history(self, header: str, field: str, value: str, new_value: str):
         nh = len(self.HistoryHeader)
@@ -311,6 +313,7 @@ if __name__ == "__main__":
 
     odf.read_odf(my_file_path)
 
-    odf.Data.print_object()
+    # odf.Data.print_object()
+    # odf.Data.print_object_old_style()
 
-    odf.Data.print_object_old_style()
+    odf.print_object("old")
