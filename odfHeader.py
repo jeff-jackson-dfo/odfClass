@@ -117,31 +117,54 @@ class OdfHeader:
         hh.set_process("'Initial creation of this ODF file.'")
         self.HistoryHeader.append(hh)
 
-        odf_output = "ODF_HEADER\n"
-        odf_output += f"  FILE_SPECIFICATION = {misc_functions.check_string(self.FileSpecification)}\n"
-        odf_output += f"  ODF_SPECIFICATION_VERSION = {misc_functions.check_value(self.OdfSpecificationVersion)}\n"
-        odf_output += self.CruiseHeader.print_object()
-        odf_output += self.EventHeader.print_object()
-        if self.MeteoHeader is not None:
-            odf_output += self.MeteoHeader.print_object()
-        if self.QualityHeader is not None:
-            odf_output += self.QualityHeader.print_object()
-        for general in self.GeneralCalHeader:
-            odf_output += general.print_object()
-        for poly in self.PolynomialCalHeader:
-            odf_output += poly.print_object()
-        odf_output += self.InstrumentHeader.print_object()
-        for compass in self.CompassCalHeader:
-            odf_output += compass.print_object()
-        for hist in self.HistoryHeader:
-            odf_output += hist.print_object()
-        for param in self.ParameterHeader:
-            odf_output += param.print_object()
-        odf_output += self.RecordHeader.print_object()
-        if file_version == 3:
+        odf_output = ""
+        if file_version == 2:
+            odf_output = "ODF_HEADER,\n"
+            odf_output += f"  FILE_SPECIFICATION = {misc_functions.check_string(self.FileSpecification)},\n"
+            odf_output += misc_functions.add_commas(self.CruiseHeader.print_object())
+            odf_output += misc_functions.add_commas(self.EventHeader.print_object())
+            if self.MeteoHeader is not None:
+                odf_output += misc_functions.add_commas(self.MeteoHeader.print_object())
+            odf_output += misc_functions.add_commas(self.InstrumentHeader.print_object())
+            if self.QualityHeader is not None:
+                odf_output += misc_functions.add_commas(self.QualityHeader.print_object())
+            for general in self.GeneralCalHeader:
+                odf_output += misc_functions.add_commas(general.print_object())
+            for poly in self.PolynomialCalHeader:
+                odf_output += misc_functions.add_commas(poly.print_object())
+            for compass in self.CompassCalHeader:
+                odf_output += misc_functions.add_commas(compass.print_object())
+            for hist in self.HistoryHeader:
+                odf_output += misc_functions.add_commas(hist.print_object())
+            for param in self.ParameterHeader:
+                odf_output += misc_functions.add_commas(param.print_object())
+            odf_output += misc_functions.add_commas(self.RecordHeader.print_object())
+            odf_output += "-- DATA --\n"
+            odf_output += misc_functions.add_commas(self.Data.print_object_old_style())
+        elif file_version == 3:
+            odf_output = "ODF_HEADER\n"
+            odf_output += f"  FILE_SPECIFICATION = {misc_functions.check_string(self.FileSpecification)}\n"
+            odf_output += f"  ODF_SPECIFICATION_VERSION = {misc_functions.check_value(self.OdfSpecificationVersion)}\n"
+            odf_output += self.CruiseHeader.print_object()
+            odf_output += self.EventHeader.print_object()
+            if self.MeteoHeader is not None:
+                odf_output += self.MeteoHeader.print_object()
+            if self.QualityHeader is not None:
+                odf_output += self.QualityHeader.print_object()
+            for general in self.GeneralCalHeader:
+                odf_output += general.print_object()
+            for poly in self.PolynomialCalHeader:
+                odf_output += poly.print_object()
+            odf_output += self.InstrumentHeader.print_object()
+            for compass in self.CompassCalHeader:
+                odf_output += compass.print_object()
+            for hist in self.HistoryHeader:
+                odf_output += hist.print_object()
+            for param in self.ParameterHeader:
+                odf_output += param.print_object()
+            odf_output += self.RecordHeader.print_object()
+            odf_output += "-- DATA --\n"
             odf_output += self.Data.print_object()
-        elif file_version == 2:
-            odf_output += self.Data.print_object_old_style()
         return odf_output
 
     def add_to_history(self, header: str, field: str, value: str, new_value: str):
@@ -200,20 +223,20 @@ class OdfHeader:
         ndf = len(header_blocks_df)
         header_field_range = pd.DataFrame(columns=["Name", "Start", "End"])
         for i in range(ndf):
-            header_field_range._set_value(i, 'Name', header_blocks_df._get_value(i, 'name'))
-            header_field_range._set_value(i, 'Start', header_blocks_df._get_value(i, 'index') + 1)
+            header_field_range.at[i, 'Name'] = header_blocks_df.at[i, 'name']
+            header_field_range.at[i, 'Start'] = header_blocks_df.at[i, 'index'] + 1
         for i in range(ndf):
             if 0 < i < ndf - 1:
-                header_field_range._set_value(i - 1, 'End', header_blocks_df._get_value(i, 'index') - 1)
+                header_field_range.at[i - 1, 'End'] = header_blocks_df.at[i, 'index'] - 1
             elif i == ndf - 1:
-                header_field_range._set_value(i - 1, 'End', header_blocks_df._get_value(i, 'index') - 1)
-                header_field_range._set_value(i, 'End', data_line_start - 1)
+                header_field_range.at[i - 1, 'End'] = header_blocks_df.at[i, 'index'] - 1
+                header_field_range.at[i, 'End'] = data_line_start - 1
 
         # Loop through the header lines, populating the OdfHeader object as it goes.
         for i in range(ndf):
-            header_block = str(header_blocks_df._get_value(i, 'name'))
-            x = header_field_range._get_value(i, 'Start')
-            y = header_field_range._get_value(i, 'End')
+            header_block = str(header_blocks_df.at[i, 'name'])
+            x = header_field_range.at[i, 'Start']
+            y = header_field_range.at[i, 'End']
             block_lines = header_lines[x:y + 1]
             match header_block:
                 case "COMPASS_CAL_HEADER":

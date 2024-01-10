@@ -65,15 +65,9 @@ class RecordHeader:
 
     def print_object(self) -> str:
         record_header_output = "RECORD_HEADER\n"
-        record_header_output += f"  NUM_CALIBRATION = {str(misc_functions.check_value(self.NumCalibration))} \n"
-        record_header_output += f"  NUM_HISTORY = {str(misc_functions.check_value(self.NumHistory))} \n"
-        record_header_output += f"  NUM_SWING = {str(misc_functions.check_value(self.NumSwing))} \n"
-        record_header_output += f"  NUM_PARAM = {str(misc_functions.check_value(self.NumParam))} \n"
-        record_header_output += f"  NUM_CYCLE = {str(misc_functions.check_value(self.NumCycle))} \n"
-        # print("RECORD_HEADER")
-        # print("  NUM_CALIBRATION = " + str(misc_functions.check_value(self.NumCalibration)))
-        # print("  NUM_HISTORY = " + str(misc_functions.check_value(self.NumHistory)))
-        # print("  NUM_SWING = " + str(misc_functions.check_value(self.NumSwing)))
-        # print("  NUM_PARAM = " + str(misc_functions.check_value(self.NumParam)))
-        # print("  NUM_CYCLE = " + str(misc_functions.check_value(self.NumCycle)))
+        record_header_output += f"  NUM_CALIBRATION = {misc_functions.check_value(self.NumCalibration)}\n"
+        record_header_output += f"  NUM_HISTORY = {misc_functions.check_value(self.NumHistory)}\n"
+        record_header_output += f"  NUM_SWING = {misc_functions.check_value(self.NumSwing)}\n"
+        record_header_output += f"  NUM_PARAM = {misc_functions.check_value(self.NumParam)}\n"
+        record_header_output += f"  NUM_CYCLE = {misc_functions.check_value(self.NumCycle)}\n"
         return record_header_output

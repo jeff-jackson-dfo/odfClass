@@ -214,7 +214,7 @@ class EventHeader:
                         self.set_event_comments(value)
         return self
 
-    def print_object(self, file_version: int = 2) -> str:
+    def print_object(self) -> str:
         event_header_output = "EVENT_HEADER\n"
         event_header_output += f"  DATA_TYPE = {self.DataType}\n"
         event_header_output += f"  EVENT_NUMBER = {self.EventNumber}\n"
@@ -235,9 +235,8 @@ class EventHeader:
         event_header_output += f"  SAMPLING_INTERVAL = {misc_functions.check_value(float(self.SamplingInterval)):.2f}\n"
         event_header_output += f"  SOUNDING = {misc_functions.check_value(float(self.Sounding)):.2f}\n"
         event_header_output += f"  DEPTH_OFF_BOTTOM = {misc_functions.check_value(float(self.DepthOffBottom)):.2f}\n"
-        if file_version == 3:
-            event_header_output += f"  STATION_NAME = {self.StationName}\n"
-            event_header_output += f"  SET_NUMBER = {self.SetNumber}\n"
+        event_header_output += f"  STATION_NAME = {self.StationName}\n"
+        event_header_output += f"  SET_NUMBER = {self.SetNumber}\n"
         if self.EventComments:
             for event_comment in self.EventComments:
                 event_header_output += f"  EVENT_COMMENTS = {event_comment}\n"

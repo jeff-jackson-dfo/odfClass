@@ -84,6 +84,12 @@ def add_commas_except_last(lines: str) -> str:
     return lines_with_commas
 
 
+def add_commas(lines: str) -> str:
+    lines_with_commas = lines.replace("\n", ",\n")
+    lines_with_commas = lines_with_commas.replace("' ,", "',")
+    return lines_with_commas
+
+
 if __name__ == "__main__":
     text_lines = "This is line 1\nThis is line\nThis is the last line\n"
     print(text_lines)

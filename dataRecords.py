@@ -80,8 +80,7 @@ class DataRecords:
         self.set_data_frame(df)
         buffer = io.StringIO()
         self.get_data_frame().to_csv(buffer, index=False, sep=",", lineterminator="\n")
-        output_data_records_v3 = "-- DATA --\n"
-        output_data_records_v3 += buffer.getvalue()
+        output_data_records_v3 = buffer.getvalue()
         return output_data_records_v3
 
     def print_object_old_style(self) -> str:
@@ -99,6 +98,5 @@ class DataRecords:
                 formatter = formatter + ", "
                 key_number += 1
         formatter = formatter + "})"
-        output_data_records_v2 = "-- DATA --\n"
-        output_data_records_v2 += eval(formatter)
+        output_data_records_v2 = eval(formatter)
         return output_data_records_v2
