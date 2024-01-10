@@ -5,7 +5,7 @@ import instrumentHeader
 import odfReader
 import parameterHeader
 import qualityHeader
-# import generalCalHeader
+import generalCalHeader
 import compassCalHeader
 import polynomialCalHeader
 import historyHeader
@@ -225,8 +225,9 @@ class OdfHeader:
                 case "EVENT_HEADER":
                     self.EventHeader = self.EventHeader.populate_object(block_lines)
                 case "GENERAL_CAL_HEADER":
-                    print(f"{block_lines}\n")
-                    # self.populate_general_cal_header(block_lines)
+                    general_cal_header = generalCalHeader.GeneralCalHeader()
+                    general_cal_header.populate_object(block_lines)
+                    self.GeneralCalHeader.append(general_cal_header)
                 case "HISTORY_HEADER":
                     history_header = historyHeader.HistoryHeader()
                     history_header.populate_object(block_lines)
@@ -284,7 +285,8 @@ if __name__ == "__main__":
     odf = OdfHeader()
 
     # my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/MCM_HUD2010014_1771_1039_3600.ODF'
-    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/CTD_CAR2023011_017_496844_DN.ODF'
+    # my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/CTD_CAR2023011_017_496844_DN.ODF'
+    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/IML-Example.ODF'
 
     odf.read_odf(my_file_path)
 

@@ -78,9 +78,12 @@ class PolynomialCalHeader:
     def print_object(self) -> str:
         polynomial_header_output = "POLYNOMIAL_CAL_HEADER\n"
         polynomial_header_output += f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}\n"
-        polynomial_header_output += f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}\n"
-        polynomial_header_output += f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}\n"
-        polynomial_header_output += f"  NUMBER_OF_COEFFICIENTS = {misc_functions.check_value(self.get_number_of_coefficients())}\n"
+        polynomial_header_output += (f"  CALIBRATION_DATE ="
+                                     f"{misc_functions.check_datetime(self.get_calibration_date())}\n")
+        polynomial_header_output += (f"  APPLICATION_DATE = "
+                                     f"{misc_functions.check_datetime(self.get_application_date())}\n")
+        polynomial_header_output += (f"  NUMBER_OF_COEFFICIENTS = "
+                                     f"{misc_functions.check_value(self.get_number_of_coefficients())}\n")
         # print("POLYNOMIAL_CAL_HEADER")
         # print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
         # print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")
