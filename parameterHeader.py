@@ -223,24 +223,32 @@ class ParameterHeader:
                         self.set_number_null(value)
         return self
 
-    def print_object(self):
-        print("PARAMETER_HEADER")
-        print(f"  TYPE = {self.get_type()}")
-        print(f"  NAME = {self.get_name()}")
-        print(f"  UNITS = {self.get_units()}")
-        print(f"  CODE = {self.get_code()}")
-        print(f"  NULL_VALUE = {misc_functions.check_value(float(self.get_null_value())):.2f}")
-        print(f"  PRINT_FIELD_ORDER = {misc_functions.check_value(self.get_print_field_order())}")
-        print(f"  PRINT_FIELD_WIDTH = {misc_functions.check_value(self.get_print_field_width())}")
-        print(f"  PRINT_DECIMAL_PLACES = {misc_functions.check_value(self.get_print_decimal_places())}")
-        print(f"  ANGLE_OF_SECTION = {misc_functions.check_value(float(self.get_angle_of_section())):.6f}")
-        print(f"  MAGNETIC_VARIATION = {misc_functions.check_value(float(self.get_magnetic_variation())):.6f}")
-        print(f"  DEPTH = {misc_functions.check_value(float(self.get_depth())):.6f}")
+    def print_object(self, file_version: str = 'old') -> str:
+        parameter_header_output = "PARAMETER_HEADER\n"
+        parameter_header_output += f"  TYPE = {self.get_type()}\n"
+        parameter_header_output += f"  NAME = {self.get_name()}\n"
+        parameter_header_output += f"  UNITS = {self.get_units()}\n"
+        parameter_header_output += f"  CODE = {self.get_code()}\n"
+        parameter_header_output += f"  NULL_VALUE = {misc_functions.check_value(float(self.get_null_value())):.2f}\n"
+        if file_version == 'new':
+            parameter_header_output += (f"  PRINT_FIELD_ORDER = "
+                                        f"{misc_functions.check_value(self.get_print_field_order())}\n")
+        parameter_header_output += f"  PRINT_FIELD_WIDTH = {misc_functions.check_value(self.get_print_field_width())}\n"
+        parameter_header_output += (f"  PRINT_DECIMAL_PLACES = "
+                                    f"{misc_functions.check_value(self.get_print_decimal_places())}\n")
+        parameter_header_output += (f"  ANGLE_OF_SECTION = "
+                                    f"{misc_functions.check_value(float(self.get_angle_of_section())):.6f}\n")
+        parameter_header_output += (f"  MAGNETIC_VARIATION = "
+                                    f"{misc_functions.check_value(float(self.get_magnetic_variation())):.6f}\n")
+        parameter_header_output += f"  DEPTH = {misc_functions.check_value(float(self.get_depth())):.6f}\n"
         if self.get_type() == "'SYTM'":
-            print(f"  MINIMUM_VALUE = {misc_functions.check_value(self.get_minimum_value())}")
-            print(f"  MAXIMUM_VALUE = {misc_functions.check_value(self.get_maximum_value())}")
+            parameter_header_output += f"  MINIMUM_VALUE = {misc_functions.check_value(self.get_minimum_value())}\n"
+            parameter_header_output += f"  MAXIMUM_VALUE = {misc_functions.check_value(self.get_maximum_value())}\n"
         else:
-            print(f"  MINIMUM_VALUE = {misc_functions.check_value(float(self.get_minimum_value())):.1f}")
-            print(f"  MAXIMUM_VALUE = {misc_functions.check_value(float(self.get_maximum_value())):.1f}")
-        print(f"  NUMBER_VALID = {misc_functions.check_value(self.get_number_valid())}")
-        print(f"  NUMBER_NULL = {misc_functions.check_value(self.get_number_null())}")
+            parameter_header_output += (f"  MINIMUM_VALUE = "
+                                        f"{misc_functions.check_value(float(self.get_minimum_value())):.1f}\n")
+            parameter_header_output += (f"  MAXIMUM_VALUE = "
+                                        f"{misc_functions.check_value(float(self.get_maximum_value())):.1f}\n")
+        parameter_header_output += f"  NUMBER_VALID = {misc_functions.check_value(self.get_number_valid())}\n"
+        parameter_header_output += f"  NUMBER_NULL = {misc_functions.check_value(self.get_number_null())}\n"
+        return parameter_header_output

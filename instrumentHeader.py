@@ -80,9 +80,15 @@ class InstrumentHeader:
                         self.set_description(value)
         return self
     
-    def print_object(self):
-        print("INSTRUMENT_HEADER")
-        print(f"  INST_TYPE = {misc_functions.check_string(self.InstrumentType)}")
-        print(f"  MODEL = {misc_functions.check_string(self.Model)}")
-        print(f"  SERIAL_NUMBER = {misc_functions.check_string(self.SerialNumber)}")
-        print(f"  DESCRIPTION = {misc_functions.check_string(self.Description)}")
+    def print_object(self) -> str:
+        instrument_header_output = "INSTRUMENT_HEADER\n"
+        instrument_header_output += f"  INST_TYPE = {misc_functions.check_string(self.InstrumentType)}\n"
+        instrument_header_output += f"  MODEL = {misc_functions.check_string(self.Model)}\n"
+        instrument_header_output += f"  SERIAL_NUMBER = {misc_functions.check_string(self.SerialNumber)}\n"
+        instrument_header_output += f"  DESCRIPTION = {misc_functions.check_string(self.Description)}\n"
+        # print("INSTRUMENT_HEADER")
+        # print(f"  INST_TYPE = {misc_functions.check_string(self.InstrumentType)}")
+        # print(f"  MODEL = {misc_functions.check_string(self.Model)}")
+        # print(f"  SERIAL_NUMBER = {misc_functions.check_string(self.SerialNumber)}")
+        # print(f"  DESCRIPTION = {misc_functions.check_string(self.Description)}")
+        return instrument_header_output

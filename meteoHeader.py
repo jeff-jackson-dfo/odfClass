@@ -13,137 +13,105 @@ class MeteoHeader:
         self.IceThickness = None
         self.MeteoComments = list()
 
-    def get_air_temperature(self):
-        print("Getting the Air Temperature ...")
+    def get_air_temperature(self) -> float:
         return self.AirTemperature
 
-    def set_air_temperature(self, odf, air_temperature):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: AIR_TEMPERATURE has been modified from "
-                                                 + str(misc_functions.check_value(self.AirTemperature)) + " to " +
-                                                 air_temperature + ".")
+    def set_air_temperature(self, air_temperature: float):
         self.AirTemperature = air_temperature
-        return odf
+        return self
 
     def get_atmospheric_pressure(self):
-        print("Getting the Atmospheric Pressure ...")
         return self.AtmosphericPressure
 
-    def set_atmospheric_pressure(self, odf, atmospheric_pressure):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: ATMOSPHERIC_PRESSURE has been modified from "
-                                                 + str(misc_functions.check_value(self.AtmosphericPressure)) + " to " +
-                                                 atmospheric_pressure + ".")
+    def set_atmospheric_pressure(self, atmospheric_pressure: float):
         self.AtmosphericPressure = atmospheric_pressure
-        return odf
+        return self
 
-    def get_wind_speed(self):
-        print("Getting the Wind Speed ...")
+    def get_wind_speed(self) -> float:
         return self.WindSpeed
 
-    def set_wind_speed(self, odf, wind_speed):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: WIND_SPEED has been modified from "
-                                                 + str(misc_functions.check_value(self.WindSpeed)) + " to " +
-                                                 wind_speed + ".")
+    def set_wind_speed(self, wind_speed):
         self.WindSpeed = wind_speed
-        return odf
+        return self
 
-    def get_wind_direction(self):
-        print("Getting the Wind Direction ...")
+    def get_wind_direction(self) -> float:
         return self.WindDirection
 
-    def set_wind_direction(self, odf, wind_direction):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: WIND_DIRECTION has been modified from "
-                                                 + str(misc_functions.check_value(self.WindDirection)) + " to " +
-                                                 wind_direction + ".")
+    def set_wind_direction(self, wind_direction):
         self.WindDirection = wind_direction
-        return odf
+        return self
 
-    def get_sea_state(self):
-        print("Getting the Sea State ...")
+    def get_sea_state(self) -> float:
         return self.SeaState
 
-    def set_sea_state(self, odf, sea_state):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: SEA_STATE has been modified from "
-                                                 + str(misc_functions.check_value(self.SeaState)) + " to " +
-                                                 sea_state + ".")
+    def set_sea_state(self, sea_state):
         self.SeaState = sea_state
-        return odf
+        return self
 
-    def get_cloud_cover(self):
-        print("Getting the Cloud Cover ...")
+    def get_cloud_cover(self) -> float:
         return self.CloudCover
 
-    def set_cloud_cover(self, odf, cloud_cover):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: CLOUD_COVER has been modified from "
-                                                 + str(misc_functions.check_value(self.CloudCover)) + " to " +
-                                                 cloud_cover + ".")
+    def set_cloud_cover(self, cloud_cover):
         self.CloudCover = cloud_cover
-        return odf
+        return self
 
-    def get_ice_thickness(self):
-        print("Getting the Ice Thickness ...")
+    def get_ice_thickness(self) -> float:
         return self.IceThickness
 
-    def set_ice_thickness(self, odf, ice_thickness):
-        nh = len(odf.HistoryHeader)
-        odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: ICE_THICKNESS has been modified from "
-                                                 + str(misc_functions.check_value(self.IceThickness)) + " to " +
-                                                 ice_thickness + ".")
+    def set_ice_thickness(self, ice_thickness):
         self.IceThickness = ice_thickness
-        return odf
+        return self
 
-    def get_meteo_comments(self):
-        print("Getting the Meteo Comments ...")
+    def get_meteo_comments(self) -> list:
         return self.MeteoComments
 
-    def set_meteo_comments(self, odf, meteo_comment, comment_number):
-        nh = len(odf.HistoryHeader)
-        ncomments = len(self.MeteoComments)
-        tn = comment_number - 1
-        if comment_number <= 0 or comment_number > ncomments + 1:
-            raise Exception("Input argument 'comment_number' is outside the number of Meteo Comments.")
-        elif comment_number == 1:
-            tn = 0
-            odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: Comment [" + str(comment_number) + "] in " +
-                                                     "METEO_COMMENTS for this ODF object has been modified from ''" +
-                                                     " to '" + meteo_comment + "'")
+    def set_meteo_comments(self, meteo_comment, comment_number):
+        number_of_comments = len(self.MeteoComments)
+        if comment_number == 0 and number_of_comments >= 0:
             self.MeteoComments.append(meteo_comment)
-        elif comment_number > ncomments + 1:
-            odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: Comment [" + str(comment_number) + "] in " +
-                                                     "METEO_COMMENTS for this ODF object has been modified from '" +
-                                                     misc_functions.check_string(self.MeteoComments[tn]) + "' to '" +
-                                                     meteo_comment + "'")
-            self.MeteoComments[tn] = meteo_comment
+        elif comment_number <= number_of_comments and number_of_comments > 0:
+            self.MeteoComments[comment_number] = meteo_comment
         else:
-            odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: Comment [" + str(comment_number) + "] in " +
-                                                     "METEO_COMMENTS for this ODF object has been modified from '" +
-                                                     misc_functions.check_string(self.MeteoComments[tn]) + "' to '" +
-                                                     meteo_comment + "'")
-            self.MeteoComments[tn] = meteo_comment
-        return odf
+            raise ValueError("The 'meteo_comment' number does not match the number of METEO_COMMENTS lines.")
+        return self
 
-    def add_meteo_comments(self, odf, meteo_comment):
-        nh = len(odf.HistoryHeader)
-        ncomments = len(self.MeteoComments)
-        odf.HistoryHeader[nh - 1].Process.append("METEO_HEADER Update: Line [" + str(ncomments + 1) + "] in " +
-                                                 "METEO_COMMENTS for this ODF object was added " +
-                                                 "with following text: '" + meteo_comment + "'")
+    def add_meteo_comments(self, meteo_comment):
         self.MeteoComments.append(meteo_comment)
-        return odf
+        return self
 
-    def print_header(self):
-        print("METEO_HEADER")
-        print("  AIR_TEMPERATURE = " + str(misc_functions.check_value(self.AirTemperature)))
-        print("  ATMOSPHERIC_PRESSURE = " + str(misc_functions.check_value(self.AtmosphericPressure)))
-        print("  WIND_SPEED = " + str(misc_functions.check_value(self.WindSpeed)))
-        print("  WIND_DIRECTION = " + str(misc_functions.check_value(self.WindDirection)))
-        print("  SEA_STATE = " + str(misc_functions.check_value(self.SeaState)))
-        print("  CLOUD_COVER = " + str(misc_functions.check_value(self.CloudCover)))
-        print("  ICE_THICKNESS = " + str(misc_functions.check_value(self.IceThickness)))
+    def populate_object(self, meteo_fields: list):
+        for header_line in meteo_fields:
+            tokens = header_line.split('=', maxsplit=1)
+            meteo_dict = misc_functions.list_to_dict(tokens)
+            for key, value in meteo_dict.items():
+                match key:
+                    case 'AIR_TEMPERATURE':
+                        self.set_air_temperature(value)
+                    case 'ATMOSPHERIC_PRESSURE':
+                        self.set_atmospheric_pressure(value)
+                    case 'WIND_SPEED':
+                        self.set_wind_speed(value)
+                    case 'WIND_DIRECTION':
+                        self.set_wind_direction(value)
+                    case 'SEA_STATE':
+                        self.set_sea_state(value)
+                    case 'CLOUD_COVER':
+                        self.set_cloud_cover(value)
+                    case 'ICE_THICKNESS':
+                        self.set_ice_thickness(value)
+                    case 'METEO_COMMENTS':
+                        self.add_meteo_comments(value)
+
+    def print_object(self) -> str:
+        meteo_header_output = "METEO_HEADER\n"
+        meteo_header_output += f"  AIR_TEMPERATURE = {misc_functions.check_value(self.AirTemperature)}\n"
+        meteo_header_output += (f"  ATMOSPHERIC_PRESSURE = "
+                                f"{str(misc_functions.check_value(self.AtmosphericPressure))}\n")
+        meteo_header_output += f"  WIND_SPEED = {str(misc_functions.check_value(self.WindSpeed))}\n"
+        meteo_header_output += f"  WIND_DIRECTION = {str(misc_functions.check_value(self.WindDirection))}\n"
+        meteo_header_output += f"  SEA_STATE = {str(misc_functions.check_value(self.SeaState))}\n"
+        meteo_header_output += f"  CLOUD_COVER = {str(misc_functions.check_value(self.CloudCover))}\n"
+        meteo_header_output += f"  ICE_THICKNESS = {str(misc_functions.check_value(self.IceThickness))}\n"
         for meteo_comment in self.MeteoComments:
-            print("  METEO_COMMENTS = '" + meteo_comment + "'")
+            meteo_header_output += f"  METEO_COMMENTS =  {meteo_comment}\n"
+        return meteo_header_output

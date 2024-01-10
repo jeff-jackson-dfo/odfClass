@@ -37,11 +37,16 @@ class HistoryHeader:
                     case 'PROCESS':
                         self.set_process(value)
 
-    def print_object(self):
-        print("HISTORY_HEADER")
-        print("  CREATION_DATE = " + misc_functions.check_datetime(self.CreationDate))
+    def print_object(self) -> str:
+        history_header_output = "HISTORY_HEADER\n"
+        history_header_output += f"  CREATION_DATE = {misc_functions.check_datetime(self.CreationDate)}\n"
+        # print("HISTORY_HEADER")
+        # print("  CREATION_DATE = " + misc_functions.check_datetime(self.CreationDate))
         if self.Process:
             for process in self.Process:
-                print(f"  PROCESS = {process}")
+                history_header_output += f"  PROCESS = {process}\n"
+                # print(f"  PROCESS = {process}")
         else:
-            print("  PROCESS = ''")
+            history_header_output += "  PROCESS = ''\n"
+            # print("  PROCESS = ''")
+        return history_header_output

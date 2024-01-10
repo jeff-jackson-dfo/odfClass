@@ -86,18 +86,25 @@ class CompassCalHeader:
                         self.set_corrections(correction_floats)
         return self
 
-    def print_object(self):
-        print("COMPASS_CAL_HEADER")
-        print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
-        print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")
-        print(f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}")
+    def print_object(self) -> str:
+        compass_cal_header_output = "COMPASS_CAL_HEADER\n"
+        compass_cal_header_output += f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}\n"
+        compass_cal_header_output += f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}\n"
+        compass_cal_header_output += f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}\n"
+        # print("COMPASS_CAL_HEADER")
+        # print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
+        # print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")
+        # print(f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}")
         directions_list = self.get_directions()
         directions_print = ""
         for direction in directions_list:
             directions_print = directions_print + "{:.8e}".format(direction) + " "
-        print(f"  DIRECTIONS = {directions_print}")
+        compass_cal_header_output += f"  DIRECTIONS = {directions_print}\n"
+        # print(f"  DIRECTIONS = {directions_print}")
         corrections_list = self.get_corrections()
         corrections_print = ""
         for correction in corrections_list:
             corrections_print = corrections_print + "{:.8e}".format(correction) + " "
-        print(f"  CORRECTIONS = {corrections_print}")
+        compass_cal_header_output += f"  CORRECTIONS = {corrections_print}\n"
+        # print(f"  CORRECTIONS = {corrections_print}")
+        return compass_cal_header_output

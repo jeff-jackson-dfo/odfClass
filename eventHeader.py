@@ -214,29 +214,33 @@ class EventHeader:
                         self.set_event_comments(value)
         return self
 
-    def print_object(self):
-        print(f"EVENT_HEADER")
-        print(f"  DATA_TYPE = {self.DataType}")
-        print(f"  EVENT_NUMBER = {self.EventNumber}")
-        print(f"  EVENT_QUALIFIER1 = {self.EventQualifier1}")
-        print(f"  EVENT_QUALIFIER2 = {self.EventQualifier2}")
-        print(f"  CREATION_DATE = {misc_functions.check_datetime(self.CreationDate)}")
-        print(f"  ORIG_CREATION_DATE = {misc_functions.check_datetime(self.OriginalCreationDate)}")
-        print(f"  START_DATE_TIME = {misc_functions.check_datetime(self.StartDateTime)}")
-        print(f"  END_DATE_TIME = {misc_functions.check_datetime(self.EndDateTime)}")
-        print(f"  InitialLatitude = {misc_functions.check_long_value(float(self.InitialLatitude)):.6f}")
-        print(f"  InitialLongitude = {misc_functions.check_long_value(float(self.InitialLongitude)):.6f}")
-        print(f"  EndLatitude = {misc_functions.check_value(float(self.EndLatitude)):.6f}")
-        print(f"  EndLongitude = {misc_functions.check_long_value(float(self.EndLongitude)):.6f}")
-        print(f"  MinDepth = {misc_functions.check_value(float(self.MinDepth)):.2f}")
-        print(f"  MaxDepth = {misc_functions.check_value(float(self.MaxDepth)):.2f}")
-        print(f"  SamplingInterval = {misc_functions.check_value(float(self.SamplingInterval)):.2f}")
-        print(f"  Sounding = {misc_functions.check_value(float(self.Sounding)):.2f}")
-        print(f"  DepthOffBottom = {misc_functions.check_value(float(self.DepthOffBottom)):.2f}")
-        print(f"  STATION_NAME = {self.StationName}")
-        print(f"  SET_NUMBER = {self.SetNumber}")
+    def print_object(self, file_version: str = 'old') -> str:
+        event_header_output = "EVENT_HEADER\n"
+        event_header_output += f"  DATA_TYPE = {self.DataType}\n"
+        event_header_output += f"  EVENT_NUMBER = {self.EventNumber}\n"
+        event_header_output += f"  EVENT_QUALIFIER1 = {self.EventQualifier1}\n"
+        event_header_output += f"  EVENT_QUALIFIER2 = {self.EventQualifier2}\n"
+        event_header_output += f"  CREATION_DATE = {misc_functions.check_datetime(self.CreationDate)}\n"
+        event_header_output += f"  ORIG_CREATION_DATE = {misc_functions.check_datetime(self.OriginalCreationDate)}\n"
+        event_header_output += f"  START_DATE_TIME = {misc_functions.check_datetime(self.StartDateTime)}\n"
+        event_header_output += f"  END_DATE_TIME = {misc_functions.check_datetime(self.EndDateTime)}\n"
+        event_header_output += (f"  INITIAL_LATITUDE = "
+                                f"{misc_functions.check_long_value(float(self.InitialLatitude)):.6f}\n")
+        event_header_output += (f"  INITIAL_LONGITUDE = "
+                                f"{misc_functions.check_long_value(float(self.InitialLongitude)):.6f}\n")
+        event_header_output += f"  END_LATITUDE = {misc_functions.check_value(float(self.EndLatitude)):.6f}\n"
+        event_header_output += f"  END_LONGITUDE = {misc_functions.check_long_value(float(self.EndLongitude)):.6f}\n"
+        event_header_output += f"  MIN_DEPTH = {misc_functions.check_value(float(self.MinDepth)):.2f}\n"
+        event_header_output += f"  MAX_DEPTH = {misc_functions.check_value(float(self.MaxDepth)):.2f}\n"
+        event_header_output += f"  SAMPLING_INTERVAL = {misc_functions.check_value(float(self.SamplingInterval)):.2f}\n"
+        event_header_output += f"  SOUNDING = {misc_functions.check_value(float(self.Sounding)):.2f}\n"
+        event_header_output += f"  DEPTH_OFF_BOTTOM = {misc_functions.check_value(float(self.DepthOffBottom)):.2f}\n"
+        if file_version == 'new':
+            event_header_output += f"  STATION_NAME = {self.StationName}\n"
+            event_header_output += f"  SET_NUMBER = {self.SetNumber}\n"
         if self.EventComments:
             for event_comment in self.EventComments:
-                print(f"  EVENT_COMMENTS = {event_comment}")
+                event_header_output += f"  EVENT_COMMENTS = {event_comment}\n"
         else:
-            print("  EVENT_COMMENTS = ''")
+            event_header_output += "  EVENT_COMMENTS = ''\n"
+        return event_header_output

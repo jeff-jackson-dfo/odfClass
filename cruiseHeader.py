@@ -112,15 +112,18 @@ class CruiseHeader:
                         self.set_cruise_description(value)
         return self
 
-    def print_object(self):
-        print("CRUISE_HEADER")
-        print(f"  COUNTRY_INSTITUTE_CODE = {misc_functions.check_value(self.get_country_institute_code())}")
-        print(f"  CRUISE_NUMBER = {self.get_cruise_number()}")
-        print(f"  ORGANIZATION = {self.get_chief_scientist()}")
-        print(f"  CHIEF_SCIENTIST = {self.get_organization()}")
-        print(f"  START_DATE = {misc_functions.check_datetime(self.get_start_date())}")
-        print(f"  END_DATE = {misc_functions.check_datetime(self.get_end_date())}")
-        print(f"  PLATFORM = {self.get_platform()}")
-        print(f"  AREA_OF_OPERATION = {self.get_area_of_operation()}")
-        print(f"  CRUISE_NAME = {self.get_cruise_name()}")
-        print(f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}")
+    def print_object(self, file_version: str = 'old') -> str:
+        cruise_header_output = "CRUISE_HEADER\n"
+        cruise_header_output += (f"  COUNTRY_INSTITUTE_CODE = "
+                                 f"{misc_functions.check_value(self.get_country_institute_code())}\n")
+        cruise_header_output += f"  CRUISE_NUMBER = {self.get_cruise_number()}\n"
+        cruise_header_output += f"  ORGANIZATION = {self.get_chief_scientist()}\n"
+        cruise_header_output += f"  CHIEF_SCIENTIST = {self.get_organization()}\n"
+        cruise_header_output += f"  START_DATE = {misc_functions.check_datetime(self.get_start_date())}\n"
+        cruise_header_output += f"  END_DATE = {misc_functions.check_datetime(self.get_end_date())}\n"
+        cruise_header_output += f"  PLATFORM = {self.get_platform()}\n"
+        if file_version == 'new':
+            cruise_header_output += f"  AREA_OF_OPERATION = {self.get_area_of_operation()}\n"
+        cruise_header_output += f"  CRUISE_NAME = {self.get_cruise_name()}\n"
+        cruise_header_output += f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}\n"
+        return cruise_header_output

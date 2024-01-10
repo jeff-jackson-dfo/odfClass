@@ -35,104 +35,64 @@ class QualityHeader:
         self.QualityComments = list()
 
     def get_quality_date(self):
-        print("Getting the Quality Date ...")
         return self.QualityDate
 
-    def set_quality_date(self, odf, quality_date):
-        nh = len(odf.HistoryHeader)
-        if self.QualityDate is None:
-            quality_date = misc_functions.get_current_date_time()
-        odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: QUALITY_DATE for this ODF object has been "
-                                                 "modified from '" +
-                                                 misc_functions.check_datetime(self.QualityDate) + "' to '" +
-                                                 quality_date + "'")
+    def set_quality_date(self, quality_date: str):
         self.QualityDate = quality_date
-        return odf
+        return self
 
     def get_quality_tests(self):
-        print("Getting the Quality Tests ...")
         return self.QualityTests
 
-    def set_quality_tests(self, odf, quality_test, test_number):
-        nh = len(odf.HistoryHeader)
-        ntests = len(self.QualityTests)
-        if test_number <= 0 or test_number > ntests + 1:
-            raise Exception("Input argument 'test_number' is outside the number of Quality Test lines.")
-        elif test_number == 1:
-            tn = 0
-            odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: Line [" + str(test_number) + "] in " +
-                                                     "QUALITY_TESTS for this ODF object has been modified from ''" +
-                                                     " to '" + quality_test + "'")
+    def set_quality_tests(self, quality_test: str, test_number: int):
+        number_of_tests = len(self.QualityTests)
+        if test_number == 0 and number_of_tests >= 0:
             self.QualityTests.append(quality_test)
-        elif test_number > ntests + 1:
-            tn = test_number - 1
-            odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: Line [" + str(test_number) + "] in " +
-                                                     "QUALITY_TESTS for this ODF object has been modified from '" +
-                                                     misc_functions.check_string(self.QualityTests[tn]) + "' to '" +
-                                                     quality_test + "'")
-            self.QualityTests[tn] = quality_test
+        elif test_number <= number_of_tests and number_of_tests > 0:
+            self.QualityTests[test_number] = quality_test
         else:
-            tn = test_number - 1
-            odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: Line [" + str(test_number) + "] in " +
-                                                     "QUALITY_TESTS for this ODF object has been modified from '" +
-                                                     misc_functions.check_string(self.QualityTests[tn]) + "' to '" +
-                                                     quality_test + "'")
-            self.QualityTests[tn] = quality_test
-        return odf
+            raise ValueError("The 'quality_test' number does not match the number of QUALITY_TESTS lines.")
+        return self
 
-    def add_quality_tests(self, odf, quality_test):
-        nh = len(odf.HistoryHeader)
-        ntests = len(self.QualityTests)
-        odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: Line [" + str(ntests + 1) + "] in " +
-                                                 "QUALITY_TESTS for this ODF object was added " +
-                                                 "with following text: '" + quality_test + "'")
+    def add_quality_tests(self, quality_test: str):
         self.QualityTests.append(quality_test)
-        return odf
+        return self
 
     def get_quality_comments(self):
-        print("Getting the Quality Comments ...")
         return self.QualityComments
 
-    def set_quality_comments(self, odf, quality_comment, comment_number):
-        nh = len(odf.HistoryHeader)
-        ncomments = len(self.QualityComments)
-        if comment_number <= 0 or comment_number > ncomments + 1:
-            raise Exception("Input argument 'comment_number' is outside the number of Quality Test lines.")
-        elif comment_number == 1:
-            tn = 0
-            odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: Line [" + str(comment_number) + "] in " +
-                                                     "QUALITY_COMMENTS for this ODF object has been modified from ''" +
-                                                     " to '" + quality_comment + "'")
+    def set_quality_comments(self, quality_comment: str, comment_number: int = 0):
+        number_of_comments = len(self.QualityComments)
+        if comment_number == 0 and number_of_comments >= 0:
             self.QualityComments.append(quality_comment)
-        elif comment_number > ncomments + 1:
-            tn = comment_number - 1
-            odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: Line [" + str(comment_number) + "] in " +
-                                                     "QUALITY_COMMENTS for this ODF object has been modified from '" +
-                                                     misc_functions.check_string(self.QualityComments[tn]) + "' to '" +
-                                                     quality_comment + "'")
-            self.QualityComments[tn] = quality_comment
+        elif comment_number <= number_of_comments and number_of_comments > 0:
+            self.QualityComments[comment_number] = quality_comment
         else:
-            tn = comment_number - 1
-            odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: Line [" + str(comment_number) + "] in " +
-                                                     "QUALITY_COMMENTS for this ODF object has been modified from '" +
-                                                     misc_functions.check_string(self.QualityComments[tn]) + "' to '" +
-                                                     quality_comment + "'")
-            self.QualityComments[tn] = quality_comment
-        return odf
+            raise ValueError("The 'quality_comment' number does not match the number of QUALITY_COMMENTS lines.")
+        return self
 
-    def add_quality_comments(self, odf, quality_comment):
-        nh = len(odf.HistoryHeader)
-        ncomments = len(self.QualityComments)
-        odf.HistoryHeader[nh - 1].Process.append("QUALITY_HEADER Update: Line [" + str(ncomments + 1) + "] in " +
-                                                 "QUALITY_COMMENTS for this ODF object was added " +
-                                                 "with following text: '" + quality_comment + "'")
+    def add_quality_comments(self, quality_comment):
         self.QualityComments.append(quality_comment)
-        return odf
+        return self
 
-    def print_object(self):
-        print("QUALITY_HEADER")
-        print("  QUALITY_DATE = '" + misc_functions.check_string(self.QualityDate) + "'")
+    def populate_object(self, quality_fields: list):
+        for header_line in quality_fields:
+            tokens = header_line.split('=', maxsplit=1)
+            quality_dict = misc_functions.list_to_dict(tokens)
+            for key, value in quality_dict.items():
+                match key:
+                    case 'QUALITY_DATE':
+                        self.set_quality_date(value)
+                    case 'QUALITY_TESTS':
+                        self.add_quality_tests(value)
+                    case 'QUALITY_COMMENTS':
+                        self.add_quality_comments(value)
+
+    def print_object(self) -> str:
+        quality_header_output = "QUALITY_HEADER\n"
+        quality_header_output += f"  QUALITY_DATE = {misc_functions.check_string(self.QualityDate)}\n"
         for quality_test in self.QualityTests:
-            print("  QUALITY_TESTS = '" + quality_test + "'")
+            quality_header_output += f"  QUALITY_TESTS = {quality_test}\n"
         for quality_comment in self.QualityComments:
-            print("  QUALITY_COMMENTS = '" + quality_comment + "'")
+            quality_header_output += f"  QUALITY_COMMENTS = {quality_comment}\n"
+        return quality_header_output

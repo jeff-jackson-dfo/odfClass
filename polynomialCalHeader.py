@@ -75,14 +75,21 @@ class PolynomialCalHeader:
                         self.set_coefficients(coefficient_floats)
         return self
 
-    def print_object(self):
-        print("POLYNOMIAL_CAL_HEADER")
-        print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
-        print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")
-        print(f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}")
-        print(f"  NUMBER_OF_COEFFICIENTS = {misc_functions.check_value(self.get_number_of_coefficients())}")
+    def print_object(self) -> str:
+        polynomial_header_output = "POLYNOMIAL_CAL_HEADER\n"
+        polynomial_header_output += f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}\n"
+        polynomial_header_output += f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}\n"
+        polynomial_header_output += f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}\n"
+        polynomial_header_output += f"  NUMBER_OF_COEFFICIENTS = {misc_functions.check_value(self.get_number_of_coefficients())}\n"
+        # print("POLYNOMIAL_CAL_HEADER")
+        # print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
+        # print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")
+        # print(f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}")
+        # print(f"  NUMBER_OF_COEFFICIENTS = {misc_functions.check_value(self.get_number_of_coefficients())}")
         coefficients_list = self.get_coefficients()
         coefficients_print = ""
         for coefficient in coefficients_list:
             coefficients_print = coefficients_print + "{:.8e}".format(coefficient) + " "
-        print(f"  COEFFICIENTS = {coefficients_print}")
+        polynomial_header_output += f"  COEFFICIENTS = {coefficients_print}\n"
+        # print(f"  COEFFICIENTS = {coefficients_print}")
+        return polynomial_header_output

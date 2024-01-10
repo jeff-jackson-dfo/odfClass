@@ -5,7 +5,7 @@ import instrumentHeader
 import odfReader
 import parameterHeader
 import qualityHeader
-import generalCalHeader
+# import generalCalHeader
 import compassCalHeader
 import polynomialCalHeader
 import historyHeader
@@ -31,12 +31,12 @@ class OdfHeader:
         """
 
         self.FileSpecification = None
-        self.OdfSpecificationVersion = "'3.0'"
+        self.OdfSpecificationVersion = 3
         self.CruiseHeader = cruiseHeader.CruiseHeader()
         self.EventHeader = eventHeader.EventHeader()
-        self.MeteoHeader = meteoHeader.MeteoHeader()
+        self.MeteoHeader = None
         self.InstrumentHeader = instrumentHeader.InstrumentHeader()
-        self.QualityHeader = qualityHeader.QualityHeader()
+        self.QualityHeader = None
         self.GeneralCalHeader = list()
         self.CompassCalHeader = list()
         self.PolynomialCalHeader = list()
@@ -44,12 +44,6 @@ class OdfHeader:
         self.ParameterHeader = list()
         self.RecordHeader = recordHeader.RecordHeader()
         self.Data = dataRecords.DataRecords()
-
-        # Add history header to start logging file modifications.
-        hh = historyHeader.HistoryHeader()
-        hh.CreationDate = misc_functions.get_current_date_time()
-        hh.Process.append("Initial creation of this ODF file.")
-        self.HistoryHeader.append(hh)
 
     def get_file_specification(self):
         """
@@ -74,42 +68,32 @@ class OdfHeader:
 
         """
 
-        # nh = len(odf.HistoryHeader)
-        # self.HistoryHeader[nh - 1].Process.append("ODF_HEADER Update: FILE_SPECIFICATION for this ODF object has "
-        #                                           "been modified from " +
-        #                                           misc_functions.check_string(self.FileSpecification) +
-        #                                           " to " + file_specification + ".")
         self.FileSpecification = file_specification
         return self
 
-    def get_odf_specification_version(self):
+    def get_odf_specification_version(self) -> int:
         """
         Returns the file specification from the ODF_HEADER of an OdfHeader class object.
 
         Returns
         -------
-        FileSpecification (str) :
+        OdfSpecificationVersion (int) :
             The file name and possibly path of an OdfHeader object (default is an empty string).
         """
 
         return self.OdfSpecificationVersion
 
-    def set_odf_specification_version(self, odf_specification_version):
+    def set_odf_specification_version(self, odf_specification_version: int):
         """
         Returns the file specification from the ODF_HEADER of an OdfHeader class object.
 
         Parameters
         ----------
-        odf_specification_version : str
+        odf_specification_version : int
             The version of the ODF specification used to generate this file.
 
         """
 
-        # nh = len(odf.HistoryHeader)
-        # self.HistoryHeader[nh - 1].Process.append("ODF_HEADER Update: FILE_SPECIFICATION for this ODF object has "
-        #                                           "been modified from " +
-        #                                           misc_functions.check_string(self.FileSpecification) +
-        #                                           " to " + file_specification + ".")
         self.OdfSpecificationVersion = odf_specification_version
         return self
 
@@ -122,40 +106,49 @@ class OdfHeader:
                     self.OdfSpecificationVersion = value
         return self
 
-    def print_object(self, file_version: str):
+    def print_object(self, file_version: int = 2) -> str:
         """
         Prints the ODF_HEADER of the OdfHeader object
         """
 
-        print("ODF_HEADER")
-        print(f"  FILE_SPECIFICATION = {misc_functions.check_string(self.FileSpecification)}")
-        print(f"  ODF_SPECIFICATION_VERSION = {misc_functions.check_string(self.OdfSpecificationVersion)}")
-        self.CruiseHeader.print_object()
-        self.EventHeader.print_object()
-        # if self.MeteoHeader is not None:
-        #     self.MeteoHeader.print_object()
-        self.InstrumentHeader.print_object()
+        # Add history header to record when the ODF file was created.
+        hh = historyHeader.HistoryHeader()
+        hh.set_creation_date(f"'{misc_functions.get_current_date_time()}'")
+        hh.set_process("'Initial creation of this ODF file.'")
+        self.HistoryHeader.append(hh)
+
+        odf_output = "ODF_HEADER\n"
+        odf_output += f"  FILE_SPECIFICATION = {misc_functions.check_string(self.FileSpecification)}\n"
+        odf_output += f"  ODF_SPECIFICATION_VERSION = {misc_functions.check_value(self.OdfSpecificationVersion)}\n"
+        odf_output += self.CruiseHeader.print_object()
+        odf_output += self.EventHeader.print_object()
+        if self.MeteoHeader is not None:
+            odf_output += self.MeteoHeader.print_object()
         if self.QualityHeader is not None:
-            self.QualityHeader.print_object()
+            odf_output += self.QualityHeader.print_object()
         for general in self.GeneralCalHeader:
-            general.print_object()
-        for compass in self.CompassCalHeader:
-            compass.print_object()
+            odf_output += general.print_object()
         for poly in self.PolynomialCalHeader:
-            poly.print_object()
+            odf_output += poly.print_object()
+        odf_output += self.InstrumentHeader.print_object()
+        for compass in self.CompassCalHeader:
+            odf_output += compass.print_object()
         for hist in self.HistoryHeader:
-            hist.print_object()
+            odf_output += hist.print_object()
         for param in self.ParameterHeader:
-            param.print_object()
-        self.RecordHeader.print_object()
-        if file_version == 'new':
-            self.Data.print_object()
-        else:
-            self.Data.print_object_old_style()
+            odf_output += param.print_object()
+        odf_output += self.RecordHeader.print_object()
+        if file_version == 3:
+            odf_output += self.Data.print_object()
+        elif file_version == 2:
+            odf_output += self.Data.print_object_old_style()
+        return odf_output
 
     def add_to_history(self, header: str, field: str, value: str, new_value: str):
         nh = len(self.HistoryHeader)
-        self.HistoryHeader[nh - 1].Process.append(f"{header} Update: field {field} was modified from {str(misc_functions.check_value(value))} to {new_value} .")
+        self.HistoryHeader[nh - 1].Process.append(
+            f"{header} Update: field {field} was modified from {str(misc_functions.check_string(value))} "
+            f"to {new_value} .")
         return self
 
     # def read_header(odf: Type[newOdfHeader], lines: list) -> newOdfHeader:
@@ -165,8 +158,6 @@ class OdfHeader:
 
         Parameters
         ----------
-        odf_object : OdfHeader object
-            a copy of an OdfHeader object to be modified
         odf_file_path : str
             The full path and filename to the ODF file to be read.
 
@@ -185,7 +176,6 @@ class OdfHeader:
 
         text_to_find = "_HEADER"
         header_lines_with_indices = file_reader.find_lines_with_text(text_to_find)
-        # print(f"\nLines containing '{text_to_find}':")
         header_starts_list = list()
         header_indices = list()
         header_names = list()
@@ -194,14 +184,12 @@ class OdfHeader:
             header_names.append(line.strip(" ,"))
             header_starts_list.append([index, line.strip(" ,")])
         header_blocks_df = pd.DataFrame(header_starts_list, columns=["index", "name"])
-        # print(f"\n{header_blocks_df}")
 
         data_line = '-- DATA --'
         data_lines_with_indices = file_reader.find_lines_with_text(data_line)
         data_line_start = None
         for index, line in data_lines_with_indices:
             data_line_start = index + 1
-        # print(f"\nData records begin at line number: {data_line_start}")
 
         # Separate the header and data lines
         header_lines = file_lines[:data_line_start - 1]
@@ -226,36 +214,28 @@ class OdfHeader:
             header_block = str(header_blocks_df._get_value(i, 'name'))
             x = header_field_range._get_value(i, 'Start')
             y = header_field_range._get_value(i, 'End')
-            block_lines = header_lines[x:y+1]
+            block_lines = header_lines[x:y + 1]
             match header_block:
                 case "COMPASS_CAL_HEADER":
                     compass_cal_header = compassCalHeader.CompassCalHeader()
                     compass_cal_header.populate_object(block_lines)
-                    # mylist = list()
-                    # mylist.append(9999.999E+000)
-                    # compass_cal_header.set_directions(mylist, 1)
-                    # compass_cal_header.print_object()
                     self.CompassCalHeader.append(compass_cal_header)
                 case "CRUISE_HEADER":
                     self.CruiseHeader = self.CruiseHeader.populate_object(block_lines)
-                    # self.CruiseHeader.print_object()
                 case "EVENT_HEADER":
                     self.EventHeader = self.EventHeader.populate_object(block_lines)
-                    # self.EventHeader.print_object()
                 case "GENERAL_CAL_HEADER":
                     print(f"{block_lines}\n")
                     # self.populate_general_cal_header(block_lines)
                 case "HISTORY_HEADER":
                     history_header = historyHeader.HistoryHeader()
                     history_header.populate_object(block_lines)
-                    # history_header.print_object()
                     self.HistoryHeader.append(history_header)
                 case "INSTRUMENT_HEADER":
                     self.InstrumentHeader = self.InstrumentHeader.populate_object(block_lines)
-                    # self.InstrumentHeader.print_object()
                 case "METEO_HEADER":
-                    print(f"{block_lines}\n")
-                    # self.populate_meteo_header(block_lines)
+                    self.MeteoHeader = meteoHeader.MeteoHeader()
+                    self.MeteoHeader.populate_object(block_lines)
                 case "ODF_HEADER":
                     for header_line in block_lines:
                         tokens = header_line.split('=', maxsplit=1)
@@ -264,16 +244,14 @@ class OdfHeader:
                 case "PARAMETER_HEADER":
                     parameter_header = parameterHeader.ParameterHeader()
                     parameter_header.populate_object(block_lines)
-                    # parameter_header.print_object()
                     self.ParameterHeader.append(parameter_header)
                 case "POLYNOMIAL_CAL_HEADER":
                     polynomial_cal_header = polynomialCalHeader.PolynomialCalHeader()
                     polynomial_cal_header.populate_object(block_lines)
-                    # polynomial_cal_header.print_object()
                     self.PolynomialCalHeader.append(polynomial_cal_header)
                 case "QUALITY_HEADER":
-                    print(f"{block_lines}\n")
-                    # self.populate_quality_header(block_lines)
+                    self.QualityHeader = qualityHeader.QualityHeader()
+                    self.QualityHeader.populate_object(block_lines)
                 case "RECORD_HEADER":
                     self.RecordHeader = self.RecordHeader.populate_object(block_lines)
                     self.RecordHeader.set_num_calibration(len(self.PolynomialCalHeader))
@@ -281,8 +259,6 @@ class OdfHeader:
                     self.RecordHeader.set_num_swing(len(self.CompassCalHeader))
                     self.RecordHeader.set_num_param(len(self.ParameterHeader))
                     self.RecordHeader.set_num_cycle(len(data_lines))
-                    # self.RecordHeader.print_object()
-
         parameter_list = list()
         parameter_formats = dict()
         for parameter in self.ParameterHeader:
@@ -293,7 +269,6 @@ class OdfHeader:
             else:
                 parameter_formats[parameter_code] = (f"{parameter.get_print_field_width()}."
                                                      f"{parameter.get_print_decimal_places()}")
-
         self.Data.populate_object(parameter_list, parameter_formats, data_lines)
         return self
 
@@ -302,18 +277,21 @@ class OdfHeader:
         self.RecordHeader.set_num_history(len(self.HistoryHeader))
         self.RecordHeader.set_num_swing(len(self.CompassCalHeader))
         self.RecordHeader.set_num_param(len(self.ParameterHeader))
-        self.RecordHeader.set_num_cycle(len(self.Data.get_data()))
+        self.RecordHeader.set_num_cycle(self.Data.get_data_record_count())
 
 
 if __name__ == "__main__":
-
     odf = OdfHeader()
 
-    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/MCM_HUD2010014_1771_1039_3600.ODF'
+    # my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/MCM_HUD2010014_1771_1039_3600.ODF'
+    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/CTD_CAR2023011_017_496844_DN.ODF'
 
     odf.read_odf(my_file_path)
 
-    # odf.Data.print_object()
-    # odf.Data.print_object_old_style()
+    # odf_file_text = odf.print_object(file_version=3)
+    odf_file_text = odf.print_object(file_version=2)
+    print(odf_file_text)
 
-    odf.print_object("old")
+    file1 = open("test.odf", "w")
+    file1.write(odf_file_text)
+    file1.close()
