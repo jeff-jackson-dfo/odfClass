@@ -224,14 +224,14 @@ class ParameterHeader:
                         self.set_number_null(value)
         return self
 
-    def print_object(self, file_version: str = 'old') -> str:
+    def print_object(self, file_version: int = 2) -> str:
         parameter_header_output = "PARAMETER_HEADER\n"
         parameter_header_output += f"  TYPE = {self.get_type()}\n"
         parameter_header_output += f"  NAME = {self.get_name()}\n"
         parameter_header_output += f"  UNITS = {self.get_units()}\n"
         parameter_header_output += f"  CODE = {self.get_code()}\n"
         parameter_header_output += f"  NULL_VALUE = {misc_functions.check_value(float(self.get_null_value())):.2f}\n"
-        if file_version == 'new':
+        if file_version == 3:
             parameter_header_output += (f"  PRINT_FIELD_ORDER = "
                                         f"{misc_functions.check_value(self.get_print_field_order())}\n")
         parameter_header_output += f"  PRINT_FIELD_WIDTH = {misc_functions.check_value(self.get_print_field_width())}\n"

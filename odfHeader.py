@@ -285,8 +285,8 @@ if __name__ == "__main__":
     odf = OdfHeader()
 
     # my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/MCM_HUD2010014_1771_1039_3600.ODF'
-    # my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/CTD_CAR2023011_017_496844_DN.ODF'
-    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/IML-Example.ODF'
+    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/CTD_CAR2023011_017_496844_DN.ODF'
+    # my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/IML-Example.ODF'
 
     odf.read_odf(my_file_path)
 

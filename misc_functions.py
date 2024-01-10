@@ -75,3 +75,19 @@ def convert_dataframe(df):
     # Apply the conversion function to each element in the DataFrame
     df = df.map(convert_to_float)
     return df
+
+
+def add_commas_except_last(lines: str) -> str:
+    lines_with_commas = lines.replace("\n", ",\n")
+    lines_with_commas = lines_with_commas.rstrip(",\n")
+    lines_with_commas = lines_with_commas + "\n"
+    return lines_with_commas
+
+
+if __name__ == "__main__":
+    text_lines = "This is line 1\nThis is line\nThis is the last line\n"
+    print(text_lines)
+    print(type(text_lines))
+    formatted_text = add_commas_except_last(text_lines)
+    print(formatted_text)
+    print(type(formatted_text))

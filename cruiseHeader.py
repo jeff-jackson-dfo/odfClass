@@ -112,7 +112,7 @@ class CruiseHeader:
                         self.set_cruise_description(value)
         return self
 
-    def print_object(self, file_version: str = 'old') -> str:
+    def print_object(self, file_version: int = 2) -> str:
         cruise_header_output = "CRUISE_HEADER\n"
         cruise_header_output += (f"  COUNTRY_INSTITUTE_CODE = "
                                  f"{misc_functions.check_value(self.get_country_institute_code())}\n")
@@ -122,7 +122,7 @@ class CruiseHeader:
         cruise_header_output += f"  START_DATE = {misc_functions.check_datetime(self.get_start_date())}\n"
         cruise_header_output += f"  END_DATE = {misc_functions.check_datetime(self.get_end_date())}\n"
         cruise_header_output += f"  PLATFORM = {self.get_platform()}\n"
-        if file_version == 'new':
+        if file_version == 3:
             cruise_header_output += f"  AREA_OF_OPERATION = {self.get_area_of_operation()}\n"
         cruise_header_output += f"  CRUISE_NAME = {self.get_cruise_name()}\n"
         cruise_header_output += f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}\n"

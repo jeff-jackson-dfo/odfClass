@@ -71,12 +71,18 @@ class DataRecords:
         return self
 
     def print_object(self) -> str:
-        print("-- DATA --")
+        df = self.get_data_frame()
+        plist = self.get_parameter_list()
+        q_params = [s for s in plist if s.startswith("Q")]
+        value = 'int'
+        convert_dict = {key: value for key in q_params}
+        df = df.astype(convert_dict)
+        self.set_data_frame(df)
         buffer = io.StringIO()
         self.get_data_frame().to_csv(buffer, index=False, sep=",", lineterminator="\n")
-        output_text = buffer.getvalue()
-        print(type(output_text))
-        return output_text
+        output_data_records_v3 = "-- DATA --\n"
+        output_data_records_v3 += buffer.getvalue()
+        return output_data_records_v3
 
     def print_object_old_style(self) -> str:
         nf = len(self.get_print_formats().items())
@@ -93,6 +99,6 @@ class DataRecords:
                 formatter = formatter + ", "
                 key_number += 1
         formatter = formatter + "})"
-        output_data_records = "-- DATA --\n"
-        output_data_records += eval(formatter)
-        return output_data_records
+        output_data_records_v2 = "-- DATA --\n"
+        output_data_records_v2 += eval(formatter)
+        return output_data_records_v2
