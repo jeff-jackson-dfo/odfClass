@@ -1,17 +1,17 @@
-import cruiseHeader
-import eventHeader
-import meteoHeader
-import instrumentHeader
-import parameterHeader
-import qualityHeader
-import generalCalHeader
 import compassCalHeader
-import polynomialCalHeader
-import historyHeader
-import recordHeader
+import cruiseHeader
 import dataRecords
+import eventHeader
+import generalCalHeader
+import historyHeader
+import instrumentHeader
+import meteoHeader
 import odfUtils
 import pandas as pd
+import parameterHeader
+import polynomialCalHeader
+import qualityHeader
+import recordHeader
 
 
 class OdfHeader:
@@ -98,11 +98,11 @@ class OdfHeader:
 
     def populate_object(self, odf_dict: dict):
         for key, value in odf_dict.items():
-            match key:
+            match key.strip():
                 case 'FILE_SPECIFICATION':
-                    self.FileSpecification = value
+                    self.set_file_specification(value.strip())
                 case 'ODF_SPECIFICATION_VERSION':
-                    self.OdfSpecificationVersion = value
+                    self.set_odf_specification_version(value.strip())
         return self
 
     def print_object(self, file_version: int = 2) -> str:
@@ -139,7 +139,7 @@ class OdfHeader:
                 odf_output += odfUtils.add_commas(param.print_object())
             odf_output += odfUtils.add_commas(self.RecordHeader.print_object())
             odf_output += "-- DATA --\n"
-            odf_output += odfUtils.add_commas(self.Data.print_object_old_style())
+            odf_output += self.Data.print_object_old_style()
         elif file_version == 3:
             odf_output = "ODF_HEADER\n"
             odf_output += f"  FILE_SPECIFICATION = {odfUtils.check_string(self.FileSpecification)}\n"
@@ -196,7 +196,7 @@ class OdfHeader:
         file_lines = odfUtils.read_file_lines(odf_file_path)
 
         text_to_find = "_HEADER"
-        header_lines_with_indices = odfUtils.find_lines_with_text(text_to_find)
+        header_lines_with_indices = odfUtils.find_lines_with_text(file_lines, text_to_find)
         header_starts_list = list()
         header_indices = list()
         header_names = list()
@@ -207,7 +207,7 @@ class OdfHeader:
         header_blocks_df = pd.DataFrame(header_starts_list, columns=["index", "name"])
 
         data_line = '-- DATA --'
-        data_lines_with_indices = odfUtils.find_lines_with_text(data_line)
+        data_lines_with_indices = odfUtils.find_lines_with_text(file_lines, data_line)
         data_line_start = None
         for index, line in data_lines_with_indices:
             data_line_start = index + 1
@@ -306,8 +306,8 @@ if __name__ == "__main__":
     odf = OdfHeader()
 
     # my_file_path = 'test-files/MCM_HUD2010014_1771_1039_3600.ODF'
-    my_file_path = 'test-files/CTD_CAR2023011_017_496844_DN.ODF'
-    # my_file_path = 'test-files/IML-Example.ODF'
+    # my_file_path = 'test-files/CTD_CAR2023011_017_496844_DN.ODF'
+    my_file_path = 'test-files/IML-Example.ODF'
     # my_file_path = 'test-files/MADCP_HUD2016027_1999_3469-31_3600.ODF'
     # my_file_path = 'test-files/MCTD_GRP2019001_2104_11689_1800.ODF'
 
@@ -315,7 +315,10 @@ if __name__ == "__main__":
 
     # odf_file_text = odf.print_object(file_version=3)
     odf_file_text = odf.print_object(file_version=2)
+    print(odf.EventHeader.print_object())
+    # print(odf.MeteoHeader.print_object())
 
-    file1 = open("test.odf", "w")
+    out_file = f"{odf.get_file_specification().strip("'")}.ODF"
+    file1 = open(out_file, "w")
     file1.write(odf_file_text)
     file1.close()

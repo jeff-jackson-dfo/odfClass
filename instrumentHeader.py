@@ -69,6 +69,8 @@ class InstrumentHeader:
             tokens = header_line.split('=', maxsplit=1)
             instrument_dict = odfUtils.list_to_dict(tokens)
             for key, value in instrument_dict.items():
+                key = key.strip()
+                value = value.strip()
                 match key:
                     case 'INST_TYPE':
                         self.set_instrument_type(value)

@@ -14,73 +14,73 @@ class CruiseHeader:
         self.CruiseName = "''"
         self.CruiseDescription = "''"
 
-    def get_country_institute_code(self):
+    def get_country_institute_code(self) -> int:
         return self.CountryInstituteCode
 
-    def set_country_institute_code(self, country_institute_code):
+    def set_country_institute_code(self, country_institute_code: int):
         self.CountryInstituteCode = country_institute_code
         return self
 
-    def get_cruise_number(self):
+    def get_cruise_number(self) -> str:
         return self.CruiseNumber
 
-    def set_cruise_number(self, cruise_number):
+    def set_cruise_number(self, cruise_number: str):
         self.CruiseNumber = cruise_number
         return self
 
-    def get_organization(self):
+    def get_organization(self) -> str:
         return self.Organization
 
-    def set_organization(self, organization):
+    def set_organization(self, organization: str):
         self.Organization = organization
         return self
 
-    def get_chief_scientist(self):
+    def get_chief_scientist(self) -> str:
         return self.ChiefScientist
 
-    def set_chief_scientist(self, chief_scientist):
+    def set_chief_scientist(self, chief_scientist: str):
         self.ChiefScientist = chief_scientist
         return self
 
-    def get_start_date(self):
+    def get_start_date(self) -> str:
         return self.StartDate
 
-    def set_start_date(self, start_date):
+    def set_start_date(self, start_date: str):
         self.StartDate = start_date
         return self
 
-    def get_end_date(self):
+    def get_end_date(self) -> str:
         return self.EndDate
 
-    def set_end_date(self, end_date):
+    def set_end_date(self, end_date: str):
         self.EndDate = end_date
         return self
 
-    def get_platform(self):
+    def get_platform(self) -> str:
         return self.Platform
 
-    def set_platform(self, platform):
+    def set_platform(self, platform: str):
         self.Platform = platform
         return self
 
-    def get_area_of_operation(self):
+    def get_area_of_operation(self) -> str:
         return self.AreaOfOperation
 
-    def set_area_of_operation(self, area_of_operation):
+    def set_area_of_operation(self, area_of_operation: str):
         self.AreaOfOperation = area_of_operation
         return self
 
-    def get_cruise_name(self):
+    def get_cruise_name(self) -> str:
         return self.CruiseName
 
-    def set_cruise_name(self, cruise_name):
+    def set_cruise_name(self, cruise_name: str):
         self.CruiseName = cruise_name
         return self
 
-    def get_cruise_description(self):
+    def get_cruise_description(self) -> str:
         return self.CruiseDescription
 
-    def set_cruise_description(self, cruise_description):
+    def set_cruise_description(self, cruise_description: str):
         self.CruiseDescription = cruise_description
         return self
 
@@ -89,6 +89,8 @@ class CruiseHeader:
             tokens = header_line.split('=', maxsplit=1)
             cruise_dict = odfUtils.list_to_dict(tokens)
             for key, value in cruise_dict.items():
+                key = key.strip()
+                value = value.strip()
                 match key:
                     case 'COUNTRY_INSTITUTE_CODE':
                         self.set_country_institute_code(value)

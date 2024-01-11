@@ -49,6 +49,8 @@ class RecordHeader:
             tokens = record_line.split('=', maxsplit=1)
             record_dict = odfUtils.list_to_dict(tokens)
             for key, value in record_dict.items():
+                key = key.strip()
+                value = value.strip()
                 match key:
                     case 'NUM_CALIBRATION':
                         self.set_num_calibration(value)

@@ -89,6 +89,7 @@ class GeneralCalHeader:
             tokens = header_line.split('=', maxsplit=1)
             general_dict = odfUtils.list_to_dict(tokens)
             for key, value in general_dict.items():
+                key = key.strip()
                 value = value.strip()
                 match key:
                     case 'PARAMETER_CODE':

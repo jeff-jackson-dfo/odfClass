@@ -84,6 +84,8 @@ class MeteoHeader:
             tokens = header_line.split('=', maxsplit=1)
             meteo_dict = odfUtils.list_to_dict(tokens)
             for key, value in meteo_dict.items():
+                key = key.strip()
+                value = value.strip()
                 match key:
                     case 'AIR_TEMPERATURE':
                         self.set_air_temperature(value)
@@ -105,19 +107,19 @@ class MeteoHeader:
     def print_object(self) -> str:
         meteo_header_output = "METEO_HEADER\n"
         meteo_header_output += ("  AIR_TEMPERATURE = " +
-                                "{:.2f}".format(float(odfUtils.check_value(self.AirTemperature))) + "\n")
+                                "{:.2f}".format(float(odfUtils.check_value(self.get_air_temperature()))) + "\n")
         meteo_header_output += ("  ATMOSPHERIC_PRESSURE = " +
-                                "{:.1f}".format(float(odfUtils.check_value(self.AtmosphericPressure))) + "\n")
+                                "{:.2f}".format(float(odfUtils.check_value(self.get_atmospheric_pressure()))) + "\n")
         meteo_header_output += ("  WIND_SPEED = " +
-                                "{:.1f}".format(float(odfUtils.check_value(self.WindSpeed))) + "\n")
+                                "{:.2f}".format(float(odfUtils.check_value(self.get_wind_speed()))) + "\n")
         meteo_header_output += ("  WIND_DIRECTION = " +
-                                "{:.1f}".format(float(odfUtils.check_value(self.WindDirection))) + "\n")
+                                "{:.2f}".format(float(odfUtils.check_value(self.get_wind_direction()))) + "\n")
         meteo_header_output += ("  SEA_STATE = " +
-                                "{:.1f}".format(float(odfUtils.check_value(self.SeaState))) + "\n")
-        meteo_header_output += ("  CLOUD_COVER = " + "{:.0f}".format(float(odfUtils.check_value(self.CloudCover)))
+                                "{:.0f}".format(float(odfUtils.check_value(self.get_sea_state()))) + "\n")
+        meteo_header_output += ("  CLOUD_COVER = " + "{:.0f}".format(float(odfUtils.check_value(self.get_cloud_cover())))
                                 + "\n")
         meteo_header_output += (
-                    "  ICE_THICKNESS = " + "{:.3f}".format(float(odfUtils.check_value(self.IceThickness))) + "\n")
-        for meteo_comment in self.MeteoComments:
+                    "  ICE_THICKNESS = " + "{:.3f}".format(float(odfUtils.check_value(self.get_ice_thickness()))) + "\n")
+        for meteo_comment in self.get_meteo_comments():
             meteo_header_output += f"  METEO_COMMENTS =  {meteo_comment}\n"
         return meteo_header_output

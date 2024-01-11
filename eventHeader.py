@@ -175,6 +175,8 @@ class EventHeader:
             tokens = header_line.split('=', maxsplit=1)
             event_dict = odfUtils.list_to_dict(tokens)
             for key, value in event_dict.items():
+                key = key.strip()
+                value = value.strip()
                 match key:
                     case 'DATA_TYPE':
                         self.set_data_type(value)
@@ -216,29 +218,29 @@ class EventHeader:
 
     def print_object(self) -> str:
         event_header_output = "EVENT_HEADER\n"
-        event_header_output += f"  DATA_TYPE = {self.DataType}\n"
-        event_header_output += f"  EVENT_NUMBER = {self.EventNumber}\n"
-        event_header_output += f"  EVENT_QUALIFIER1 = {self.EventQualifier1}\n"
-        event_header_output += f"  EVENT_QUALIFIER2 = {self.EventQualifier2}\n"
-        event_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(self.CreationDate)}\n"
-        event_header_output += f"  ORIG_CREATION_DATE = {odfUtils.check_datetime(self.OriginalCreationDate)}\n"
-        event_header_output += f"  START_DATE_TIME = {odfUtils.check_datetime(self.StartDateTime)}\n"
-        event_header_output += f"  END_DATE_TIME = {odfUtils.check_datetime(self.EndDateTime)}\n"
+        event_header_output += f"  DATA_TYPE = {self.get_data_type()}\n"
+        event_header_output += f"  EVENT_NUMBER = {self.get_event_number()}\n"
+        event_header_output += f"  EVENT_QUALIFIER1 = {self.get_event_qualifier1()}\n"
+        event_header_output += f"  EVENT_QUALIFIER2 = {self.get_event_qualifier2()}\n"
+        event_header_output += f"  CREATION_DATE = '{odfUtils.check_datetime(odfUtils.get_current_date_time())}'\n"
+        event_header_output += f"  ORIG_CREATION_DATE = {odfUtils.check_datetime(self.get_creation_date())}\n"
+        event_header_output += f"  START_DATE_TIME = {odfUtils.check_datetime(self.get_start_date_time())}\n"
+        event_header_output += f"  END_DATE_TIME = {odfUtils.check_datetime(self.get_end_date_time())}\n"
         event_header_output += (f"  INITIAL_LATITUDE = "
-                                f"{odfUtils.check_long_value(float(self.InitialLatitude)):.6f}\n")
+                                f"{odfUtils.check_long_value(float(self.get_initial_latitude())):.6f}\n")
         event_header_output += (f"  INITIAL_LONGITUDE = "
-                                f"{odfUtils.check_long_value(float(self.InitialLongitude)):.6f}\n")
-        event_header_output += f"  END_LATITUDE = {odfUtils.check_value(float(self.EndLatitude)):.6f}\n"
-        event_header_output += f"  END_LONGITUDE = {odfUtils.check_long_value(float(self.EndLongitude)):.6f}\n"
-        event_header_output += f"  MIN_DEPTH = {odfUtils.check_value(float(self.MinDepth)):.2f}\n"
-        event_header_output += f"  MAX_DEPTH = {odfUtils.check_value(float(self.MaxDepth)):.2f}\n"
-        event_header_output += f"  SAMPLING_INTERVAL = {odfUtils.check_value(float(self.SamplingInterval)):.2f}\n"
-        event_header_output += f"  SOUNDING = {odfUtils.check_value(float(self.Sounding)):.2f}\n"
-        event_header_output += f"  DEPTH_OFF_BOTTOM = {odfUtils.check_value(float(self.DepthOffBottom)):.2f}\n"
-        event_header_output += f"  STATION_NAME = {self.StationName}\n"
-        event_header_output += f"  SET_NUMBER = {self.SetNumber}\n"
-        if self.EventComments:
-            for event_comment in self.EventComments:
+                                f"{odfUtils.check_long_value(float(self.get_initial_longitude())):.6f}\n")
+        event_header_output += f"  END_LATITUDE = {odfUtils.check_value(float(self.get_end_latitude())):.6f}\n"
+        event_header_output += f"  END_LONGITUDE = {odfUtils.check_long_value(float(self.get_end_longitude())):.6f}\n"
+        event_header_output += f"  MIN_DEPTH = {odfUtils.check_value(float(self.get_min_depth())):.2f}\n"
+        event_header_output += f"  MAX_DEPTH = {odfUtils.check_value(float(self.get_max_depth())):.2f}\n"
+        event_header_output += f"  SAMPLING_INTERVAL = {odfUtils.check_value(float(self.get_sampling_interval())):.2f}\n"
+        event_header_output += f"  SOUNDING = {odfUtils.check_value(float(self.get_sounding())):.2f}\n"
+        event_header_output += f"  DEPTH_OFF_BOTTOM = {odfUtils.check_value(float(self.get_depth_off_bottom())):.2f}\n"
+        event_header_output += f"  STATION_NAME = {self.get_station_name()}\n"
+        event_header_output += f"  SET_NUMBER = {self.get_set_number()}\n"
+        if self.get_event_comments():
+            for event_comment in self.get_event_comments():
                 event_header_output += f"  EVENT_COMMENTS = {event_comment}\n"
         else:
             event_header_output += "  EVENT_COMMENTS = ''\n"

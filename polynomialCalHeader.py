@@ -58,6 +58,8 @@ class PolynomialCalHeader:
             tokens = header_line.split('=', maxsplit=1)
             poly_dict = odfUtils.list_to_dict(tokens)
             for key, value in poly_dict.items():
+                key = key.strip()
+                value = value.strip()
                 match key:
                     case 'PARAMETER_NAME':
                         self.set_parameter_code(value)

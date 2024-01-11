@@ -190,6 +190,7 @@ class ParameterHeader:
             tokens = header_line.split('=', maxsplit=1)
             parameter_dict = odfUtils.list_to_dict(tokens)
             for key, value in parameter_dict.items():
+                key = key.strip()
                 value = value.strip()
                 match key:
                     case 'TYPE':

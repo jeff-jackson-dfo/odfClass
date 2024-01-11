@@ -31,6 +31,8 @@ class HistoryHeader:
             tokens = header_line.split('=', maxsplit=1)
             history_dict = odfUtils.list_to_dict(tokens)
             for key, value in history_dict.items():
+                key = key.strip()
+                value = value.strip()
                 match key:
                     case 'CREATION_DATE':
                         self.set_creation_date(value)

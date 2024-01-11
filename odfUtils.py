@@ -16,9 +16,9 @@ def read_file_lines(file_with_path):
         return f"An error occurred while reading the file: {e}"
 
 
-def find_lines_with_text(text: str) -> list:
-    lines = read_file_lines(text)
-    matching_lines = [(text_index, text_line) for text_index, text_line in enumerate(lines) if text in text_line]
+def find_lines_with_text(odf_file_lines: str, separator: str) -> list:
+    matching_lines = [(text_index, text_line) for text_index, text_line in enumerate(odf_file_lines)
+                      if separator in text_line]
     return matching_lines
 
 
@@ -225,7 +225,7 @@ if __name__ == "__main__":
 
     # text_to_find = "_HEADER"
     text_to_find = "-- DATA --"
-    header_lines_with_indices = find_lines_with_text(text_to_find)
+    header_lines_with_indices = find_lines_with_text(file_lines, text_to_find)
     # print(f"\nLines containing '{text_to_find}':")
     data_line_start = None
     for index, line in header_lines_with_indices:
