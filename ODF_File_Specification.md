@@ -111,7 +111,7 @@ ODF_HEADER
 | CRUISE_HEADER | CRUISE_NAME            | n                 | string | n                 | 1                     | empty         | none                    |
 | CRUISE_HEADER | CRUISE_DESCRIPTION     | n                 | string | n                 | 1                     | empty         | none                    |
 
-The CRUISE_HEADER block consists of metadata that relates to the entire cruise. 
+The CRUISE_HEADER block consists of metadata that relates to the entire mission. 
 
 The CRUISE_HEADER block is mandatory.
 
@@ -167,6 +167,8 @@ CRUISE_HEADER
 | EVENT_HEADER | DEPTH_OFF_BOTTOM   | n                 | number | n                 | 1                     | empty         | none                    |
 | EVENT_HEADER | EVENT_COMMENTS     | n                 | string | n                 | 1+                    | empty         | none                    |
 
+The METEO_HEADER block consists of metadata related to a specific event that occurred during the mission. 
+
 The EVENT_HEADER block is mandatory.
 
 All fields in the EVENT_HEADER block are mandatory. 
@@ -207,6 +209,112 @@ EVENT_HEADER
 > 
 > Sampling_Interval must always be in seconds.
 
+#### METEO_HEADER Block (mandatory)
+
+| Block name   | Field Name           | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value |
+|--------------|----------------------|-------------------|--------|-------------------|-----------------------|---------------|------------|
+| METEO_HEADER | AIR_TEMPERATURE      | n                 | number | n                 | 1                     | empty         | none       |
+| METEO_HEADER | ATMOSPHERIC_PRESSURE | n                 | number | n                 | 1                     | empty         | none       |
+| METEO_HEADER | WIND_SPEED           | n                 | number | n                 | 1                     | empty         | none       |
+| METEO_HEADER | WIND_DIRECTION       | n                 | number | n                 | 1                     | empty         | none       |
+| METEO_HEADER | SEA_STATE            | n                 | number | n                 | 1                     | empty         | none       |
+| METEO_HEADER | CLOUD_COVER          | n                 | number | n                 | 1                     | empty         | none       |
+| METEO_HEADER | ICE_THICKNESS        | n                 | number | n                 | 1                     | empty         | none       |
+| METEO_HEADER | METEO_COMMENTS       | n                 | string | n                 | 1...n                 | empty         | none       |
+
+The METEO_HEADER block consists of metadata that relates to meteorological data obtained during the mission's event. 
+
+The METEO_HEADER block is not mandatory.
+
+All fields in the METEO_HEADER block are mandatory.
+
+The fields are also order dependent and must conform to the above order.
+
+If a string field is empty, then only two successive single quotes are required.
+
+An example METEO_HEADER block follows:
+
+<pre>
+METEO_HEADER,
+  AIR_TEMPERATURE = -99.00,
+  ATMOSPHERIC_PRESSURE = -99.00,
+  WIND_SPEED = 4.60,
+  WIND_DIRECTION = 135.00,
+  SEA_STATE = 3,
+  CLOUD_COVER = 8,
+  ICE_THICKNESS = 0.000,
+  METEO_COMMENTS = ''
+</pre>
+
+#### QUALITY_HEADER Block (mandatory)
+
+| Block name     | Field Name        | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value              |
+|----------------|-------------------|-------------------|--------|-------------------|-----------------------|---------------|-------------------------|
+| QUALITY_HEADER | QUALITY_DATE      | n                 | SYTM   | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| QUALITY_HEADER | QUALITY_TESTS     | n                 | string | y                 | 1                     | empty         | none                    |
+| QUALITY_HEADER | QUALITY_COMMENTS  | n                 | string | y                 | 1...n                 | empty         | none                    |
+
+The QUALITY_HEADER block consists of metadata that relates to the file's data quality. 
+
+The QUALITY_HEADER block is not mandatory.
+
+All fields in the QUALITY_HEADER block are mandatory.
+
+The fields are also order dependent and must conform to the above order.
+
+If a string field is empty, then only two successive single quotes are required.
+
+The QUALITY_DATE field is given in SYTM format. 
+
+An example QUALITY_HEADER block follows:
+
+<pre>
+QUALITY_HEADER
+  QUALITY_DATE='29-NOV-2023 14:34:11.02',
+  QUALITY_TESTS='QUALITY CONTROL TESTS RUN',
+  QUALITY_TESTS='Test 2.1: GTSPP Global Impossible Parameter Values (4)',
+  QUALITY_TESTS='Test 2.2: GTSPP Regional Impossible Parameter Values (8)',
+  QUALITY_TESTS='Test 2.3: GTSPP Increasing Depth (16)',
+  QUALITY_TESTS='Test 2.4: GTSPP Profile Envelope (Temperature and Salinity) (32)',
+  QUALITY_TESTS='Test 2.5: GTSPP Constant Profile (64)',
+  QUALITY_TESTS='Test 2.6: GTSPP Freezing Point (128)',
+  QUALITY_TESTS='Test 2.7: GTSPP Spike in Temperature and Salinity (one point) (256)',
+  QUALITY_TESTS='Test 2.8: GTSPP Top and Bottom Spike in Temperature and Salinity (512)',
+  QUALITY_TESTS='Test 2.9: GTSPP Gradient in Temperature and Salinity (1024)',
+  QUALITY_TESTS='Test 2.10: GTSPP Density Inversion (point to point) (2048)',
+  QUALITY_TESTS='Test 2.11: IML Spike in Pressure, Temperature and Salinity (one point or more) (4096)',
+  QUALITY_TESTS='Test 2.12: IML Density Inversion (overall profile) (8192)'
+  QUALITY_COMMENTS='QUALITY CODES',
+  QUALITY_COMMENTS='0: Value has not been quality controlled',
+  QUALITY_COMMENTS='1: Value seems to be correct',
+  QUALITY_COMMENTS='2: Value appears inconsistent with other values',
+  QUALITY_COMMENTS='3: Value seems doubtful',
+  QUALITY_COMMENTS='4: Value seems erroneous',
+  QUALITY_COMMENTS='5: Value was modified',
+  QUALITY_COMMENTS='9: Value is missing',
+  QUALITY_COMMENTS='QCFF CHANNEL',
+  QUALITY_COMMENTS='The QCFF flag allows one to determine from which test(s) the quality flag(s) originate',
+  QUALITY_COMMENTS='It only applies to the stage 2 quality control tests.',
+  QUALITY_COMMENTS='Each test in this step is associated with a number 2x, where x is a whole positive number.',
+  QUALITY_COMMENTS='Before running the quality control, a QCFF value of 0 is attributed to each line of data.',
+  QUALITY_COMMENTS='When a test fails, the value of 2x that is associated with that test is added to the QCFF.',
+  QUALITY_COMMENTS='In this way one can easily identify which tests failed by analyzing the QCFF value.',
+  QUALITY_COMMENTS='If the QC flag of a record is modified by hand, a value of 1 is added to the QCFF.',
+  QUALITY_COMMENTS='QUALITY CONTROL TEST RESULTS',
+  QUALITY_COMMENTS='Test 2.1 Global Impossible Parameter Values -> ok',
+  QUALITY_COMMENTS='Test 2.2 Regional Impossible Parameter Values -> ok',
+  QUALITY_COMMENTS='Test 2.3 Increasing Depth -> ok',
+  QUALITY_COMMENTS='Test 2.4 Profile Envelope -> ok',
+  QUALITY_COMMENTS='Test 2.5 Constant Profile -> ok',
+  QUALITY_COMMENTS='Test 2.6 Freezing Point -> ok',
+  QUALITY_COMMENTS='Test 2.7 Spike in Temperature and Salinity (one point) -> ok',
+  QUALITY_COMMENTS='Test 2.8 Top and Bottom Spike in Temperature and Salinity (one point) -> ok',
+  QUALITY_COMMENTS='Test 2.9 Gradient (point to point) -> ok',
+  QUALITY_COMMENTS='Test 2.10 Density Inversion (point to point) -> Density inversion found (SIGP_01)',
+  QUALITY_COMMENTS='Test 2.11 Spike (one point or more) (supplementary test) -> ok',
+  QUALITY_COMMENTS='Test 2.12 Density Inversion (overall profile) -> Density inversion found (SIGP_01)'
+</pre>
+
 #### INSTRUMENT_HEADER Block (mandatory)
 
 | Block name        | Field Name    | Restricted values | Type   | Content Mandatory | Number of Occurrences | Default Value | Null Value |
@@ -216,13 +324,13 @@ EVENT_HEADER
 | INSTRUMENT_HEADER | SERIAL_NUMBER | n                 | string | n                 | 1                     | empty         | none       |
 | INSTRUMENT_HEADER | DESCRIPTION   | n                 | string | n                 | 1                     | empty         | none       |
 
+The INSTRUMENT_HEADER block consists of metadata describing the instrument used to acquire the data in the file. 
+
 The INSTRUMENT_HEADER block is mandatory. 
 
 All fields in the INSTRUMENT_HEADER block are mandatory. 
 
 The fields are also order dependent and must conform to the above order.
-
-The INSTRUMENT_HEADER block must follow the EVENT_HEADER block.
 
 An example of the INSTRUMENT_HEADER block follows:
 
@@ -243,6 +351,8 @@ INSTRUMENT_HEADER
 | POLYNOMIAL_CAL_HEADER | APPLICATION_DATE       | n                 | SYTM      | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
 | POLYNOMIAL_CAL_HEADER | NUMBER_OF_COEFFICIENTS | n                 | number    | y                 | 1                     | empty         | none                    |
 | POLYNOMIAL_CAL_HEADER | COEFFICIENTS           | n                 | number(s) | y                 | 1…n                   | empty         | none                    |
+
+The POLYNOMIAL_CAL_HEADER block consists of metadata describing a polynomial calibration applied to a parameter in the file. 
 
 The POLYNOMIAL_CAL_HEADER block is not mandatory.
 
@@ -275,13 +385,64 @@ An example POLYNOMIAL_CAL_HEADER block follows:
 | COMPASS_CAL_HEADER | DIRECTIONS       | y                 | number(s) | y                 | 1…n                   | empty         | none             |
 | COMPASS_CAL_HEADER | CORRECTIONS      | y                 | number(s) | y                 | 1…n                   | empty         | none             |
 
-The COMPASS_CAL_HEADER block is not mandatory in an ODF file.
+The COMPASS_CAL_HEADER block consists of metadata describing a calibration applied to the current meter data in the file. 
+
+The COMPASS_CAL_HEADER block is not mandatory.
 
 All fields in the COMPASS_CAL_HEADER block are mandatory when the block is present.
 
 The fields are also order dependent and must conform to the above order.
 
-Multiple COMPASS_CAL_HEADER blocks can exist in one ODF file. However, the last COMPASS_CAL_HEADER block must be followed by a HISTORY_HEADER block. 
+Multiple COMPASS_CAL_HEADER blocks can exist in one ODF file. 
+
+<pre>
+COMPASS_CAL_HEADER,
+  PARAMETER_NAME='HCDT_01',
+  CALIBRATION_DATE='26-JUL-2011 10:43:10.19',
+  APPLICATION_DATE='26-JUL-2011 10:43:10.19',
+  DIRECTIONS=8.30000000E+000  1.83000000E+001  2.83000000E+001  3.83000000E+001  4.83000000E+001  5.83000000E+001  6.83000000E+001  7.83000000E+001  8.83000000E+001  9.83000000E+001  1.08300000E+002  1.18300000E+002  1.28300000E+002  1.38300000E+002  1.48300000E+002  1.58300000E+002  1.68300000E+002  1.78300000E+002  1.88300000E+002  1.98300000E+002  2.08300000E+002  2.18300000E+002  2.28300000E+002  2.38300000E+002  2.48300000E+002  2.58300000E+002  2.68300000E+002  2.78300000E+002  2.88300000E+002  2.98300000E+002  3.08300000E+002  3.18300000E+002  3.28300000E+002  3.38300000E+002  3.48300000E+002  3.58300000E+002,
+  CORRECTIONS=1.40000000E+000  1.20000000E+000  9.00000000E-001  2.00000000E-001  8.00000000E-001  1.00000000E+000  8.00000000E-001  8.00000000E-001  3.00000000E-001  0.00000000E+000  0.00000000E+000  -5.00000000E-001  -4.00000000E-001  1.00000000E-001  -4.00000000E-001  -7.00000000E-001  -9.00000000E-001  -8.00000000E-001  -1.30000000E+000  -1.30000000E+000  -1.30000000E+000  -1.40000000E+000  -2.10000000E+000  -1.20000000E+000  -1.20000000E+000  -1.70000000E+000  -1.60000000E+000  -1.60000000E+000  -1.60000000E+000  -1.00000000E+000  -1.00000000E+000  -8.00000000E-001  -1.30000000E+000  -1.10000000E+000  -1.40000000E+000  5.00000000E-001,
+</pre>
+
+#### GENERAL_CAL_HEADER Block (optional)
+
+| Block name         | Field Name             | Restricted values | Type      | Content Mandatory | Number of Occurrences | Default Value | #### Null Value         |
+|--------------------|------------------------|-------------------|-----------|-------------------|-----------------------|---------------|-------------------------|
+| GENERAL_CAL_HEADER | PARAMETER_CODE         | y                 | string    | y                 | 1                     | empty         | none                    |
+| GENERAL_CAL_HEADER | CALIBRATION_TYPE       | n                 | string    | y                 | 1                     | empty         | none                    |
+| GENERAL_CAL_HEADER | CALIBRATION_DATE       | n                 | SYTM      | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| GENERAL_CAL_HEADER | APPLICATION_DATE       | n                 | SYTM      | y                 | 1                     | empty         | 17-NOV-1858 00:00:00.00 |
+| GENERAL_CAL_HEADER | NUMBER_OF_COEFFICIENTS | n                 | number    | y                 | 1                     | empty         | none                    |
+| GENERAL_CAL_HEADER | COEFFICIENTS           | n                 | number(s) | y                 | 1...n                 | empty         | none                    |
+| GENERAL_CAL_HEADER | CALIBRATION_EQUATION   | n                 | string    | y                 | 1                     | empty         | none                    |
+| GENERAL_CAL_HEADER | CALIBRATION_COMMENTS   | n                 | string    | y                 | 1...n                 | empty         | none                    |
+
+The POLYNOMIAL_CAL_HEADER block consists of metadata describing a polynomial calibration applied to a parameter in the file. 
+
+The GENERAL_CAL_HEADER block is not mandatory.
+
+All fields in the GENERAL_CAL_HEADER block are mandatory when the block is present.
+
+The fields are also order dependent and must conform to the above order.
+
+The position of the GENERAL_CAL_HEADER block has no order dependency within the ODF header.
+
+The NUMBER_COEFFICIENTS value must correspond to the actual number of coefficients listed in the block.
+
+An example GENERAL_CAL_HEADER block follows:
+
+<pre>
+ GENERAL_CAL_HEADER
+  PARAMETER_CODE = 'PRES_01',
+  CALIBRATION_TYPE = 'PRES04',
+  CALIBRATION_DATE = '04-NOV-1997 00:00:00.00',
+  APPLICATION_DATE = '23-AUG-2000 11:56:23.00',
+  NUMBER_OF_COEFFICIENTS = 4,
+  COEFFICIENTS = -3.97110200e-02 -7.14514600e+03 0.00000000e+00 0.00000000e+00 ,
+  CALIBRATION_EQUATION = 'PRES = (C0 + C1*N + C2*N^2 + C3)/1.450377',
+  CALIBRATION_COMMENTS = '',
+</pre>
+
 
 #### HISTORY_HEADER Block (mandatory)
 
@@ -345,6 +506,27 @@ The fields in the PARAMETER_HEADER block are not order dependent.
 The order of the individual PARAMETER_HEADER blocks is independent of the order of the data channels within the data section of the ODF file.
 
 All data parameters in an ODF file must have a valid parameter code.
+
+An example PARAMETER_HEADER block follows:
+
+<pre>
+PARAMETER_HEADER,
+  TYPE = 'DOUB',
+  NAME = 'Sea Pressure (sea surface - 0)',
+  UNITS = 'decibars',
+  CODE = 'PRES_01',
+  NULL_VALUE = 173.00,
+  PRINT_FIELD_WIDTH = 10,
+  PRINT_DECIMAL_PLACES = 3,
+  ANGLE_OF_SECTION = 0.000000,
+  MAGNETIC_VARIATION = 0.000000,
+  DEPTH = 0.000000,
+  MINIMUM_VALUE = 1.2,
+  MAXIMUM_VALUE = 35.6,
+  NUMBER_VALID = -99,
+  NUMBER_NULL = 0,
+</pre>
+
 
 > TODO: Valid codes can be found here: <link to list of parameter codes>
 
@@ -417,4 +599,6 @@ A list of the changes to the ODF file format specification for version 3.0 follo
 - All fields in the PARAMETER_HEADER and RECORD_HEADER are now mandatory.
 - The order of the PARAMETER_HEADER blocks is no longer restricted by the order of the data columns in the data section.
 - The data section in an ODF file now starts with a column header line that is a list of column names delimited by commas.
-- The data records are no longer delimited by whitespace; instead they are now comma delimited records. 
+- The data records are no longer delimited by whitespace; instead they are now comma delimited records.
+- Added the GENERAL_CAL_HEADER block.
+- Changed the field NUMBER_COEFFICIENTS in POLYNOMIAL_CAL_HEADER to NUMBER_OF_COEFFICIENTS.

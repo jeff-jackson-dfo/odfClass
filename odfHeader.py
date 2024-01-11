@@ -315,7 +315,7 @@ if __name__ == "__main__":
 
     # odf_file_text = odf.print_object(file_version=3)
     odf_file_text = odf.print_object(file_version=2)
-    print(odf.EventHeader.print_object())
+    # print(odf.EventHeader.print_object())
     # print(odf.MeteoHeader.print_object())
 
     out_file = f"{odf.get_file_specification().strip("'")}.ODF"
