@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class CruiseHeader:
@@ -87,7 +87,7 @@ class CruiseHeader:
     def populate_object(self, cruise_fields: list):
         for header_line in cruise_fields:
             tokens = header_line.split('=', maxsplit=1)
-            cruise_dict = misc_functions.list_to_dict(tokens)
+            cruise_dict = odfUtils.list_to_dict(tokens)
             for key, value in cruise_dict.items():
                 match key:
                     case 'COUNTRY_INSTITUTE_CODE':
@@ -115,12 +115,12 @@ class CruiseHeader:
     def print_object(self, file_version: int = 2) -> str:
         cruise_header_output = "CRUISE_HEADER\n"
         cruise_header_output += (f"  COUNTRY_INSTITUTE_CODE = "
-                                 f"{misc_functions.check_value(self.get_country_institute_code())}\n")
+                                 f"{odfUtils.check_value(self.get_country_institute_code())}\n")
         cruise_header_output += f"  CRUISE_NUMBER = {self.get_cruise_number()}\n"
         cruise_header_output += f"  ORGANIZATION = {self.get_chief_scientist()}\n"
         cruise_header_output += f"  CHIEF_SCIENTIST = {self.get_organization()}\n"
-        cruise_header_output += f"  START_DATE = {misc_functions.check_datetime(self.get_start_date())}\n"
-        cruise_header_output += f"  END_DATE = {misc_functions.check_datetime(self.get_end_date())}\n"
+        cruise_header_output += f"  START_DATE = {odfUtils.check_datetime(self.get_start_date())}\n"
+        cruise_header_output += f"  END_DATE = {odfUtils.check_datetime(self.get_end_date())}\n"
         cruise_header_output += f"  PLATFORM = {self.get_platform()}\n"
         if file_version == 3:
             cruise_header_output += f"  AREA_OF_OPERATION = {self.get_area_of_operation()}\n"

@@ -2,7 +2,6 @@ import cruiseHeader
 import eventHeader
 import meteoHeader
 import instrumentHeader
-import odfReader
 import parameterHeader
 import qualityHeader
 import generalCalHeader
@@ -11,7 +10,7 @@ import polynomialCalHeader
 import historyHeader
 import recordHeader
 import dataRecords
-import misc_functions
+import odfUtils
 import pandas as pd
 
 
@@ -113,38 +112,38 @@ class OdfHeader:
 
         # Add history header to record when the ODF file was created.
         hh = historyHeader.HistoryHeader()
-        hh.set_creation_date(f"'{misc_functions.get_current_date_time()}'")
+        hh.set_creation_date(f"'{odfUtils.get_current_date_time()}'")
         hh.set_process("'Initial creation of this ODF file.'")
         self.HistoryHeader.append(hh)
 
         odf_output = ""
         if file_version == 2:
             odf_output = "ODF_HEADER,\n"
-            odf_output += f"  FILE_SPECIFICATION = {misc_functions.check_string(self.FileSpecification)},\n"
-            odf_output += misc_functions.add_commas(self.CruiseHeader.print_object())
-            odf_output += misc_functions.add_commas(self.EventHeader.print_object())
+            odf_output += f"  FILE_SPECIFICATION = {odfUtils.check_string(self.FileSpecification)},\n"
+            odf_output += odfUtils.add_commas(self.CruiseHeader.print_object())
+            odf_output += odfUtils.add_commas(self.EventHeader.print_object())
             if self.MeteoHeader is not None:
-                odf_output += misc_functions.add_commas(self.MeteoHeader.print_object())
-            odf_output += misc_functions.add_commas(self.InstrumentHeader.print_object())
+                odf_output += odfUtils.add_commas(self.MeteoHeader.print_object())
+            odf_output += odfUtils.add_commas(self.InstrumentHeader.print_object())
             if self.QualityHeader is not None:
-                odf_output += misc_functions.add_commas(self.QualityHeader.print_object())
+                odf_output += odfUtils.add_commas(self.QualityHeader.print_object())
             for general in self.GeneralCalHeader:
-                odf_output += misc_functions.add_commas(general.print_object())
+                odf_output += odfUtils.add_commas(general.print_object())
             for poly in self.PolynomialCalHeader:
-                odf_output += misc_functions.add_commas(poly.print_object())
+                odf_output += odfUtils.add_commas(poly.print_object())
             for compass in self.CompassCalHeader:
-                odf_output += misc_functions.add_commas(compass.print_object())
+                odf_output += odfUtils.add_commas(compass.print_object())
             for hist in self.HistoryHeader:
-                odf_output += misc_functions.add_commas(hist.print_object())
+                odf_output += odfUtils.add_commas(hist.print_object())
             for param in self.ParameterHeader:
-                odf_output += misc_functions.add_commas(param.print_object())
-            odf_output += misc_functions.add_commas(self.RecordHeader.print_object())
+                odf_output += odfUtils.add_commas(param.print_object())
+            odf_output += odfUtils.add_commas(self.RecordHeader.print_object())
             odf_output += "-- DATA --\n"
-            odf_output += misc_functions.add_commas(self.Data.print_object_old_style())
+            odf_output += odfUtils.add_commas(self.Data.print_object_old_style())
         elif file_version == 3:
             odf_output = "ODF_HEADER\n"
-            odf_output += f"  FILE_SPECIFICATION = {misc_functions.check_string(self.FileSpecification)}\n"
-            odf_output += f"  ODF_SPECIFICATION_VERSION = {misc_functions.check_value(self.OdfSpecificationVersion)}\n"
+            odf_output += f"  FILE_SPECIFICATION = {odfUtils.check_string(self.FileSpecification)}\n"
+            odf_output += f"  ODF_SPECIFICATION_VERSION = {odfUtils.check_value(self.OdfSpecificationVersion)}\n"
             odf_output += self.CruiseHeader.print_object()
             odf_output += self.EventHeader.print_object()
             if self.MeteoHeader is not None:
@@ -170,7 +169,7 @@ class OdfHeader:
     def add_to_history(self, header: str, field: str, value: str, new_value: str):
         nh = len(self.HistoryHeader)
         self.HistoryHeader[nh - 1].Process.append(
-            f"{header} Update: field {field} was modified from {str(misc_functions.check_string(value))} "
+            f"{header} Update: field {field} was modified from {str(odfUtils.check_string(value))} "
             f"to {new_value} .")
         return self
 
@@ -194,11 +193,10 @@ class OdfHeader:
             file_path:
         """
 
-        file_reader = odfReader.OdfReader(odf_file_path)
-        file_lines = file_reader.read_file_lines()
+        file_lines = odfUtils.read_file_lines(odf_file_path)
 
         text_to_find = "_HEADER"
-        header_lines_with_indices = file_reader.find_lines_with_text(text_to_find)
+        header_lines_with_indices = odfUtils.find_lines_with_text(text_to_find)
         header_starts_list = list()
         header_indices = list()
         header_names = list()
@@ -209,7 +207,7 @@ class OdfHeader:
         header_blocks_df = pd.DataFrame(header_starts_list, columns=["index", "name"])
 
         data_line = '-- DATA --'
-        data_lines_with_indices = file_reader.find_lines_with_text(data_line)
+        data_lines_with_indices = odfUtils.find_lines_with_text(data_line)
         data_line_start = None
         for index, line in data_lines_with_indices:
             data_line_start = index + 1
@@ -219,7 +217,7 @@ class OdfHeader:
         data_lines = file_lines[data_line_start:]
 
         # Get the line range for the list of fields in each header block
-        header_lines = misc_functions.remove_trailing_commas_and_whitespace(header_lines)
+        header_lines = odfUtils.remove_trailing_commas_and_whitespace(header_lines)
         ndf = len(header_blocks_df)
         header_field_range = pd.DataFrame(columns=["Name", "Start", "End"])
         for i in range(ndf):
@@ -263,7 +261,7 @@ class OdfHeader:
                 case "ODF_HEADER":
                     for header_line in block_lines:
                         tokens = header_line.split('=', maxsplit=1)
-                        header_fields = file_reader.split_lines_into_dict(tokens)
+                        header_fields = odfUtils.split_lines_into_dict(tokens)
                         self.populate_object(header_fields)
                 case "PARAMETER_HEADER":
                     parameter_header = parameterHeader.ParameterHeader()
@@ -307,15 +305,16 @@ class OdfHeader:
 if __name__ == "__main__":
     odf = OdfHeader()
 
-    # my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/MCM_HUD2010014_1771_1039_3600.ODF'
-    my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/CTD_CAR2023011_017_496844_DN.ODF'
-    # my_file_path = 'C:/DEV/pythonProjects/odfClass/test-files/IML-Example.ODF'
+    # my_file_path = 'test-files/MCM_HUD2010014_1771_1039_3600.ODF'
+    my_file_path = 'test-files/CTD_CAR2023011_017_496844_DN.ODF'
+    # my_file_path = 'test-files/IML-Example.ODF'
+    # my_file_path = 'test-files/MADCP_HUD2016027_1999_3469-31_3600.ODF'
+    # my_file_path = 'test-files/MCTD_GRP2019001_2104_11689_1800.ODF'
 
     odf.read_odf(my_file_path)
 
     # odf_file_text = odf.print_object(file_version=3)
     odf_file_text = odf.print_object(file_version=2)
-    print(odf_file_text)
 
     file1 = open("test.odf", "w")
     file1.write(odf_file_text)

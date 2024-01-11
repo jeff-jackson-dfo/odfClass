@@ -1,6 +1,6 @@
 import io
 import pandas as pd
-import misc_functions
+import odfUtils
 
 
 class DataRecords:
@@ -60,9 +60,9 @@ class DataRecords:
         self.PrintFormats = formats
 
     def populate_object(self, parameter_list: list, data_formats: dict, data_lines_list: list):
-        data_record_list = [misc_functions.split_string_with_quotes(s) for s in data_lines_list]
+        data_record_list = [odfUtils.split_string_with_quotes(s) for s in data_lines_list]
         df = pd.DataFrame(columns=parameter_list, data=data_record_list)
-        df = misc_functions.convert_dataframe(df)
+        df = odfUtils.convert_dataframe(df)
         if 'SYTM_01' in df.columns:
             df['SYTM_01'] = df['SYTM_01'].apply(lambda x: f"'{x}'")
         self.set_data_frame(df)

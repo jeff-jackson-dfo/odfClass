@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class EventHeader:
@@ -173,7 +173,7 @@ class EventHeader:
     def populate_object(self, event_fields: list):
         for header_line in event_fields:
             tokens = header_line.split('=', maxsplit=1)
-            event_dict = misc_functions.list_to_dict(tokens)
+            event_dict = odfUtils.list_to_dict(tokens)
             for key, value in event_dict.items():
                 match key:
                     case 'DATA_TYPE':
@@ -220,21 +220,21 @@ class EventHeader:
         event_header_output += f"  EVENT_NUMBER = {self.EventNumber}\n"
         event_header_output += f"  EVENT_QUALIFIER1 = {self.EventQualifier1}\n"
         event_header_output += f"  EVENT_QUALIFIER2 = {self.EventQualifier2}\n"
-        event_header_output += f"  CREATION_DATE = {misc_functions.check_datetime(self.CreationDate)}\n"
-        event_header_output += f"  ORIG_CREATION_DATE = {misc_functions.check_datetime(self.OriginalCreationDate)}\n"
-        event_header_output += f"  START_DATE_TIME = {misc_functions.check_datetime(self.StartDateTime)}\n"
-        event_header_output += f"  END_DATE_TIME = {misc_functions.check_datetime(self.EndDateTime)}\n"
+        event_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(self.CreationDate)}\n"
+        event_header_output += f"  ORIG_CREATION_DATE = {odfUtils.check_datetime(self.OriginalCreationDate)}\n"
+        event_header_output += f"  START_DATE_TIME = {odfUtils.check_datetime(self.StartDateTime)}\n"
+        event_header_output += f"  END_DATE_TIME = {odfUtils.check_datetime(self.EndDateTime)}\n"
         event_header_output += (f"  INITIAL_LATITUDE = "
-                                f"{misc_functions.check_long_value(float(self.InitialLatitude)):.6f}\n")
+                                f"{odfUtils.check_long_value(float(self.InitialLatitude)):.6f}\n")
         event_header_output += (f"  INITIAL_LONGITUDE = "
-                                f"{misc_functions.check_long_value(float(self.InitialLongitude)):.6f}\n")
-        event_header_output += f"  END_LATITUDE = {misc_functions.check_value(float(self.EndLatitude)):.6f}\n"
-        event_header_output += f"  END_LONGITUDE = {misc_functions.check_long_value(float(self.EndLongitude)):.6f}\n"
-        event_header_output += f"  MIN_DEPTH = {misc_functions.check_value(float(self.MinDepth)):.2f}\n"
-        event_header_output += f"  MAX_DEPTH = {misc_functions.check_value(float(self.MaxDepth)):.2f}\n"
-        event_header_output += f"  SAMPLING_INTERVAL = {misc_functions.check_value(float(self.SamplingInterval)):.2f}\n"
-        event_header_output += f"  SOUNDING = {misc_functions.check_value(float(self.Sounding)):.2f}\n"
-        event_header_output += f"  DEPTH_OFF_BOTTOM = {misc_functions.check_value(float(self.DepthOffBottom)):.2f}\n"
+                                f"{odfUtils.check_long_value(float(self.InitialLongitude)):.6f}\n")
+        event_header_output += f"  END_LATITUDE = {odfUtils.check_value(float(self.EndLatitude)):.6f}\n"
+        event_header_output += f"  END_LONGITUDE = {odfUtils.check_long_value(float(self.EndLongitude)):.6f}\n"
+        event_header_output += f"  MIN_DEPTH = {odfUtils.check_value(float(self.MinDepth)):.2f}\n"
+        event_header_output += f"  MAX_DEPTH = {odfUtils.check_value(float(self.MaxDepth)):.2f}\n"
+        event_header_output += f"  SAMPLING_INTERVAL = {odfUtils.check_value(float(self.SamplingInterval)):.2f}\n"
+        event_header_output += f"  SOUNDING = {odfUtils.check_value(float(self.Sounding)):.2f}\n"
+        event_header_output += f"  DEPTH_OFF_BOTTOM = {odfUtils.check_value(float(self.DepthOffBottom)):.2f}\n"
         event_header_output += f"  STATION_NAME = {self.StationName}\n"
         event_header_output += f"  SET_NUMBER = {self.SetNumber}\n"
         if self.EventComments:

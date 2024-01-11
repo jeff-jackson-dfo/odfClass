@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class HistoryHeader:
@@ -29,7 +29,7 @@ class HistoryHeader:
     def populate_object(self, history_fields: list):
         for header_line in history_fields:
             tokens = header_line.split('=', maxsplit=1)
-            history_dict = misc_functions.list_to_dict(tokens)
+            history_dict = odfUtils.list_to_dict(tokens)
             for key, value in history_dict.items():
                 match key:
                     case 'CREATION_DATE':
@@ -39,9 +39,9 @@ class HistoryHeader:
 
     def print_object(self) -> str:
         history_header_output = "HISTORY_HEADER\n"
-        history_header_output += f"  CREATION_DATE = {misc_functions.check_datetime(self.CreationDate)}\n"
+        history_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(self.CreationDate)}\n"
         # print("HISTORY_HEADER")
-        # print("  CREATION_DATE = " + misc_functions.check_datetime(self.CreationDate))
+        # print("  CREATION_DATE = " + odfUtils.check_datetime(self.CreationDate))
         if self.Process:
             for process in self.Process:
                 history_header_output += f"  PROCESS = {process}\n"

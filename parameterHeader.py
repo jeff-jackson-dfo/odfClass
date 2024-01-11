@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class ParameterHeader:
@@ -188,7 +188,7 @@ class ParameterHeader:
     def populate_object(self, parameter_fields: list):
         for header_line in parameter_fields:
             tokens = header_line.split('=', maxsplit=1)
-            parameter_dict = misc_functions.list_to_dict(tokens)
+            parameter_dict = odfUtils.list_to_dict(tokens)
             for key, value in parameter_dict.items():
                 value = value.strip()
                 match key:
@@ -230,26 +230,26 @@ class ParameterHeader:
         parameter_header_output += f"  NAME = {self.get_name()}\n"
         parameter_header_output += f"  UNITS = {self.get_units()}\n"
         parameter_header_output += f"  CODE = {self.get_code()}\n"
-        parameter_header_output += f"  NULL_VALUE = {misc_functions.check_value(float(self.get_null_value())):.2f}\n"
+        parameter_header_output += f"  NULL_VALUE = {odfUtils.check_value(float(self.get_null_value())):.2f}\n"
         if file_version == 3:
             parameter_header_output += (f"  PRINT_FIELD_ORDER = "
-                                        f"{misc_functions.check_value(self.get_print_field_order())}\n")
-        parameter_header_output += f"  PRINT_FIELD_WIDTH = {misc_functions.check_value(self.get_print_field_width())}\n"
+                                        f"{odfUtils.check_value(self.get_print_field_order())}\n")
+        parameter_header_output += f"  PRINT_FIELD_WIDTH = {odfUtils.check_value(self.get_print_field_width())}\n"
         parameter_header_output += (f"  PRINT_DECIMAL_PLACES = "
-                                    f"{misc_functions.check_value(self.get_print_decimal_places())}\n")
+                                    f"{odfUtils.check_value(self.get_print_decimal_places())}\n")
         parameter_header_output += (f"  ANGLE_OF_SECTION = "
-                                    f"{misc_functions.check_value(float(self.get_angle_of_section())):.6f}\n")
+                                    f"{odfUtils.check_value(float(self.get_angle_of_section())):.6f}\n")
         parameter_header_output += (f"  MAGNETIC_VARIATION = "
-                                    f"{misc_functions.check_value(float(self.get_magnetic_variation())):.6f}\n")
-        parameter_header_output += f"  DEPTH = {misc_functions.check_value(float(self.get_depth())):.6f}\n"
-        if self.get_type() == "'SYTM'":
-            parameter_header_output += f"  MINIMUM_VALUE = {misc_functions.check_value(self.get_minimum_value())}\n"
-            parameter_header_output += f"  MAXIMUM_VALUE = {misc_functions.check_value(self.get_maximum_value())}\n"
+                                    f"{odfUtils.check_value(float(self.get_magnetic_variation())):.6f}\n")
+        parameter_header_output += f"  DEPTH = {odfUtils.check_value(float(self.get_depth())):.6f}\n"
+        if self.get_units() == "'GMT'" or self.get_units() == "'UTC'":
+            parameter_header_output += f"  MINIMUM_VALUE = {odfUtils.check_value(self.get_minimum_value())}\n"
+            parameter_header_output += f"  MAXIMUM_VALUE = {odfUtils.check_value(self.get_maximum_value())}\n"
         else:
             parameter_header_output += (f"  MINIMUM_VALUE = "
-                                        f"{misc_functions.check_value(float(self.get_minimum_value())):.1f}\n")
+                                        f"{odfUtils.check_value(float(self.get_minimum_value())):.1f}\n")
             parameter_header_output += (f"  MAXIMUM_VALUE = "
-                                        f"{misc_functions.check_value(float(self.get_maximum_value())):.1f}\n")
-        parameter_header_output += f"  NUMBER_VALID = {misc_functions.check_value(self.get_number_valid())}\n"
-        parameter_header_output += f"  NUMBER_NULL = {misc_functions.check_value(self.get_number_null())}\n"
+                                        f"{odfUtils.check_value(float(self.get_maximum_value())):.1f}\n")
+        parameter_header_output += f"  NUMBER_VALID = {odfUtils.check_value(self.get_number_valid())}\n"
+        parameter_header_output += f"  NUMBER_NULL = {odfUtils.check_value(self.get_number_null())}\n"
         return parameter_header_output

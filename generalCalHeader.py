@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class GeneralCalHeader:
@@ -87,7 +87,7 @@ class GeneralCalHeader:
     def populate_object(self, general_cal_fields: list):
         for header_line in general_cal_fields:
             tokens = header_line.split('=', maxsplit=1)
-            general_dict = misc_functions.list_to_dict(tokens)
+            general_dict = odfUtils.list_to_dict(tokens)
             for key, value in general_dict.items():
                 value = value.strip()
                 match key:
@@ -113,22 +113,22 @@ class GeneralCalHeader:
 
     def print_object(self) -> str:
         general_header_output = "GENERAL_CAL_HEADER\n"
-        general_header_output += f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}\n"
+        general_header_output += f"  PARAMETER_CODE = {odfUtils.check_string(self.ParameterCode)}\n"
         general_header_output += (f"  CALIBRATION_TYPE = "
-                                  f"{misc_functions.check_string(self.get_calibration_type())}\n")
+                                  f"{odfUtils.check_string(self.get_calibration_type())}\n")
         general_header_output += (f"  CALIBRATION_DATE = "
-                                  f"{misc_functions.check_datetime(self.get_calibration_date())}\n")
+                                  f"{odfUtils.check_datetime(self.get_calibration_date())}\n")
         general_header_output += (f"  APPLICATION_DATE = "
-                                  f"{misc_functions.check_datetime(self.get_application_date())}\n")
+                                  f"{odfUtils.check_datetime(self.get_application_date())}\n")
         general_header_output += (f"  NUMBER_OF_COEFFICIENTS = "
-                                  f"{misc_functions.check_value(self.get_number_of_general_coefficients())}\n")
+                                  f"{odfUtils.check_value(self.get_number_of_general_coefficients())}\n")
         coefficients_list = self.get_coefficients()
         coefficients_print = ""
         for coefficient in coefficients_list:
             coefficients_print = coefficients_print + "{:.8e}".format(coefficient) + " "
         general_header_output += f"  COEFFICIENTS = {coefficients_print}\n"
         general_header_output += (f"  CALIBRATION_EQUATION = "
-                                  f"{misc_functions.check_string(self.get_calibration_equation())}\n")
+                                  f"{odfUtils.check_string(self.get_calibration_equation())}\n")
         for general_comment in self.get_calibration_comments():
             general_header_output += f"  CALIBRATION_COMMENTS = {general_comment}\n"
         return general_header_output

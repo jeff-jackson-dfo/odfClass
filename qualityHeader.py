@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class QualityHeader:
@@ -78,7 +78,7 @@ class QualityHeader:
     def populate_object(self, quality_fields: list):
         for header_line in quality_fields:
             tokens = header_line.split('=', maxsplit=1)
-            quality_dict = misc_functions.list_to_dict(tokens)
+            quality_dict = odfUtils.list_to_dict(tokens)
             for key, value in quality_dict.items():
                 match key:
                     case 'QUALITY_DATE':
@@ -90,7 +90,7 @@ class QualityHeader:
 
     def print_object(self) -> str:
         quality_header_output = "QUALITY_HEADER\n"
-        quality_header_output += f"  QUALITY_DATE = {misc_functions.check_string(self.QualityDate)}\n"
+        quality_header_output += f"  QUALITY_DATE = {odfUtils.check_string(self.QualityDate)}\n"
         for quality_test in self.QualityTests:
             quality_header_output += f"  QUALITY_TESTS = {quality_test}\n"
         for quality_comment in self.QualityComments:

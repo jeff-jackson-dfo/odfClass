@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class RecordHeader:
@@ -47,7 +47,7 @@ class RecordHeader:
     def populate_object(self, record_fields: list):
         for record_line in record_fields:
             tokens = record_line.split('=', maxsplit=1)
-            record_dict = misc_functions.list_to_dict(tokens)
+            record_dict = odfUtils.list_to_dict(tokens)
             for key, value in record_dict.items():
                 match key:
                     case 'NUM_CALIBRATION':
@@ -65,9 +65,9 @@ class RecordHeader:
 
     def print_object(self) -> str:
         record_header_output = "RECORD_HEADER\n"
-        record_header_output += f"  NUM_CALIBRATION = {misc_functions.check_value(self.NumCalibration)}\n"
-        record_header_output += f"  NUM_HISTORY = {misc_functions.check_value(self.NumHistory)}\n"
-        record_header_output += f"  NUM_SWING = {misc_functions.check_value(self.NumSwing)}\n"
-        record_header_output += f"  NUM_PARAM = {misc_functions.check_value(self.NumParam)}\n"
-        record_header_output += f"  NUM_CYCLE = {misc_functions.check_value(self.NumCycle)}\n"
+        record_header_output += f"  NUM_CALIBRATION = {odfUtils.check_value(self.NumCalibration)}\n"
+        record_header_output += f"  NUM_HISTORY = {odfUtils.check_value(self.NumHistory)}\n"
+        record_header_output += f"  NUM_SWING = {odfUtils.check_value(self.NumSwing)}\n"
+        record_header_output += f"  NUM_PARAM = {odfUtils.check_value(self.NumParam)}\n"
+        record_header_output += f"  NUM_CYCLE = {odfUtils.check_value(self.NumCycle)}\n"
         return record_header_output

@@ -1,342 +1,260 @@
 # -*- coding: utf-8 -*-
 
-from collections import OrderedDict
-import os.path
-import re
-import numpy
-
-import odfSpecification
-import odfHeader
-
-from odfSpecification import get_odf_header
-
-'''
- Sub-function : EXTRACT_VAL
-      Purpose : Extract field value from input string expression
-        Input : LINE -- input string expression such as Variable='Value'
-       Output : VAL -- extracted value of input string expression
-      Example : If LINE is CRUISE_NUMBER='NED2009002',
-              : then VAL is NED2009002
-'''
-
-
-def extract_val(line):
-    # create a character array used for substrings and indexing
-    equal_index = line.index("=")
-
-    # split the field up into the field name and it's value
-    val = [line[:equal_index], line[equal_index + 1:]]
-
-    for i in range(len(val)):
-        # remove leading and trailing whitespaces from both the field name and field value
-        val[i] = val[i].strip()
-
-        # remove leading and trailing single quotes from both the field name and field value
-        val[i] = re.sub("^'|'$", "", val[i])
-
-        # remove leading and trailing whitespaces from both the field name and field value
-        val[i] = val[i].strip()
-
-        val[i] = convert_number_exponent(val[i])
-    return val
-
-
-'''
-add_to_param
- 
- Description:
-     Used to create and add to a list, parameters using the same name are added
- to a list of other parameters using the same name. The list is then returned.
- 
- pram - Null or the existing list of parameters
- name - the name of the sub-parameter list to add the value to
- val - the value to add the the parameter ist.
-'''
-
-
-def add_to_param(pram, name, val):
-    if name not in pram:
-        # If the structure doesn't already exist
-        pram.update({name: val})
-    else:
-        if type(pram[name]) is not list:
-            # if the structure does exisst
-            tmp = pram[name]
-
-            pram[name] = list()
-            pram[name].append(tmp)
-
-        pram[name].append(val)
-
-    return pram
-
-
-'''
-print_odf_object
-
- Description:
-     Convenience method for printing the resulting object created by the read_odf method
-     
- Usage:
-     print_odf_object( <obj to print> )
-
- obj - object to be displayed
- tab - number of tab characters to dispaly before each line. Used by the method recursively
-     should not be used when calling the print_odf_object method
-     
-'''
-
-
-def print_odf_object(obj, tab=""):
-    for key in obj.keys():
-        print(tab + "key: " + str(key))
-        if type(obj.get(key)) is list:
-            for val in obj.get(key):
-                if type(val) is dict:
-                    print_odf_object(val, tab + "\t")
-                else:
-                    print(tab + "\t" + str(val))
-        elif type(obj.get(key)) is dict:
-            for subKey in obj.get(key).keys():
-                print(tab + "\t" + subKey + ":" + obj.get(key).get(subKey))
-        else:
-            print(tab + "\t" + str(obj.get(key)))
-
-
-'''
-  convert_number_exponent: test a value to see if it matches the old VAC notation for exponents
-  
-  EG. -.2999000D-01
-  
-  if a string matches then it should be converted to newer notation
-  
-  EG. -.2999000E-01
-'''
-
-
-def convert_number_exponent(integer_value):
-    if re.search(r"(\d+D([+\-])\d\d)", integer_value):
-        # in older files numeric notation is sometimes 0.0000000D+00 for base 10 exponents
-        # Replace the D with E, so it can be processed by modern string to numeric functions
-        integer_value = re.sub("D\\+", "E+", integer_value)
-        integer_value = re.sub("D-", "E-", integer_value)
-
-    return integer_value
-
-
-'''
- READ_ODF: Read in an odf file.
- 
- Description:
-   Read in an odf file.
- 
- @param filename location and name of the odf file to be processed
-
- @export
- 
- @details
- ODSToolbox Version: 2.0
-
- Last Updated: 23-MAR-2016
-
- Source:
-   Ocean Data and Information Services,
-   Bedford Institute of Oceanography, DFO, Canada.
-   DataServicesDonnees@dfo-mpo.gc.ca
-
- Notes:
-   This program was totally re-designed and re-written for
-   ODSToolbox Version 2.0. It is not based on Version 1.0.
-
-   While this new version of read_odf corrects many errors in
-   Version 1.0, and includes some new functionalities such as
-   checking if all mandatory header blocks and all mandatory
-   fields are presented in the input odf file etc., it is possible
-   that this program may have some conflicts with other tools in
-   ODSToolbox, please email yongcun.hu@@dfo-mpo.gc.ca if the
-   user find any problems.
-
- See also \\code{\\link{write_odf}}.
-
- Copyright 2006-2016, DFO, Bedford Institute of Oceanography, Canada.
- All Rights Reserved.
- 
- @author Yongcun Hu, Patrick Upson
-'''
-
-
-def read_odf(odf_file_path):
-    # IMPORT: following lines define some strings according to odf file
-    #         definition (see the last sub-function in this file), if these
-    #         strings are changed in that definition, they must be changed
-    #         here accordingly.
-
-    type = "TYPE"
-    general_cal_header = "GENERAL_CAL_HEADER"
-    polynomial_cal_header = "POLYNOMIAL_CAL_HEADER"
-    compass_cal_header = "COMPASS_CAL_HEADER"
-    record_header = "RECORD_HEADER"
-    num_cycle = "NUM_CYCLE"
-    data = "DATA"
-    sytm = "SYTM"
-    integer = "integer"
-    numeric = "numeric"
-
-    if not os.path.isfile(odf_file_path):
-        raise FileNotFoundError("File does not exist")
-
-    # Read input ODF File and strip leading and trailing whitespace.
-    lines = list(line.strip() for line in open(odf_file_path, "r"))
-    lines = odfHeader.OdfHeader.read_header(odf, )
-
-    # Count the lines in the file if the file is empty raise an exception.
-    if len(lines) <= 0:
-        raise Exception("File contains no data")
-
-    # Find the data line separator, there must be one and only one; otherwise raise an exception indicating if there
-    # are too many or too few.
-    data_lines = [i for i, line in enumerate(lines) if re.match(data_line, line)]
-    if len(data_lines) <= 0:
-        raise Exception(
-            " -- The input odf file does NOT have a separated beginning line for data section such as: '" +
-            data_line + "'")
-    elif len(data_lines) > 1:
-        raise Exception(
-            " -- The input odf file has more than one separator line for data section such as: '" + data_line + "'")
-
-    # Load the ODF header information from the odf_header resource.
-    #odf_header = odfSpecification.get_odf_header()
-    
-    # Create an odfClass object
-    odf = odfHeader
-
-    # Read the ODF_HEADER
-    odf = odf.read_header(odf, lines)
-
-    # Get the ODF header keys. At the moment this is a dictionary and I don't think the order
-    # of the keys is going to matter, but can be changed if it does.
-#    parameter_keys = odf_header.keys()
-#    print(parameter_keys)
-
-    # Set up the variables used in the file parsing.
-    current_parameter_name = None
-    current_parameter = None
-    head_object = None
-
-    # odf_object is the returned object containing the parsed file information.
-    odf_object = odfHeader.OdfHeader()
-
-    # Scan through the header lines, we know where the index line is because
-    # it was found in the above section.
-    for idxLine in range(0, data_lines[0] + 1):
-        # Remove the last character of each line in the header. in all but the
-        # last line it's a comma.
-        line = re.sub(r",$", r"", lines[idxLine])
-
-        # Remove leading and trailing whitespace.
-        line = line.strip()
-
-        # test to see if the current line is a header object
-        # if it exists in the list of ODF_Header names then
-        # Create a list for the variables to follow and add
-        # them to the structure to be returned.
-        if line in parameter_keys or idxLine >= data_lines[0]:
-            head_object = odf_header.get(line)
-
-            if current_parameter_name is not None:
-                if current_parameter_name in odf_object:
-
-                    # If the current parameter already exists in the
-                    # structure, but is a single variable then we need
-                    # to upgrade it to a list to account for multiple
-                    # values falling under the same dictionary name.
-                    if type(odf_object[current_parameter_name]) is not list:
-                        tmp = odf_object[current_parameter_name]
-                        odf_object[current_parameter_name] = list()
-                        odf_object[current_parameter_name].append(tmp)
-
-                    # Append the new parameter to the parameter list.
-                    odf_object[current_parameter_name].append(current_parameter)
-                else:
-                    # Add the new parameter to the return structure.
-                    odf_object.update({current_parameter_name: current_parameter})
-
-            current_parameter_name = line
-            current_parameter = None
-        else:
-            val = extract_val(line)
-
-            # The following lines were added by Jeff Jackson on 23-MAR-2016.
-            if (val[0] == 'NUM_VALID'):
-                val[0] = 'NUMBER_VALID'
-            if (val[0] == 'NUM_NULL'):
-                val[0] = 'NUMBER_NULL'
-
-            # Find the parameter from the header definition.
-            headPram = head_object[val[0]]
-
-            if current_parameter is None:
-                current_parameter = OrderedDict()
-
-            # Create or add values to the parameter currently being handled;
-            # index 3 in the parameter array is the parameter type.
-            if (len(current_parameter) > 0) and (type in current_parameter) and (current_parameter[type] == sytm):
-                try:
-                    convert_value = int(val[1])
-                except ValueError:
-                    convert_value = val[1]
-
-                current_parameter = add_to_param(current_parameter, val[0], convert_value)
-            elif headPram[0] == integer:
-                current_parameter = add_to_param(current_parameter, val[0], int(val[1]))
-            elif headPram[0] == numeric:
-                if current_parameter_name == polynomial_cal_header or current_parameter_name == compass_cal_header or current_parameter_name == general_cal_header:
-                    tmpVals = re.sub("\\s+|\\t+", ",", val[1])
-                    tmpVals = tmpVals.split(",")
-
-                    for i in range(0, len(tmpVals)):
-                        current_parameter = add_to_param(current_parameter, val[0], float(tmpVals[i]))
-                else:
-                    current_parameter = add_to_param(current_parameter, val[0], float(val[1]))
-            else:
-                current_parameter = add_to_param(current_parameter, val[0], val[1])
-
-    rows = odf_object[record_header][num_cycle]
-
-    #     print('# of rows = ' + str(rows))
-
-    # The data is already in the F array, we just have to grab the lines starting from
-    # the index line '-- DATA --' to the end of the file.
-    data_list = lines[data_lines[0] + 1:len(lines)]
-
-    # Replace spaces with tabs, or replace leading and/or trailing quotes with tabs.
-
-    # Deal with single quotes.
-    data_list = [re.sub("\\s+'", "\t'", line) for line in data_list]
-    data_list = [re.sub("'\\s+", "'\t", line) for line in data_list]
-
-    # Deal with double quotes.
-    data_list = [re.sub("\\s+\"", "\t\"", line) for line in data_list]
-    data_list = [re.sub("\"\\s+", "\"\t", line) for line in data_list]
-
-    # Deal with multiple spaces between variables.
-    # Assume that there is a minimum of two spaces so that SYTM data fields are not altered.
-    data_list = [re.sub("\\s\\s+", "\t", line) for line in data_list]
-
-    data_list = [line.split('\t') for line in data_list]
-
-    # Check to make sure the number of rows is correct, report an issue if it isn't.
-    if rows != len(data_list):
-        raise Exception("The number of rows specified by 'RECORD_HEADER.NUM_CYCLE' = " + str(
-            rows) + " does not match the number of rows found = " + str(len(data_list)))
-
-    # Convert the data_list (list of lists) to a NUMPY two dimensional array.
-    # This code was added by Jeff Jackson (06-OCT-2014).
-    data_array = numpy.array(data_list)
-
-    # Create a data frame based on the known number of rows and columns.
-    odf_object.update({data: data_array})
-
-    odf_object.update({"INPUT_FILE": in_file})
-
-    return odf_object
+import datetime
+import pandas
+import shlex
+
+
+def read_file_lines(file_with_path):
+    try:
+        with open(file_with_path, 'r') as file:
+            lines = list(file_line.strip() for file_line in file.readlines())
+        return lines
+    except FileNotFoundError:
+        return f"File not found: {file_with_path}"
+    except Exception as e:
+        return f"An error occurred while reading the file: {e}"
+
+
+def find_lines_with_text(text: str) -> list:
+    lines = read_file_lines(text)
+    matching_lines = [(text_index, text_line) for text_index, text_line in enumerate(lines) if text in text_line]
+    return matching_lines
+
+
+def split_lines_into_dict(lines: list) -> dict:
+    return list_to_dict(lines)
+
+
+def search_dictionaries(search_text, dictionaries):
+    matching_results = []
+    for string_index, dictionary in enumerate(dictionaries):
+        for key, value in dictionary.items():
+            if search_text.lower() in key.lower() or search_text.lower() in value.lower():
+                matching_results.append((string_index + 1, dictionary))
+    return matching_results
+
+
+def split_lines_after_data(all_data_lines) -> pandas.DataFrame:
+    result_lines = []
+
+    for data_line in all_data_lines:
+        # Split each line by all whitespace characters
+        parts = data_line.split()
+        result_lines.append(parts)
+
+    # Convert the list of lists to a Pandas DataFrame
+    df = pandas.DataFrame(result_lines)
+
+    return df
+
+
+def get_current_date_time() -> str:
+    dt = datetime.datetime.now()
+    dts = dt.strftime("%d-%b-%Y %H:%M:%S.%f").upper()
+    return dts[:-4]
+
+
+def check_value(value: float) -> float:
+    if value is None:
+        value = -99
+    return value
+
+
+def check_long_value(value: float) -> float:
+    if value is None:
+        value = -999
+    return value
+
+
+def check_datetime(value: str) -> str:
+    if value is None:
+        value = "'17-NOV-1858 00:00:00.00'"
+    return value
+
+
+def check_string(string: str) -> str:
+    if string is None:
+        string = ' '
+    if not string:
+        string = ' '
+    return string
+
+
+def list_to_dict(lst: list) -> dict:
+    # Using a dictionary comprehension to create key-value pairs from alternating elements in the list
+    result_dict = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)}
+    return result_dict
+
+
+def remove_trailing_commas_and_whitespace(lst):
+    # Using list comprehension to remove trailing commas and whitespace from each item
+    cleaned_list = [item.rstrip(', ').strip() for item in lst]
+    return cleaned_list
+
+
+def split_string_with_quotes(input_string):
+    # Using shlex.split to split the string by whitespace except when between double quotes
+    result_list = shlex.split(input_string)
+    return result_list
+
+
+# def list_to_dataframe(data_list, number_of_columns):
+#     # Assuming the list has alternating numbers and strings
+#     # If the list structure is different, you might need to modify this code accordingly
+#     column_list = data_list[::number_of_columns]
+#     df = pd.DataFrame({, data_list[1::2]})
+#     return df
+
+def convert_to_float(item):
+    try:
+        # Attempt to convert the item to float
+        return float(item)
+    except (ValueError, TypeError):
+        # Return the original item if conversion is not possible
+        return item
+
+
+def convert_dataframe(df):
+    # Apply the conversion function to each element in the DataFrame
+    df = df.map(convert_to_float)
+    return df
+
+
+def add_commas_except_last(lines: str) -> str:
+    lines_with_commas = lines.replace("\n", ",\n")
+    lines_with_commas = lines_with_commas.rstrip(",\n")
+    lines_with_commas = lines_with_commas + "\n"
+    return lines_with_commas
+
+
+def add_commas(lines: str) -> str:
+    lines_with_commas = lines.replace("\n", ",\n")
+    lines_with_commas = lines_with_commas.replace("' ,", "',")
+    return lines_with_commas
+
+
+# def extract_val(line):
+#     """
+#      Sub-function : EXTRACT_VAL
+#           Purpose : Extract field value from input string expression
+#             Input : LINE -- input string expression such as Variable='Value'
+#            Output : VAL -- extracted value of input string expression
+#           Example : If LINE is CRUISE_NUMBER='NED2009002',
+#                   : then VAL is NED2009002
+#     """
+#     # create a character array used for substrings and indexing
+#     equal_index = line.index("=")
+#
+#     # split the field up into the field name and it's value
+#     val = [line[:equal_index], line[equal_index + 1:]]
+#
+#     for i in range(len(val)):
+#         # remove leading and trailing whitespaces from both the field name and field value
+#         val[i] = val[i].strip()
+#
+#         # remove leading and trailing single quotes from both the field name and field value
+#         val[i] = re.sub("^'|'$", "", val[i])
+#
+#         # remove leading and trailing whitespaces from both the field name and field value
+#         val[i] = val[i].strip()
+#
+#         val[i] = convert_number_exponent(val[i])
+#     return val
+#
+#
+# def add_to_param(param, name, val):
+#     """
+#     add_to_param
+#
+#      Description:
+#          Used to create and add to a list, parameters using the same name are added
+#      to a list of other parameters using the same name. The list is then returned.
+#
+#      param - Null or the existing list of parameters
+#      name - the name of the sub-parameter list to add the value to
+#      val - the value to add the parameter ist.
+#     """
+#     if name not in param:
+#         # If the structure doesn't already exist
+#         param.update({name: val})
+#     else:
+#         if type(param[name]) is not list:
+#             # if the structure does exist
+#             tmp = param[name]
+#
+#             param[name] = list()
+#             param[name].append(tmp)
+#
+#         param[name].append(val)
+#
+#     return param
+#
+#
+# def convert_number_exponent(integer_value):
+#     """
+#       convert_number_exponent: test a value to see if it matches the old VAC notation for exponents
+#
+#       EG. -.2999000D-01
+#
+#       if a string matches then it should be converted to newer notation
+#
+#       EG. -.2999000E-01
+#     """
+#     if re.search(r"(\d+D([+\-])\d\d)", integer_value):
+#         # in older files numeric notation is sometimes 0.0000000D+00 for base 10 exponents
+#         # Replace the D with E, so it can be processed by modern string to numeric functions
+#         integer_value = re.sub("D\\+", "E+", integer_value)
+#         integer_value = re.sub("D-", "E-", integer_value)
+#
+#     return integer_value
+
+
+if __name__ == "__main__":
+    text_lines = "This is line 1\nThis is line\nThis is the last line\n"
+    print(text_lines)
+    print(type(text_lines))
+    formatted_text = add_commas_except_last(text_lines)
+    print(formatted_text)
+    print(type(formatted_text))
+
+    # file_path = input("Enter the file path: ")
+    # file_path = 'C:/DEV/pythonProjects/odfClass/test-files/XBT_HUD2005016_58_1_016.ODF'
+    file_path = 'test-files/MADCP_HUD2016027_1999_3469-31_3600.ODF'
+    file_lines = read_file_lines(file_path)
+
+    # text_to_find = "_HEADER"
+    text_to_find = "-- DATA --"
+    header_lines_with_indices = find_lines_with_text(text_to_find)
+    # print(f"\nLines containing '{text_to_find}':")
+    data_line_start = None
+    for index, line in header_lines_with_indices:
+        # print(f"Line {index + 1}: {line.strip()}")  # Adding 1 to the index to match line numbers in the file
+        data_line_start = index + 1
+    # print(f"\nData records begin at line number: {data_line_start}\n")
+
+    # Separate the header and data lines
+    header_lines = file_lines[:data_line_start - 1]
+    data_lines = file_lines[data_line_start:]
+
+    # lines_as_dicts = file_reader.split_lines_into_dict(header_lines)
+    # print("\nLines as dictionaries:")
+    # for line_dict in lines_as_dicts:
+    #     print(line_dict)
+
+    # search_string = input("\nEnter text to search for in dictionaries: ")
+    # while search_string:
+    #     search_results = file_reader.search_dictionaries(search_string, lines_as_dicts)
+    #     print(f"\nSearch results for '{search_string}':")
+    #     for index, result in search_results:
+    #         print(f"Dictionary at line {index}: {result}")
+    #     search_string = input("\nEnter text to search for in dictionaries: ")
+
+    # print("\nFile Content:")
+    # print(type(file_lines))
+    # print(file_lines)
+
+    lines_after_data_df = split_lines_after_data(data_lines)
+
+    print("\nDataFrame with lines after '--DATA--' split by whitespace:")
+    print(lines_after_data_df)

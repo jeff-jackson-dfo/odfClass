@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class CompassCalHeader:
@@ -65,7 +65,7 @@ class CompassCalHeader:
     def populate_object(self, compass_cal_fields: list):
         for header_line in compass_cal_fields:
             tokens = header_line.split('=', maxsplit=1)
-            compass_dict = misc_functions.list_to_dict(tokens)
+            compass_dict = odfUtils.list_to_dict(tokens)
             for key, value in compass_dict.items():
                 match key:
                     case 'PARAMETER_NAME':
@@ -88,13 +88,13 @@ class CompassCalHeader:
 
     def print_object(self) -> str:
         compass_cal_header_output = "COMPASS_CAL_HEADER\n"
-        compass_cal_header_output += f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}\n"
-        compass_cal_header_output += f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}\n"
-        compass_cal_header_output += f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}\n"
+        compass_cal_header_output += f"  PARAMETER_CODE = {odfUtils.check_string(self.ParameterCode)}\n"
+        compass_cal_header_output += f"  CALIBRATION_DATE = {odfUtils.check_datetime(self.get_calibration_date())}\n"
+        compass_cal_header_output += f"  APPLICATION_DATE = {odfUtils.check_datetime(self.get_application_date())}\n"
         # print("COMPASS_CAL_HEADER")
-        # print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
-        # print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")
-        # print(f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}")
+        # print(f"  PARAMETER_CODE = {odfUtils.check_string(self.ParameterCode)}")
+        # print(f"  CALIBRATION_DATE = {odfUtils.check_datetime(self.get_calibration_date())}")
+        # print(f"  APPLICATION_DATE = {odfUtils.check_datetime(self.get_application_date())}")
         directions_list = self.get_directions()
         directions_print = ""
         for direction in directions_list:

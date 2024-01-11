@@ -1,4 +1,4 @@
-import misc_functions
+import odfUtils
 
 
 class PolynomialCalHeader:
@@ -56,7 +56,7 @@ class PolynomialCalHeader:
     def populate_object(self, polynomial_cal_fields: list):
         for header_line in polynomial_cal_fields:
             tokens = header_line.split('=', maxsplit=1)
-            poly_dict = misc_functions.list_to_dict(tokens)
+            poly_dict = odfUtils.list_to_dict(tokens)
             for key, value in poly_dict.items():
                 match key:
                     case 'PARAMETER_NAME':
@@ -77,18 +77,18 @@ class PolynomialCalHeader:
 
     def print_object(self) -> str:
         polynomial_header_output = "POLYNOMIAL_CAL_HEADER\n"
-        polynomial_header_output += f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}\n"
+        polynomial_header_output += f"  PARAMETER_CODE = {odfUtils.check_string(self.ParameterCode)}\n"
         polynomial_header_output += (f"  CALIBRATION_DATE ="
-                                     f"{misc_functions.check_datetime(self.get_calibration_date())}\n")
+                                     f"{odfUtils.check_datetime(self.get_calibration_date())}\n")
         polynomial_header_output += (f"  APPLICATION_DATE = "
-                                     f"{misc_functions.check_datetime(self.get_application_date())}\n")
+                                     f"{odfUtils.check_datetime(self.get_application_date())}\n")
         polynomial_header_output += (f"  NUMBER_OF_COEFFICIENTS = "
-                                     f"{misc_functions.check_value(self.get_number_of_coefficients())}\n")
+                                     f"{odfUtils.check_value(self.get_number_of_coefficients())}\n")
         # print("POLYNOMIAL_CAL_HEADER")
-        # print(f"  PARAMETER_CODE = {misc_functions.check_string(self.ParameterCode)}")
-        # print(f"  CALIBRATION_DATE = {misc_functions.check_datetime(self.get_calibration_date())}")
-        # print(f"  APPLICATION_DATE = {misc_functions.check_datetime(self.get_application_date())}")
-        # print(f"  NUMBER_OF_COEFFICIENTS = {misc_functions.check_value(self.get_number_of_coefficients())}")
+        # print(f"  PARAMETER_CODE = {odfUtils.check_string(self.ParameterCode)}")
+        # print(f"  CALIBRATION_DATE = {odfUtils.check_datetime(self.get_calibration_date())}")
+        # print(f"  APPLICATION_DATE = {odfUtils.check_datetime(self.get_application_date())}")
+        # print(f"  NUMBER_OF_COEFFICIENTS = {odfUtils.check_value(self.get_number_of_coefficients())}")
         coefficients_list = self.get_coefficients()
         coefficients_print = ""
         for coefficient in coefficients_list:
