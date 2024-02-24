@@ -305,9 +305,9 @@ class OdfHeader:
 if __name__ == "__main__":
     odf = OdfHeader()
 
-    # my_file_path = 'test-files/MCM_HUD2010014_1771_1039_3600.ODF'
+    my_file_path = 'test-files/MCM_HUD2010014_1771_1039_3600.ODF'
     # my_file_path = 'test-files/CTD_CAR2023011_017_496844_DN.ODF'
-    my_file_path = 'test-files/IML-Example.ODF'
+    # my_file_path = 'test-files/IML-Example.ODF'
     # my_file_path = 'test-files/MADCP_HUD2016027_1999_3469-31_3600.ODF'
     # my_file_path = 'test-files/MCTD_GRP2019001_2104_11689_1800.ODF'
 
@@ -315,6 +315,7 @@ if __name__ == "__main__":
 
     # odf_file_text = odf.print_object(file_version=3)
     odf_file_text = odf.print_object(file_version=2)
+
     # print(odf.EventHeader.print_object())
     # print(odf.MeteoHeader.print_object())
 

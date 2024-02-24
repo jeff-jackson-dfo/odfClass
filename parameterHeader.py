@@ -243,7 +243,7 @@ class ParameterHeader:
         parameter_header_output += (f"  MAGNETIC_VARIATION = "
                                     f"{odfUtils.check_value(float(self.get_magnetic_variation())):.6f}\n")
         parameter_header_output += f"  DEPTH = {odfUtils.check_value(float(self.get_depth())):.6f}\n"
-        if self.get_units() == "'GMT'" or self.get_units() == "'UTC'":
+        if self.get_units() == "'GMT'" or self.get_units() == "'UTC'" or self.get_type() == "'SYTM'":
             parameter_header_output += f"  MINIMUM_VALUE = {odfUtils.check_value(self.get_minimum_value())}\n"
             parameter_header_output += f"  MAXIMUM_VALUE = {odfUtils.check_value(self.get_maximum_value())}\n"
         else:
