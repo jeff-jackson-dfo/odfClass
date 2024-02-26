@@ -98,9 +98,9 @@ class OdfHeader:
         for key, value in odf_dict.items():
             match key.strip():
                 case 'FILE_SPECIFICATION':
-                    self._file_specification = value.strip()
+                    self.file_specification = value.strip()
                 case 'ODF_SPECIFICATION_VERSION':
-                    self.set_odf_specification_version(value.strip())
+                    self.odf_specification_version = value.strip()
         return self
 
     def print_object(self, file_version: int = 2) -> str:
