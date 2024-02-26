@@ -44,55 +44,58 @@ class OdfHeader:
         self.record_header = recordHeader.RecordHeader()
         self.data = dataRecords.DataRecords()
 
-    @property
-    def file_specification(self) -> str:
-        """
-        Returns the file specification from the ODF_HEADER of an OdfHeader class object.
-
-        Returns
-        -------
-        file_specification (str) :
-            The file name and possibly path of an OdfHeader object (default is an empty string).
-        """
-        return self._file_specification
-
-    @file_specification.setter
-    def file_specification(self, value: str) -> None:
-        """
-        Sets the file specification for the ODF_HEADER of an OdfHeader class object.
-
-        Parameters
-        ----------
-        value : str
-            The file name and possibly path of the OdfHeader object (default is an empty string).
-
-        """
-        self._file_specification = value
-
-    @property
-    def odf_specification_version(self) -> float:
-        """
-        Returns the odf specification version from the ODF_HEADER of an OdfHeader class object.
-
-        Returns
-        -------
-        odf_specification_version (float) :
-            The file name and possibly path of an OdfHeader object (default is an empty string).
-        """
-        return self._odf_specification_version
-
-    @odf_specification_version.setter
-    def odf_specification_version(self, value: float) -> None:
-        """
-        Sets the odf specification version for the ODF_HEADER of an OdfHeader class object.
-
-        Parameters
-        ----------
-        value : float
-            Sets the version of the ODF specification used to generate this file.
-
-        """
-        self._odf_specification_version = value
+    # The commented code below is provided in case additional functionality is required when handling class attributes.
+    # Currently, there is no requirement for this functionality but since it was added and could be used in the future,
+    # it was decided to leave it in.
+    # @property
+    # def file_specification(self) -> str:
+    #     """
+    #     Returns the file specification from the ODF_HEADER of an OdfHeader class object.
+    #
+    #     Returns
+    #     -------
+    #     file_specification (str) :
+    #         The file name and possibly path of an OdfHeader object (default is an empty string).
+    #     """
+    #     return self._file_specification
+    #
+    # @file_specification.setter
+    # def file_specification(self, value: str) -> None:
+    #     """
+    #     Sets the file specification for the ODF_HEADER of an OdfHeader class object.
+    #
+    #     Parameters
+    #     ----------
+    #     value : str
+    #         The file name and possibly path of the OdfHeader object (default is an empty string).
+    #
+    #     """
+    #     self._file_specification = value
+    #
+    # @property
+    # def odf_specification_version(self) -> float:
+    #     """
+    #     Returns the odf specification version from the ODF_HEADER of an OdfHeader class object.
+    #
+    #     Returns
+    #     -------
+    #     odf_specification_version (float) :
+    #         The file name and possibly path of an OdfHeader object (default is an empty string).
+    #     """
+    #     return self._odf_specification_version
+    #
+    # @odf_specification_version.setter
+    # def odf_specification_version(self, value: float) -> None:
+    #     """
+    #     Sets the odf specification version for the ODF_HEADER of an OdfHeader class object.
+    #
+    #     Parameters
+    #     ----------
+    #     value : float
+    #         Sets the version of the ODF specification used to generate this file.
+    #
+    #     """
+    #     self._odf_specification_version = value
 
     def populate_object(self, odf_dict: dict):
         for key, value in odf_dict.items():
@@ -171,7 +174,6 @@ class OdfHeader:
             f"to {new_value} .")
         return self
 
-    # def read_header(odf: Type[newOdfHeader], lines: list) -> newOdfHeader:
     def read_odf(self, odf_file_path: str):
         """
         Reads an ODF file and puts it into an OdfHeader class object.
@@ -240,7 +242,7 @@ class OdfHeader:
                     compass_cal_header.populate_object(block_lines)
                     self.compass_cal_header.append(compass_cal_header)
                 case "CRUISE_HEADER":
-                    self.cruise_header = self.cruise_header .populate_object(block_lines)
+                    self.cruise_header = self.cruise_header.populate_object(block_lines)
                 case "EVENT_HEADER":
                     self.event_header = self.event_header.populate_object(block_lines)
                 case "GENERAL_CAL_HEADER":

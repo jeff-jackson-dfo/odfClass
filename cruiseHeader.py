@@ -2,87 +2,102 @@ import odfUtils
 
 
 class CruiseHeader:
-    def __init__(self):
-        self.CountryInstituteCode = None
-        self.CruiseNumber = "''"
-        self.Organization = "''"
-        self.ChiefScientist = "''"
-        self.StartDate = None
-        self.EndDate = None
-        self.Platform = "''"
-        self.AreaOfOperation = "''"
-        self.CruiseName = "''"
-        self.CruiseDescription = "''"
+    def __init__(self, country_institute_code=1810, cruise_number="''", organization="''", chief_scientist="''",
+                 start_date=None, end_date=None, platform="''", area_of_operation="''", cruise_name="''",
+                 cruise_description="''"):
+        self.country_institute_code = country_institute_code
+        self.cruise_number = cruise_number
+        self.organization = organization
+        self.chief_scientist = chief_scientist
+        self.start_date = start_date
+        self.end_date = end_date
+        self.platform = platform
+        self.area_of_operation = area_of_operation
+        self.cruise_name = cruise_name
+        self.cruise_description = cruise_description
 
-    def get_country_institute_code(self) -> int:
-        return self.CountryInstituteCode
-
-    def set_country_institute_code(self, country_institute_code: int):
-        self.CountryInstituteCode = country_institute_code
-        return self
-
-    def get_cruise_number(self) -> str:
-        return self.CruiseNumber
-
-    def set_cruise_number(self, cruise_number: str):
-        self.CruiseNumber = cruise_number
-        return self
-
-    def get_organization(self) -> str:
-        return self.Organization
-
-    def set_organization(self, organization: str):
-        self.Organization = organization
-        return self
-
-    def get_chief_scientist(self) -> str:
-        return self.ChiefScientist
-
-    def set_chief_scientist(self, chief_scientist: str):
-        self.ChiefScientist = chief_scientist
-        return self
-
-    def get_start_date(self) -> str:
-        return self.StartDate
-
-    def set_start_date(self, start_date: str):
-        self.StartDate = start_date
-        return self
-
-    def get_end_date(self) -> str:
-        return self.EndDate
-
-    def set_end_date(self, end_date: str):
-        self.EndDate = end_date
-        return self
-
-    def get_platform(self) -> str:
-        return self.Platform
-
-    def set_platform(self, platform: str):
-        self.Platform = platform
-        return self
-
-    def get_area_of_operation(self) -> str:
-        return self.AreaOfOperation
-
-    def set_area_of_operation(self, area_of_operation: str):
-        self.AreaOfOperation = area_of_operation
-        return self
-
-    def get_cruise_name(self) -> str:
-        return self.CruiseName
-
-    def set_cruise_name(self, cruise_name: str):
-        self.CruiseName = cruise_name
-        return self
-
-    def get_cruise_description(self) -> str:
-        return self.CruiseDescription
-
-    def set_cruise_description(self, cruise_description: str):
-        self.CruiseDescription = cruise_description
-        return self
+    # The commented code below is provided in case additional functionality is required when handling class attributes.
+    # Currently, there is no requirement for this functionality but since it was added and could be used in the future,
+    # it was decided to leave it in.
+    # @property
+    # def country_institute_code(self) -> int:
+    #     return self._country_institute_code
+    #
+    # @country_institute_code.setter
+    # def country_institute_code(self, value: int) -> None:
+    #     self._country_institute_code = value
+    #
+    # @property
+    # def cruise_number(self) -> str:
+    #     return self._cruise_number
+    #
+    # @cruise_number.setter
+    # def cruise_number(self, value: str) -> None:
+    #     self._cruise_number = value
+    #
+    # @property
+    # def organization(self) -> str:
+    #     return self._organization
+    #
+    # @organization.setter
+    # def organization(self, value: str) -> None:
+    #     self._organization = value
+    #
+    # @property
+    # def chief_scientist(self) -> str:
+    #     return self._chief_scientist
+    #
+    # @chief_scientist.setter
+    # def chief_scientist(self, value: str) -> None:
+    #     self._chief_scientist = value
+    #
+    # @property
+    # def start_date(self) -> str:
+    #     return self._start_date
+    #
+    # @start_date.setter
+    # def start_date(self, value: str) -> None:
+    #     self._start_date = value
+    #
+    # @property
+    # def end_date(self) -> str:
+    #     return self._end_date
+    #
+    # @end_date.setter
+    # def end_date(self, value: str) -> None:
+    #     self._end_date = value
+    #
+    # @property
+    # def platform(self) -> str:
+    #     return self._platform
+    #
+    # @platform.setter
+    # def platform(self, value: str) -> None:
+    #     self._platform = value
+    #
+    # @property
+    # def area_of_operation(self) -> str:
+    #     return self._area_of_operation
+    #
+    # @area_of_operation.setter
+    # def area_of_operation(self, value: str) -> None:
+    #     self._area_of_operation = value
+    #
+    # @property
+    # def cruise_name(self) -> str:
+    #     return self._cruise_name
+    #
+    # @cruise_name.setter
+    # def cruise_name(self, value: str) -> None:
+    #     self._cruise_name = value
+    #
+    # @property
+    # def cruise_description(self) -> str:
+    #     return self._cruise_description
+    #
+    # @cruise_description.setter
+    # def cruise_description(self, value: str) -> None:
+    #     self._cruise_description = value
 
     def populate_object(self, cruise_fields: list):
         for header_line in cruise_fields:
@@ -93,39 +108,39 @@ class CruiseHeader:
                 value = value.strip()
                 match key:
                     case 'COUNTRY_INSTITUTE_CODE':
-                        self.set_country_institute_code(value)
+                        self.country_institute_code = value
                     case 'CRUISE_NUMBER':
-                        self.set_cruise_number(value)
+                        self.cruise_number = value
                     case 'ORGANIZATION':
-                        self.set_chief_scientist(value)
+                        self.chief_scientist = value
                     case 'CHIEF_SCIENTIST':
-                        self.set_organization(value)
+                        self.organization = value
                     case 'START_DATE':
-                        self.set_start_date(value)
+                        self.start_date = value
                     case 'END_DATE':
-                        self.set_end_date(value)
+                        self.end_date = value
                     case 'PLATFORM':
-                        self.set_platform(value)
+                        self.platform = value
                     case 'AREA_OF_OPERATION':
-                        self.set_area_of_operation(value)
+                        self.area_of_operation = value
                     case 'CRUISE_NAME':
-                        self.set_cruise_name(value)
+                        self.cruise_name = value
                     case 'CRUISE_DESCRIPTION':
-                        self.set_cruise_description(value)
+                        self.cruise_description = value
         return self
 
     def print_object(self, file_version: int = 2) -> str:
         cruise_header_output = "CRUISE_HEADER\n"
-        cruise_header_output += (f"  COUNTRY_INSTITUTE_CODE = "
-                                 f"{odfUtils.check_value(self.get_country_institute_code())}\n")
-        cruise_header_output += f"  CRUISE_NUMBER = {self.get_cruise_number()}\n"
-        cruise_header_output += f"  ORGANIZATION = {self.get_chief_scientist()}\n"
-        cruise_header_output += f"  CHIEF_SCIENTIST = {self.get_organization()}\n"
-        cruise_header_output += f"  START_DATE = {odfUtils.check_datetime(self.get_start_date())}\n"
-        cruise_header_output += f"  END_DATE = {odfUtils.check_datetime(self.get_end_date())}\n"
-        cruise_header_output += f"  PLATFORM = {self.get_platform()}\n"
-        if file_version == 3:
-            cruise_header_output += f"  AREA_OF_OPERATION = {self.get_area_of_operation()}\n"
-        cruise_header_output += f"  CRUISE_NAME = {self.get_cruise_name()}\n"
-        cruise_header_output += f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}\n"
+        cruise_header_output += (f"  country_institute_code = "
+                                 f"{odfUtils.check_value(self.country_institute_code)}\n")
+        cruise_header_output += f"  CRUISE_NUMBER = {self.cruise_number}\n"
+        cruise_header_output += f"  ORGANIZATION = {self.chief_scientist}\n"
+        cruise_header_output += f"  CHIEF_SCIENTIST = {self.organization}\n"
+        cruise_header_output += f"  START_DATE = {odfUtils.check_datetime(self.start_date)}\n"
+        cruise_header_output += f"  END_DATE = {odfUtils.check_datetime(self.end_date)}\n"
+        cruise_header_output += f"  PLATFORM = {self.platform}\n"
+        if file_version >= 3:
+            cruise_header_output += f"  AREA_OF_OPERATION = {self.area_of_operation}\n"
+        cruise_header_output += f"  CRUISE_NAME = {self.cruise_name}\n"
+        cruise_header_output += f"  CRUISE_DESCRIPTION = {self.cruise_description}\n"
         return cruise_header_output
