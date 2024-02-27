@@ -3,86 +3,76 @@ import odfUtils
 
 class CruiseHeader:
     def __init__(self):
-        self.CountryInstituteCode = None
-        self.CruiseNumber = "''"
-        self.Organization = "''"
-        self.ChiefScientist = "''"
-        self.StartDate = None
-        self.EndDate = None
-        self.Platform = "''"
-        self.AreaOfOperation = "''"
-        self.CruiseName = "''"
-        self.CruiseDescription = "''"
+        self._country_institute_code = None
+        self._cruise_number = "''"
+        self._organization = "''"
+        self._chief_scientist = "''"
+        self._start_date = None
+        self._end_date = None
+        self._platform = "''"
+        self._area_of_operation = "''"
+        self._cruise_name = "''"
+        self._cruise_description = "''"
 
     def get_country_institute_code(self) -> int:
-        return self.CountryInstituteCode
+        return self._country_institute_code
 
-    def set_country_institute_code(self, country_institute_code: int):
-        self.CountryInstituteCode = country_institute_code
-        return self
+    def set_country_institute_code(self, value: int) -> None:
+        self._country_institute_code = value
 
     def get_cruise_number(self) -> str:
-        return self.CruiseNumber
+        return self._cruise_number
 
-    def set_cruise_number(self, cruise_number: str):
-        self.CruiseNumber = cruise_number
-        return self
+    def set_cruise_number(self, cruise_number: str) -> None:
+        self._cruise_number = cruise_number
 
     def get_organization(self) -> str:
-        return self.Organization
+        return self._organization
 
-    def set_organization(self, organization: str):
-        self.Organization = organization
-        return self
+    def set_organization(self, value: str) -> None:
+        self._organization = value
 
     def get_chief_scientist(self) -> str:
-        return self.ChiefScientist
+        return self._chief_scientist
 
-    def set_chief_scientist(self, chief_scientist: str):
-        self.ChiefScientist = chief_scientist
-        return self
+    def set_chief_scientist(self, value: str) -> None:
+        self._chief_scientist = value
 
     def get_start_date(self) -> str:
-        return self.StartDate
+        return self._start_date
 
-    def set_start_date(self, start_date: str):
-        self.StartDate = start_date
-        return self
+    def set_start_date(self, value: str) -> None:
+        self._start_date = value
 
     def get_end_date(self) -> str:
-        return self.EndDate
+        return self._end_date
 
-    def set_end_date(self, end_date: str):
-        self.EndDate = end_date
-        return self
+    def set_end_date(self, value: str) -> None:
+        self._end_date = value
 
     def get_platform(self) -> str:
-        return self.Platform
+        return self._platform
 
-    def set_platform(self, platform: str):
-        self.Platform = platform
-        return self
+    def set_platform(self, value: str) -> None:
+        self._platform = value
 
     def get_area_of_operation(self) -> str:
-        return self.AreaOfOperation
+        return self._area_of_operation
 
-    def set_area_of_operation(self, area_of_operation: str):
-        self.AreaOfOperation = area_of_operation
-        return self
+    def set_area_of_operation(self, value: str) -> None:
+        self._area_of_operation = value
 
     def get_cruise_name(self) -> str:
-        return self.CruiseName
+        return self._cruise_name
 
-    def set_cruise_name(self, cruise_name: str):
-        self.CruiseName = cruise_name
-        return self
+    def set_cruise_name(self, value: str) -> None:
+        self._cruise_name = value
 
     def get_cruise_description(self) -> str:
-        return self.CruiseDescription
+        return self._cruise_description
 
-    def set_cruise_description(self, cruise_description: str):
-        self.CruiseDescription = cruise_description
-        return self
+    def set_cruise_description(self, value: str) -> None:
+        self._cruise_description = value
 
     def populate_object(self, cruise_fields: list):
         for header_line in cruise_fields:

@@ -3,86 +3,79 @@ import odfUtils
 
 class GeneralCalHeader:
     def __init__(self):
-        self.ParameterCode = None
-        self.CalibrationType = None
-        self.CalibrationDate = None
-        self.ApplicationDate = None
-        self.NumberCoefficients = None
-        self.Coefficients = list()
-        self.CalibrationEquation = None
-        self.CalibrationComments = list()
+        self._parameter_code = None
+        self._calibration_type = None
+        self._calibration_date = None
+        self._application_date = None
+        self._number_coefficients = None
+        self._coefficients = []
+        self._calibration_equation = None
+        self._calibration_comments = []
 
     def get_parameter_code(self) -> str:
-        return self.ParameterCode
+        return self._parameter_code
 
-    def set_parameter_code(self, parameter_code: str):
-        self.ParameterCode = parameter_code
-        return self
+    def set_parameter_code(self, value: str) -> None:
+        self._parameter_code = value
 
     def get_calibration_type(self) -> str:
-        return self.CalibrationType
+        return self._calibration_type
 
-    def set_calibration_type(self, calibration_type: str):
-        self.CalibrationType = calibration_type
-        return self
+    def set_calibration_type(self, value: str) -> None:
+        self._calibration_type = value
 
     def get_calibration_date(self) -> str:
-        return self.CalibrationDate
+        return self._calibration_date
 
-    def set_calibration_date(self, calibration_date: str):
-        self.CalibrationDate = calibration_date
-        return self
+    def set_calibration_date(self, value: str) -> None:
+        self._calibration_date = value
 
     def get_application_date(self) -> str:
-        return self.ApplicationDate
+        return self._application_date
 
-    def set_application_date(self, application_date: str):
-        self.ApplicationDate = application_date
-        return self
+    def set_application_date(self, value: str) -> None:
+        self._application_date = value
 
     def get_number_of_general_coefficients(self) -> int:
-        return self.NumberCoefficients
+        return self._number_coefficients
 
-    def set_number_of_coefficients(self, number_of_coefficients: int):
-        self.NumberCoefficients = number_of_coefficients
-        return self
+    def set_number_of_coefficients(self, value: int) -> None:
+        self._number_coefficients = value
 
     def get_coefficients(self) -> list:
-        return self.Coefficients
+        return self._coefficients
 
-    def set_coefficients(self, general_coefficient_list: list, general_coefficient_number: int = 0):
+    def set_coefficients(self, general_coefficient_list: list, general_coefficient_number: int = 0) -> None:
         number_of_general_coefficients = self.get_number_of_general_coefficients()
-        if general_coefficient_number == 0 and number_of_general_coefficients == 0:
-            self.Coefficients = general_coefficient_list
-        elif general_coefficient_number == 0 and number_of_general_coefficients > 0:
-            self.Coefficients.extend(general_coefficient_list)
-        elif general_coefficient_number <= number_of_general_coefficients and number_of_general_coefficients > 0:
-            if len(general_coefficient_list) == 1:
-                self.Coefficients[general_coefficient_number] = general_coefficient_list.pop()
-        else:
-            raise ValueError("The 'coefficient_number' does not match the number of COEFFICIENTS.")
-        return self
+        if general_coefficient_number == 0:
+            if number_of_general_coefficients == 0:
+                self._coefficients = general_coefficient_list
+            elif number_of_general_coefficients > 0:
+                self._coefficients.extend(general_coefficient_list)
+            elif general_coefficient_number <= number_of_general_coefficients and number_of_general_coefficients > 0:
+                if len(general_coefficient_list) == 1:
+                    self._coefficients[general_coefficient_number] = general_coefficient_list.pop()
+            else:
+                raise ValueError("The 'coefficient_number' does not match the number of COEFFICIENTS.")
 
     def get_calibration_equation(self) -> str:
-        return self.CalibrationEquation
+        return self._calibration_equation
 
-    def set_calibration_equation(self, calibration_equation: str):
-        self.CalibrationEquation = calibration_equation
-        return self
+    def set_calibration_equation(self, value: str) -> None:
+        self._calibration_equation = value
 
     def get_calibration_comments(self) -> list:
-        return self.CalibrationComments
+        return self._calibration_comments
 
-    def set_calibration_comments(self, calibration_comment: str, comment_number: int = 0):
-        number_of_comments = len(self.CalibrationComments)
+    def set_calibration_comments(self, calibration_comment: str, comment_number: int = 0) -> None:
+        number_of_comments = len(self.get_calibration_comments())
         if comment_number == 0 and number_of_comments >= 0:
-            self.CalibrationComments.append(calibration_comment)
+            self._calibration_comments.append(calibration_comment)
         elif comment_number <= number_of_comments and number_of_comments > 0:
-            self.CalibrationComments[comment_number] = calibration_comment
+            self._calibration_comments[comment_number] = calibration_comment
         else:
             raise ValueError("The 'calibration_comment' number does not match the number of "
                              "CALIBRATION_COMMENTS lines.")
-        return self
 
     def populate_object(self, general_cal_fields: list):
         for header_line in general_cal_fields:
@@ -114,7 +107,7 @@ class GeneralCalHeader:
 
     def print_object(self) -> str:
         general_header_output = "GENERAL_CAL_HEADER\n"
-        general_header_output += f"  PARAMETER_CODE = {odfUtils.check_string(self.ParameterCode)}\n"
+        general_header_output += f"  PARAMETER_CODE = {odfUtils.check_string(self.get_parameter_code())}\n"
         general_header_output += (f"  CALIBRATION_TYPE = "
                                   f"{odfUtils.check_string(self.get_calibration_type())}\n")
         general_header_output += (f"  CALIBRATION_DATE = "

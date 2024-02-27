@@ -3,28 +3,26 @@ import odfUtils
 
 class HistoryHeader:
     def __init__(self):
-        self.CreationDate = None
-        self.Process = list()
+        self._creation_date = None
+        self._process = []
 
     def get_creation_date(self):
-        return self.CreationDate
+        return self._creation_date
 
-    def set_creation_date(self, creation_date: str):
-        self.CreationDate = creation_date
-        return self
+    def set_creation_date(self, creation_date: str) -> None:
+        self._creation_date = creation_date
 
     def get_process(self):
-        return self.Process
+        return self._process
 
-    def set_process(self, process: str, process_number: int = 0):
-        number_of_processes = len(self.Process)
+    def set_process(self, process: str, process_number: int = 0) -> None:
+        number_of_processes = len(self._process)
         if process_number == 0 and number_of_processes >= 0:
-            self.Process.append(process)
+            self._process.append(process)
         elif process_number <= number_of_processes and number_of_processes > 0:
-            self.Process[process_number-1] = process
+            self._process[process_number-1] = process
         else:
             raise ValueError("The PROCESS number does not match the number of PROCESS lines.")
-        return self
 
     def populate_object(self, history_fields: list):
         for header_line in history_fields:
@@ -41,14 +39,10 @@ class HistoryHeader:
 
     def print_object(self) -> str:
         history_header_output = "HISTORY_HEADER\n"
-        history_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(self.CreationDate)}\n"
-        # print("HISTORY_HEADER")
-        # print("  CREATION_DATE = " + odfUtils.check_datetime(self.CreationDate))
-        if self.Process:
-            for process in self.Process:
+        history_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(self.get_creation_date())}\n"
+        if self.get_process():
+            for process in self.get_process():
                 history_header_output += f"  PROCESS = {process}\n"
-                # print(f"  PROCESS = {process}")
         else:
             history_header_output += "  PROCESS = ''\n"
-            # print("  PROCESS = ''")
         return history_header_output

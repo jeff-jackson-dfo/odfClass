@@ -3,48 +3,43 @@ import odfUtils
 
 class RecordHeader:
     def __init__(self):
-        self.NumCalibration = 0
-        self.NumSwing = 0
-        self.NumHistory = 0
-        self.NumCycle = 0
-        self.NumParam = 0
+        self._num_calibration = 0
+        self._num_swing = 0
+        self._num_history = 0
+        self._num_cycle = 0
+        self._num_param = 0
 
     def get_num_calibration(self) -> int:
-        return self.NumCalibration
+        return self._num_calibration
 
-    def set_num_calibration(self, num_calibration):
-        self.NumCalibration = num_calibration
-        return self
+    def set_num_calibration(self, value: int) -> None:
+        self._num_calibration = value
 
     def get_num_swing(self) -> int:
-        return self.NumSwing
+        return self._num_swing
 
-    def set_num_swing(self, num_swing):
-        self.NumSwing = num_swing
-        return self
+    def set_num_swing(self, value: int) -> None:
+        self._num_swing = value
 
     def get_num_history(self) -> int:
-        return self.NumHistory
+        return self._num_history
 
-    def set_num_history(self, num_history):
-        self.NumHistory = num_history
-        return self
+    def set_num_history(self, value: int) -> None:
+        self._num_history = value
 
     def get_num_cycle(self) -> int:
-        return self.NumCycle
+        return self._num_cycle
 
-    def set_num_cycle(self, num_cycle):
-        self.NumCycle = num_cycle
-        return self
+    def set_num_cycle(self, value: int) -> None:
+        self._num_cycle = value
 
     def get_num_param(self) -> int:
-        return self.NumParam
+        return self._num_param
 
-    def set_num_param(self, num_param):
-        self.NumParam = num_param
-        return self
+    def set_num_param(self, value: int) -> None:
+        self._num_param = value
 
-    def populate_object(self, record_fields: list):
+    def populate_object(self, record_fields: list) -> None:
         for record_line in record_fields:
             tokens = record_line.split('=', maxsplit=1)
             record_dict = odfUtils.list_to_dict(tokens)
@@ -63,13 +58,11 @@ class RecordHeader:
                     case 'NUM_PARAM':
                         self.set_num_param(value)
 
-        return self
-
     def print_object(self) -> str:
         record_header_output = "RECORD_HEADER\n"
-        record_header_output += f"  NUM_CALIBRATION = {odfUtils.check_value(self.NumCalibration)}\n"
-        record_header_output += f"  NUM_HISTORY = {odfUtils.check_value(self.NumHistory)}\n"
-        record_header_output += f"  NUM_SWING = {odfUtils.check_value(self.NumSwing)}\n"
-        record_header_output += f"  NUM_PARAM = {odfUtils.check_value(self.NumParam)}\n"
-        record_header_output += f"  NUM_CYCLE = {odfUtils.check_value(self.NumCycle)}\n"
+        record_header_output += f"  NUM_CALIBRATION = {odfUtils.check_value(self.get_num_calibration())}\n"
+        record_header_output += f"  NUM_HISTORY = {odfUtils.check_value(self.get_num_history())}\n"
+        record_header_output += f"  NUM_SWING = {odfUtils.check_value(self.get_num_swing())}\n"
+        record_header_output += f"  NUM_PARAM = {odfUtils.check_value(self.get_num_param())}\n"
+        record_header_output += f"  NUM_CYCLE = {odfUtils.check_value(self.get_num_cycle())}\n"
         return record_header_output

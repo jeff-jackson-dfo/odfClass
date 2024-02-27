@@ -3,172 +3,152 @@ import odfUtils
 
 class EventHeader:
     def __init__(self):
-        self.DataType = "''"
-        self.EventNumber = "''"
-        self.EventQualifier1 = "''"
-        self.EventQualifier2 = "''"
-        self.CreationDate = None
-        self.OriginalCreationDate = None
-        self.StartDateTime = None
-        self.EndDateTime = None
-        self.InitialLatitude = None
-        self.InitialLongitude = None
-        self.EndLatitude = None
-        self.EndLongitude = None
-        self.MinDepth = None
-        self.MaxDepth = None
-        self.SamplingInterval = None
-        self.Sounding = None
-        self.DepthOffBottom = None
-        self.StationName = "''"
-        self.SetNumber = "''"
-        self.EventComments = list()
+        self._data_type = "''"
+        self._event_number = "''"
+        self._event_qualifier1 = "''"
+        self._event_qualifier2 = "''"
+        self._creation_date = None
+        self._original_creation_date = None
+        self._start_date_time = None
+        self._end_date_time = None
+        self._initial_latitude = None
+        self._initial_longitude = None
+        self._end_latitude = None
+        self._end_longitude = None
+        self._min_depth = None
+        self._max_depth = None
+        self._sampling_interval = None
+        self._sounding = None
+        self._depth_off_bottom = None
+        self._station_name = "''"
+        self._set_number = "''"
+        self._event_comments = []
 
     def get_data_type(self) -> str:
-        return self.DataType
+        return self._data_type
 
-    def set_data_type(self, data_type: str):
-        self.DataType = data_type
-        return self
+    def set_data_type(self, value: str) -> None:
+        self._data_type = value
 
     def get_event_number(self) -> str:
-        return self.EventNumber
+        return self._event_number
 
-    def set_event_number(self, event_number: str):
-        self.EventNumber = event_number
-        return self
+    def set_event_number(self, value: str) -> None:
+        self._event_number = value
 
     def get_event_qualifier1(self) -> str:
-        return self.EventQualifier1
+        return self._event_qualifier1
 
-    def set_event_qualifier1(self, event_qualifier1: str):
-        self.EventQualifier1 = event_qualifier1
-        return self
+    def set_event_qualifier1(self, value: str) -> None:
+        self._event_qualifier1 = value
 
     def get_event_qualifier2(self) -> str:
-        return self.EventQualifier2
+        return self._event_qualifier2
 
-    def set_event_qualifier2(self, event_qualifier2: str):
-        self.EventQualifier2 = event_qualifier2
-        return self
+    def set_event_qualifier2(self, value: str) -> None:
+        self._event_qualifier2 = value
 
     def get_creation_date(self) -> str:
-        return self.CreationDate
+        return self._creation_date
 
-    def set_creation_date(self, creation_date: str):
-        self.CreationDate = creation_date
-        return self
+    def set_creation_date(self, value: str) -> None:
+        self._creation_date = value
 
     def get_original_creation_date(self) -> str:
-        return self.OriginalCreationDate
+        return self._original_creation_date
 
-    def set_original_creation_date(self, original_creation_date: str):
-        self.OriginalCreationDate = original_creation_date
-        return self
+    def set_original_creation_date(self, value: str) -> None:
+        self._original_creation_date = value
 
     def get_start_date_time(self) -> str:
-        return self.StartDateTime
+        return self._start_date_time
 
-    def set_start_date_time(self, start_date_time: str):
-        self.StartDateTime = start_date_time
-        return self
+    def set_start_date_time(self, value: str) -> None:
+        self._start_date_time = value
 
     def get_end_date_time(self) -> str:
-        return self.EndDateTime
+        return self._end_date_time
 
-    def set_end_date_time(self, end_date_time: str):
-        self.EndDateTime = end_date_time
-        return self
+    def set_end_date_time(self, value: str) -> None:
+        self._end_date_time = value
 
     def get_initial_latitude(self) -> float:
-        return self.InitialLatitude
+        return self._initial_latitude
 
-    def set_initial_latitude(self, initial_latitude: float):
-        self.InitialLatitude = initial_latitude
-        return self
+    def set_initial_latitude(self, value: float) -> None:
+        self._initial_latitude = value
 
     def get_initial_longitude(self) -> float:
-        return self.InitialLongitude
+        return self._initial_longitude
 
-    def set_initial_longitude(self, initial_longitude: float):
-        self.InitialLongitude = initial_longitude
-        return self
+    def set_initial_longitude(self, value: float) -> None:
+        self._initial_longitude = value
 
     def get_end_latitude(self) -> float:
-        return self.EndLatitude
+        return self._end_latitude
 
-    def set_end_latitude(self, end_latitude: float):
-        self.EndLatitude = end_latitude
-        return self
+    def set_end_latitude(self, value: float) -> None:
+        self._end_latitude = value
 
     def get_end_longitude(self) -> float:
-        return self.EndLongitude
+        return self._end_longitude
 
-    def set_end_longitude(self, end_longitude: float):
-        self.EndLongitude = end_longitude
-        return self
+    def set_end_longitude(self, value: float) -> None:
+        self._end_longitude = value
 
     def get_min_depth(self) -> float:
-        return self.MinDepth
+        return self._min_depth
 
-    def set_min_depth(self, min_depth: float):
-        self.MinDepth = min_depth
-        return self
+    def set_min_depth(self, value: float) -> None:
+        self._min_depth = value
 
     def get_max_depth(self) -> float:
-        return self.MaxDepth
+        return self._max_depth
 
-    def set_max_depth(self, max_depth: float):
-        self.MaxDepth = max_depth
-        return self
+    def set_max_depth(self, value: float) -> None:
+        self._max_depth = value
 
     def get_sampling_interval(self) -> float:
-        return self.SamplingInterval
+        return self._sampling_interval
 
-    def set_sampling_interval(self, sampling_interval: float):
-        self.SamplingInterval = sampling_interval
-        return self
+    def set_sampling_interval(self, value: float) -> None:
+        self._sampling_interval = value
 
     def get_sounding(self) -> float:
-        return self.Sounding
+        return self._sounding
 
-    def set_sounding(self, sounding: float):
-        self.Sounding = sounding
-        return self
+    def set_sounding(self, value: float) -> None:
+        self._sounding = value
 
     def get_depth_off_bottom(self) -> float:
-        return self.DepthOffBottom
+        return self._depth_off_bottom
 
-    def set_depth_off_bottom(self, depth_off_bottom: float):
-        self.DepthOffBottom = depth_off_bottom
-        return self
+    def set_depth_off_bottom(self, value: float) -> None:
+        self._depth_off_bottom = value
 
     def get_station_name(self) -> str:
-        return self.StationName
+        return self._station_name
 
-    def set_station_name(self, station_name: str):
-        self.StationName = station_name
-        return self
+    def set_station_name(self, value: str) -> None:
+        self._station_name = value
 
     def get_set_number(self) -> str:
-        return self.SetNumber
+        return self._set_number
 
-    def set_set_number(self, set_number: str):
-        self.SetNumber = set_number
-        return self
+    def set_set_number(self, value: str) -> None:
+        self._set_number = value
 
     def get_event_comments(self) -> list:
-        return self.EventComments
+        return self._event_comments
 
-    def set_event_comments(self, event_comment: str, comment_number: int = 0):
-        number_of_comments = len(self.EventComments)
+    def set_event_comments(self, event_comment: str, comment_number: int = 0) -> None:
+        number_of_comments = len(self.get_event_comments())
         if comment_number == 0 and number_of_comments >= 0:
-            self.EventComments.append(event_comment)
+            self._event_comments.append(event_comment)
         elif comment_number <= number_of_comments and number_of_comments > 0:
-            self.EventComments[comment_number] = event_comment
+            self._event_comments[comment_number] = event_comment
         else:
             raise ValueError("The 'event_comment' number does not match the number of EVENT_COMMENTS lines.")
-        return self
 
     def populate_object(self, event_fields: list):
         for header_line in event_fields:
@@ -234,7 +214,8 @@ class EventHeader:
         event_header_output += f"  END_LONGITUDE = {odfUtils.check_long_value(float(self.get_end_longitude())):.6f}\n"
         event_header_output += f"  MIN_DEPTH = {odfUtils.check_value(float(self.get_min_depth())):.2f}\n"
         event_header_output += f"  MAX_DEPTH = {odfUtils.check_value(float(self.get_max_depth())):.2f}\n"
-        event_header_output += f"  SAMPLING_INTERVAL = {odfUtils.check_value(float(self.get_sampling_interval())):.2f}\n"
+        event_header_output += (f"  SAMPLING_INTERVAL = "
+                                f"{odfUtils.check_value(float(self.get_sampling_interval())):.2f}\n")
         event_header_output += f"  SOUNDING = {odfUtils.check_value(float(self.get_sounding())):.2f}\n"
         event_header_output += f"  DEPTH_OFF_BOTTOM = {odfUtils.check_value(float(self.get_depth_off_bottom())):.2f}\n"
         event_header_output += f"  STATION_NAME = {self.get_station_name()}\n"

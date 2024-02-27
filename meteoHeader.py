@@ -4,82 +4,70 @@ import odfUtils
 class MeteoHeader:
 
     def __init__(self):
-        self.AirTemperature = None
-        self.AtmosphericPressure = None
-        self.WindSpeed = None
-        self.WindDirection = None
-        self.SeaState = None
-        self.CloudCover = None
-        self.IceThickness = None
-        self.MeteoComments = list()
+        self._air_temperature = None
+        self._atmospheric_pressure = None
+        self._wind_speed = None
+        self._wind_direction = None
+        self._sea_state = None
+        self._cloud_cover = None
+        self._ice_thickness = None
+        self._meteo_comments = []
 
     def get_air_temperature(self) -> float:
-        return self.AirTemperature
+        return self._air_temperature
 
-    def set_air_temperature(self, air_temperature: float):
-        self.AirTemperature = air_temperature
-        return self
+    def set_air_temperature(self, value: float) -> None:
+        self._air_temperature = value
 
     def get_atmospheric_pressure(self):
-        return self.AtmosphericPressure
+        return self._atmospheric_pressure
 
-    def set_atmospheric_pressure(self, atmospheric_pressure: float):
-        self.AtmosphericPressure = atmospheric_pressure
-        return self
+    def set_atmospheric_pressure(self, value: float) -> None:
+        self._atmospheric_pressure = value
 
     def get_wind_speed(self) -> float:
-        return self.WindSpeed
+        return self._wind_speed
 
-    def set_wind_speed(self, wind_speed):
-        self.WindSpeed = wind_speed
-        return self
+    def set_wind_speed(self, value) -> None:
+        self._wind_speed = value
 
     def get_wind_direction(self) -> float:
-        return self.WindDirection
+        return self._wind_direction
 
-    def set_wind_direction(self, wind_direction):
-        self.WindDirection = wind_direction
-        return self
+    def set_wind_direction(self, value) -> None:
+        self._wind_direction = value
 
     def get_sea_state(self) -> float:
-        return self.SeaState
+        return self._sea_state
 
-    def set_sea_state(self, sea_state):
-        self.SeaState = sea_state
-        return self
+    def set_sea_state(self, value) -> None:
+        self._sea_state = value
 
     def get_cloud_cover(self) -> float:
-        return self.CloudCover
+        return self._cloud_cover
 
-    def set_cloud_cover(self, cloud_cover):
-        self.CloudCover = cloud_cover
-        return self
+    def set_cloud_cover(self, value) -> None:
+        self._cloud_cover = value
 
     def get_ice_thickness(self) -> float:
-        return self.IceThickness
+        return self._ice_thickness
 
-    def set_ice_thickness(self, ice_thickness):
-        self.IceThickness = ice_thickness
-        return self
+    def set_ice_thickness(self, value) -> None:
+        self._ice_thickness = value
 
     def get_meteo_comments(self) -> list:
-        return self.MeteoComments
+        return self._meteo_comments
 
-    def set_meteo_comments(self, meteo_comment, comment_number):
-        number_of_comments = len(self.MeteoComments)
+    def set_meteo_comments(self, meteo_comment, comment_number=0) -> None:
+        number_of_comments = len(self.get_meteo_comments())
         if comment_number == 0 and number_of_comments >= 0:
-            self.MeteoComments.append(meteo_comment)
+            self._meteo_comments.append(meteo_comment)
         elif comment_number <= number_of_comments and number_of_comments > 0:
-            self.MeteoComments[comment_number] = meteo_comment
+            self._meteo_comments[comment_number] = meteo_comment
         else:
             raise ValueError("The 'meteo_comment' number does not match the number of METEO_COMMENTS lines.")
-        return self
 
-    def add_meteo_comments(self, meteo_comment):
-        self.MeteoComments.append(meteo_comment)
-        return self
-
-    def populate_object(self, meteo_fields: list):
+    def populate_object(self, meteo_fields: list) -> None:
         for header_line in meteo_fields:
             tokens = header_line.split('=', maxsplit=1)
             meteo_dict = odfUtils.list_to_dict(tokens)
@@ -102,7 +90,7 @@ class MeteoHeader:
                     case 'ICE_THICKNESS':
                         self.set_ice_thickness(value)
                     case 'METEO_COMMENTS':
-                        self.add_meteo_comments(value)
+                        self.set_meteo_comments(value)
 
     def print_object(self) -> str:
         meteo_header_output = "METEO_HEADER\n"

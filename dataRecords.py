@@ -34,30 +34,30 @@ class DataRecords:
     """
 
     def __init__(self):
-        self.DataFrame = pd.DataFrame()
-        self.ParameterList = list()
-        self.PrintFormats = dict()
+        self._data_frame = pd.DataFrame()
+        self._parameter_list = []
+        self._print_formats = {}
 
     def get_data_frame(self) -> pd.DataFrame:
-        return self.DataFrame
+        return self._data_frame
 
     def set_data_frame(self, data_frame):
-        self.DataFrame = data_frame
-
-    def get_data_record_count(self) -> int:
-        return self.DataFrame.shape[0]
+        self._data_frame = data_frame
 
     def get_parameter_list(self) -> list:
-        return self.ParameterList
+        return self._parameter_list
 
     def set_parameter_list(self, parameters: list):
-        self.ParameterList = parameters
+        self._parameter_list = parameters
 
     def get_print_formats(self) -> dict:
-        return self.PrintFormats
+        return self._print_formats
 
     def set_print_formats(self, formats: dict):
-        self.PrintFormats = formats
+        self._print_formats = formats
+
+    def __len__(self):
+        return len(self._data_frame)
 
     def populate_object(self, parameter_list: list, data_formats: dict, data_lines_list: list):
         data_record_list = [odfUtils.split_string_with_quotes(s) for s in data_lines_list]

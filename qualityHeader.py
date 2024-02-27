@@ -7,11 +7,11 @@ class QualityHeader:
 
     Attributes:
     -----------
-    QualityDate : string
+    _quality_date : string
         the date time when the Quality Header was added to the ODF object
-    QualityTests : list of strings
+    _quality_tests : list of strings
         list of quality control tests run on the ODF object's data
-    QualityTests : list of strings
+    _quality_comments : list of strings
         list of comments regarding the quality control carried out on the ODF object's data
 
     Methods:
@@ -30,50 +30,39 @@ class QualityHeader:
     """
 
     def __init__(self):
-        self.QualityDate = None
-        self.QualityTests = list()
-        self.QualityComments = list()
+        self._quality_date = None
+        self._quality_tests = []
+        self._quality_comments = []
 
     def get_quality_date(self):
-        return self.QualityDate
+        return self._quality_date
 
-    def set_quality_date(self, quality_date: str):
-        self.QualityDate = quality_date
-        return self
+    def set_quality_date(self, quality_date: str) -> None:
+        self._quality_date = quality_date
 
     def get_quality_tests(self):
-        return self.QualityTests
+        return self._quality_tests
 
-    def set_quality_tests(self, quality_test: str, test_number: int):
-        number_of_tests = len(self.QualityTests)
+    def set_quality_tests(self, quality_test: str, test_number: int = 0) -> None:
+        number_of_tests = len(self.get_quality_tests())
         if test_number == 0 and number_of_tests >= 0:
-            self.QualityTests.append(quality_test)
+            self._quality_tests.append(quality_test)
         elif test_number <= number_of_tests and number_of_tests > 0:
-            self.QualityTests[test_number] = quality_test
+            self._quality_tests[test_number] = quality_test
         else:
             raise ValueError("The 'quality_test' number does not match the number of QUALITY_TESTS lines.")
-        return self
-
-    def add_quality_tests(self, quality_test: str):
-        self.QualityTests.append(quality_test)
-        return self
 
     def get_quality_comments(self):
-        return self.QualityComments
+        return self._quality_comments
 
-    def set_quality_comments(self, quality_comment: str, comment_number: int = 0):
-        number_of_comments = len(self.QualityComments)
+    def set_quality_comments(self, quality_comment: str, comment_number: int = 0) -> None:
+        number_of_comments = len(self.get_quality_comments())
         if comment_number == 0 and number_of_comments >= 0:
-            self.QualityComments.append(quality_comment)
+            self._quality_comments.append(quality_comment)
         elif comment_number <= number_of_comments and number_of_comments > 0:
-            self.QualityComments[comment_number] = quality_comment
+            self._quality_comments[comment_number] = quality_comment
         else:
             raise ValueError("The 'quality_comment' number does not match the number of QUALITY_COMMENTS lines.")
-        return self
-
-    def add_quality_comments(self, quality_comment):
-        self.QualityComments.append(quality_comment)
-        return self
 
     def populate_object(self, quality_fields: list):
         for header_line in quality_fields:
@@ -86,15 +75,15 @@ class QualityHeader:
                     case 'QUALITY_DATE':
                         self.set_quality_date(value)
                     case 'QUALITY_TESTS':
-                        self.add_quality_tests(value)
+                        self.set_quality_tests(value)
                     case 'QUALITY_COMMENTS':
-                        self.add_quality_comments(value)
+                        self.set_quality_comments(value)
 
     def print_object(self) -> str:
         quality_header_output = "QUALITY_HEADER\n"
-        quality_header_output += f"  QUALITY_DATE = {odfUtils.check_string(self.QualityDate)}\n"
-        for quality_test in self.QualityTests:
+        quality_header_output += f"  QUALITY_DATE = {odfUtils.check_string(self.get_quality_date())}\n"
+        for quality_test in self.get_quality_tests():
             quality_header_output += f"  QUALITY_TESTS = {quality_test}\n"
-        for quality_comment in self.QualityComments:
+        for quality_comment in self.get_quality_comments():
             quality_header_output += f"  QUALITY_COMMENTS = {quality_comment}\n"
         return quality_header_output

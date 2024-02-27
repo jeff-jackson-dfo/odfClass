@@ -49,141 +49,126 @@ class ParameterHeader:
     """
 
     def __init__(self):
-        self.Type = "''"
-        self.Name = "''"
-        self.Units = "''"
-        self.Code = "''"
-        self.WmoCode = "''"
-        self.NullValue = None
-        self.PrintFieldOrder = None
-        self.PrintFieldWidth = None
-        self.PrintDecimalPlaces = None
-        self.AngleOfSection = None
-        self.MagneticVariation = None
-        self.Depth = None
-        self.MinimumValue = None
-        self.MaximumValue = None
-        self.NumberValid = None
-        self.NumberNull = None
+        self._type = "''"
+        self._name = "''"
+        self._units = "''"
+        self._code = "''"
+        self._wmo_code = "''"
+        self._null_value = None
+        self._print_field_order = None
+        self._print_field_width = None
+        self._print_decimal_places = None
+        self._angle_of_section = None
+        self._magnetic_variation = None
+        self._depth = None
+        self._minimum_value = None
+        self._maximum_value = None
+        self._number_valid = None
+        self._number_null = None
 
     def __str__(self):
-        return f'Parameter named "{self.Name}" has code "{self.Code}", type "{self.Type}", and units "{self.Units}".'
+        return (f'Parameter named "{self.get_name()}" has code "{self.get_code()}", type "{self.get_type()}'
+                f'", and units "{self.get_units()}".')
 
     def get_type(self) -> str:
-        return self.Type
+        return self._type
 
-    def set_type(self, data_type):
-        self.Type = data_type
-        return self
+    def set_type(self, value) -> None:
+        self._type = value
 
     def get_name(self) -> str:
-        return self.Name
+        return self._name
 
-    def set_name(self, name):
-        self.Name = name
-        return self
+    def set_name(self, value) -> None:
+        self._name = value
 
     def get_units(self) -> str:
-        return self.Units
+        return self._units
 
-    def set_units(self, units):
-        self.Units = units
-        return self
+    def set_units(self, value) -> None:
+        self._units = value
 
     def get_code(self) -> str:
-        return self.Code
+        return self._code
 
     '''
     TODO: this function may have to update other headers that reference the parameter code. Write the code to handle 
     these situations.
     '''
-    def set_code(self, code):
-        self.Code = code
-        return self
+    def set_code(self, value) -> None:
+        self._code = value
 
     def get_wmo_code(self) -> str:
-        return self.WmoCode
+        return self._wmo_code
 
-    def set_wmo_code(self, wmo_code):
-        self.WmoCode = wmo_code
-        return self
+    def set_wmo_code(self, value) -> None:
+        self._wmo_code = value
 
     def get_null_value(self) -> float:
-        return self.NullValue
+        return self._null_value
 
-    def set_null_value(self, null_value):
-        self.NullValue = null_value
-        return self
+    def set_null_value(self, value) -> None:
+        self._null_value = value
 
     def get_print_field_order(self) -> int:
-        return self.PrintFieldOrder
+        return self._print_field_order
 
-    def set_print_field_order(self, print_field_order):
-        self.PrintFieldOrder = print_field_order
-        return self
+    def set_print_field_order(self, value) -> None:
+        self._print_field_order = value
 
     def get_print_field_width(self) -> int:
-        return self.PrintFieldWidth
+        return self._print_field_width
 
-    def set_print_field_width(self, print_field_width):
-        self.PrintFieldWidth = print_field_width
-        return self
+    def set_print_field_width(self, value) -> None:
+        self._print_field_width = value
 
     def get_print_decimal_places(self) -> int:
-        return self.PrintDecimalPlaces
+        return self._print_decimal_places
 
-    def set_print_decimal_places(self, print_decimal_places):
-        self.PrintDecimalPlaces = print_decimal_places
-        return self
+    def set_print_decimal_places(self, value) -> None:
+        self._print_decimal_places = value
 
     def get_angle_of_section(self) -> float:
-        return self.AngleOfSection
+        return self._angle_of_section
 
-    def set_angle_of_section(self, angle_of_section):
-        self.AngleOfSection = angle_of_section
-        return self
+    def set_angle_of_section(self, value) -> None:
+        self._angle_of_section = value
 
     def get_magnetic_variation(self) -> float:
-        return self.MagneticVariation
+        return self._magnetic_variation
 
-    def set_magnetic_variation(self, magnetic_variation):
-        self.MagneticVariation = magnetic_variation
-        return self
+    def set_magnetic_variation(self, value) -> None:
+        self._magnetic_variation = value
 
     def get_depth(self) -> float:
-        return self.Depth
+        return self._depth
 
-    def set_depth(self, depth):
-        self.Depth = depth
-        return self
+    def set_depth(self, value) -> None:
+        self._depth = value
 
     def get_minimum_value(self) -> float:
-        return self.MinimumValue
+        return self._minimum_value
 
-    def set_minimum_value(self, minimum_value):
-        self.MinimumValue = minimum_value
-        return self
+    def set_minimum_value(self, value) -> None:
+        self._minimum_value = value
 
     def get_maximum_value(self) -> float:
-        return self.MaximumValue
+        return self._maximum_value
 
-    def set_maximum_value(self, maximum_value):
-        self.MaximumValue = maximum_value
-        return self
+    def set_maximum_value(self, value) -> None:
+        self._maximum_value = value
 
     def get_number_valid(self) -> int:
-        return self.NumberValid
+        return self._number_valid
 
-    def set_number_valid(self, number_valid):
-        self.NumberValid = number_valid
-        return self
+    def set_number_valid(self, value) -> None:
+        self._number_valid = value
 
     def get_number_null(self) -> int:
-        return self.NumberNull
+        return self._number_null
 
-    def set_number_null(self, number_null):
-        self.NumberNull = number_null
-        return self
+    def set_number_null(self, value) -> None:
+        self._number_null = value
 
     def populate_object(self, parameter_fields: list):
         for header_line in parameter_fields:

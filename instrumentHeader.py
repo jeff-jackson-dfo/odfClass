@@ -31,38 +31,34 @@ class InstrumentHeader:
 
     """
     def __init__(self):
-        self.InstrumentType = ""
-        self.Model = ""
-        self.SerialNumber = ""
-        self.Description = ""
+        self._instrument_type = ""
+        self._model = ""
+        self._serial_number = ""
+        self._description = ""
 
     def get_instrument_type(self) -> str:
-        return self.InstrumentType
+        return self._instrument_type
 
-    def set_instrument_type(self, instrument_type: str):
-        self.InstrumentType = instrument_type
-        return self
+    def set_instrument_type(self, value: str) -> None:
+        self._instrument_type = value
 
     def get_model(self) -> str:
-        return self.Model
+        return self._model
 
-    def set_model(self, model: str):
-        self.Model = model
-        return self
+    def set_model(self, value: str) -> None:
+        self._model = value
 
     def get_serial_number(self) -> str:
-        return self.SerialNumber
+        return self._serial_number
 
-    def set_serial_number(self, serial_number: str):
-        self.SerialNumber = serial_number
-        return self
+    def set_serial_number(self, value: str) -> None:
+        self._serial_number = value
 
     def get_description(self) -> str:
-        return self.Description
+        return self._description
 
-    def set_description(self, description: str):
-        self.Description = description
-        return self
+    def set_description(self, value: str) -> None:
+        self._description = value
 
     def populate_object(self, instrument_fields: list):
         for header_line in instrument_fields:
@@ -84,13 +80,8 @@ class InstrumentHeader:
     
     def print_object(self) -> str:
         instrument_header_output = "INSTRUMENT_HEADER\n"
-        instrument_header_output += f"  INST_TYPE = {odfUtils.check_string(self.InstrumentType)}\n"
-        instrument_header_output += f"  MODEL = {odfUtils.check_string(self.Model)}\n"
-        instrument_header_output += f"  SERIAL_NUMBER = {odfUtils.check_string(self.SerialNumber)}\n"
-        instrument_header_output += f"  DESCRIPTION = {odfUtils.check_string(self.Description)}\n"
-        # print("INSTRUMENT_HEADER")
-        # print(f"  INST_TYPE = {odfUtils.check_string(self.InstrumentType)}")
-        # print(f"  MODEL = {odfUtils.check_string(self.Model)}")
-        # print(f"  SERIAL_NUMBER = {odfUtils.check_string(self.SerialNumber)}")
-        # print(f"  DESCRIPTION = {odfUtils.check_string(self.Description)}")
+        instrument_header_output += f"  INST_TYPE = {odfUtils.check_string(self.get_instrument_type())}\n"
+        instrument_header_output += f"  MODEL = {odfUtils.check_string(self.get_model())}\n"
+        instrument_header_output += f"  SERIAL_NUMBER = {odfUtils.check_string(self.get_serial_number())}\n"
+        instrument_header_output += f"  DESCRIPTION = {odfUtils.check_string(self.get_description())}\n"
         return instrument_header_output
