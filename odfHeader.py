@@ -318,7 +318,7 @@ if __name__ == "__main__":
     odf.cruise_header.set_end_date('22-10-2010 00:00:00')
     odf.cruise_header.set_platform('HUDSON')
     odf.event_header.set_station_name('AR7W_15')
-    odf.instrument_header.set_instrument_type('MELONS')
+    # Add an empty General_Cal_Header for testing purposes
     gch = generalCalHeader.GeneralCalHeader()
     odf.general_cal_headers.append(gch)
 
