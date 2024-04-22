@@ -68,6 +68,7 @@ class PolynomialCalHeader:
                     case 'APPLICATION_DATE':
                         self.set_application_date(value)
                     case 'NUMBER_OF_COEFFICIENTS':
+                        value = int(value)
                         self.set_number_of_coefficients(value)
                     case 'COEFFICIENTS':
                         coefficient_list = value.split()
