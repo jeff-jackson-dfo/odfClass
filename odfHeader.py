@@ -108,19 +108,21 @@ class OdfHeader:
                     self.set_odf_specification_version(value.strip())
         return self
 
-    def print_object(self, file_version: float = 2) -> str:
+    def print_object(self, file_version: float = 2, history_comment: str = '') -> str:
         """
         Prints the ODF_HEADER of the OdfHeader object
 
-        Parameters
-        ----------
-        file_version : float, optional
+        Args:
+            file_version : float, optional
+            history_comment: str, optional
         """
 
         # Add history header to record when the ODF file was created.
         hh = historyHeader.HistoryHeader()
         hh.set_creation_date(f"'{odfUtils.get_current_date_time()}'")
         hh.set_process("'Initial creation of this ODF file.'")
+        if history_comment != '':
+            hh.add_process(history_comment)
         self.history_headers.append(hh)
 
         odf_output = ""
@@ -322,8 +324,10 @@ if __name__ == "__main__":
     gch = generalCalHeader.GeneralCalHeader()
     odf.general_cal_headers.append(gch)
 
-    # odf_file_text = odf.print_object(file_version=3)
-    odf_file_text = odf.print_object(file_version=2)
+    # odf_file_text = odf.print_object(file_version=3, history_comment='Jeff Jackson made the recent modifications to '
+    #                                                                  'this file.')
+    odf_file_text = odf.print_object(file_version=2, history_comment='Jeff Jackson made the recent modifications to '
+                                                                     'this file.')
 
     spec = odf.get_file_specification().strip("'")
     out_file = f"{spec}.ODF"

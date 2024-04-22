@@ -26,6 +26,10 @@ class HistoryHeader:
         else:
             raise ValueError("The PROCESS number does not match the number of PROCESS lines.")
 
+    def add_process(self, process: str) -> None:
+        process = process.strip("\'")
+        self._process.append(f"'{process}'")
+
     def populate_object(self, history_fields: list):
         for header_line in history_fields:
             tokens = header_line.split('=', maxsplit=1)
