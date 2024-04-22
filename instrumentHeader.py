@@ -40,25 +40,29 @@ class InstrumentHeader:
         return self._instrument_type
 
     def set_instrument_type(self, value: str) -> None:
-        self._instrument_type = value
+        value = value.strip("\'")
+        self._instrument_type = f"'{value}'"
 
     def get_model(self) -> str:
         return self._model
 
     def set_model(self, value: str) -> None:
-        self._model = value
+        value = value.strip("\'")
+        self._model = f"'{value}'"
 
     def get_serial_number(self) -> str:
         return self._serial_number
 
     def set_serial_number(self, value: str) -> None:
-        self._serial_number = value
+        value = value.strip("\'")
+        self._serial_number = f"'{value}'"
 
     def get_description(self) -> str:
         return self._description
 
     def set_description(self, value: str) -> None:
-        self._description = value
+        value = value.strip("\'")
+        self._description = f"'{value}'"
 
     def populate_object(self, instrument_fields: list):
         for header_line in instrument_fields:

@@ -28,49 +28,57 @@ class EventHeader:
         return self._data_type
 
     def set_data_type(self, value: str) -> None:
-        self._data_type = value
+        value = value.strip("\'")
+        self._data_type = f"'{value}'"
 
     def get_event_number(self) -> str:
         return self._event_number
 
     def set_event_number(self, value: str) -> None:
-        self._event_number = value
+        value = value.strip("\'")
+        self._event_number = f"'{value}'"
 
     def get_event_qualifier1(self) -> str:
         return self._event_qualifier1
 
     def set_event_qualifier1(self, value: str) -> None:
-        self._event_qualifier1 = value
+        value = value.strip("\'")
+        self._event_qualifier1 = f"'{value}'"
 
     def get_event_qualifier2(self) -> str:
         return self._event_qualifier2
 
     def set_event_qualifier2(self, value: str) -> None:
-        self._event_qualifier2 = value
+        value = value.strip("\'")
+        self._event_qualifier2 = f"'{value}'"
 
     def get_creation_date(self) -> str:
         return self._creation_date
 
     def set_creation_date(self, value: str) -> None:
-        self._creation_date = value
+        value = value.strip("\'")
+        self._creation_date = f"'{value}'"
 
     def get_original_creation_date(self) -> str:
         return self._original_creation_date
 
     def set_original_creation_date(self, value: str) -> None:
-        self._original_creation_date = value
+        value = value.strip("\'")
+        self._original_creation_date = f"'{value}'"
 
     def get_start_date_time(self) -> str:
         return self._start_date_time
 
     def set_start_date_time(self, value: str) -> None:
-        self._start_date_time = value
+        value = value.strip("\'")
+        self._start_date_time = f"'{value}'"
 
     def get_end_date_time(self) -> str:
         return self._end_date_time
 
     def set_end_date_time(self, value: str) -> None:
-        self._end_date_time = value
+        value = value.strip("\'")
+        self._end_date_time = f"'{value}'"
 
     def get_initial_latitude(self) -> float:
         return self._initial_latitude
@@ -130,23 +138,26 @@ class EventHeader:
         return self._station_name
 
     def set_station_name(self, value: str) -> None:
-        self._station_name = value
+        value = value.strip("\'")
+        self._station_name = f"'{value}'"
 
     def get_set_number(self) -> str:
         return self._set_number
 
     def set_set_number(self, value: str) -> None:
-        self._set_number = value
+        value = value.strip("\'")
+        self._set_number = f"'{value}'"
 
     def get_event_comments(self) -> list:
         return self._event_comments
 
     def set_event_comments(self, event_comment: str, comment_number: int = 0) -> None:
+        event_comment = event_comment.strip("\'")
         number_of_comments = len(self.get_event_comments())
         if comment_number == 0 and number_of_comments >= 0:
-            self._event_comments.append(event_comment)
+            self._event_comments.append(f"'{event_comment}'")
         elif comment_number <= number_of_comments and number_of_comments > 0:
-            self._event_comments[comment_number] = event_comment
+            self._event_comments[comment_number] = f"'{event_comment}'"
         else:
             raise ValueError("The 'event_comment' number does not match the number of EVENT_COMMENTS lines.")
 
@@ -192,6 +203,10 @@ class EventHeader:
                         self.set_sounding(value)
                     case 'DEPTH_OFF_BOTTOM':
                         self.set_depth_off_bottom(value)
+                    case 'STATION_NAME':
+                        self.set_station_name(value)
+                    case 'SET_NUMBER':
+                        self.set_set_number(value)
                     case 'EVENT_COMMENTS':
                         self.set_event_comments(value)
         return self
@@ -202,7 +217,7 @@ class EventHeader:
         event_header_output += f"  EVENT_NUMBER = {self.get_event_number()}\n"
         event_header_output += f"  EVENT_QUALIFIER1 = {self.get_event_qualifier1()}\n"
         event_header_output += f"  EVENT_QUALIFIER2 = {self.get_event_qualifier2()}\n"
-        event_header_output += f"  CREATION_DATE = '{odfUtils.check_datetime(odfUtils.get_current_date_time())}'\n"
+        event_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(odfUtils.get_current_date_time())}\n"
         event_header_output += f"  ORIG_CREATION_DATE = {odfUtils.check_datetime(self.get_creation_date())}\n"
         event_header_output += f"  START_DATE_TIME = {odfUtils.check_datetime(self.get_start_date_time())}\n"
         event_header_output += f"  END_DATE_TIME = {odfUtils.check_datetime(self.get_end_date_time())}\n"

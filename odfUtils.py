@@ -52,7 +52,7 @@ def split_lines_after_data(all_data_lines) -> pandas.DataFrame:
 def get_current_date_time() -> str:
     dt = datetime.datetime.now()
     dts = dt.strftime("%d-%b-%Y %H:%M:%S.%f").upper()
-    return dts[:-4]
+    return f"'{dts[:-4]}'"
 
 
 def check_value(value: float) -> float:

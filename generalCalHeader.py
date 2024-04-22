@@ -3,38 +3,42 @@ import odfUtils
 
 class GeneralCalHeader:
     def __init__(self):
-        self._parameter_code = None
-        self._calibration_type = None
-        self._calibration_date = None
-        self._application_date = None
+        self._parameter_code = "''"
+        self._calibration_type = "''"
+        self._calibration_date = "''"
+        self._application_date = "''"
         self._number_coefficients = None
         self._coefficients = []
-        self._calibration_equation = None
+        self._calibration_equation = "''"
         self._calibration_comments = []
 
     def get_parameter_code(self) -> str:
         return self._parameter_code
 
     def set_parameter_code(self, value: str) -> None:
-        self._parameter_code = value
+        value = value.strip("\'")
+        self._parameter_code = f"'{value}'"
 
     def get_calibration_type(self) -> str:
         return self._calibration_type
 
     def set_calibration_type(self, value: str) -> None:
-        self._calibration_type = value
+        value = value.strip("\'")
+        self._calibration_type = f"'{value}'"
 
     def get_calibration_date(self) -> str:
         return self._calibration_date
 
     def set_calibration_date(self, value: str) -> None:
-        self._calibration_date = value
+        value = value.strip("\'")
+        self._calibration_date = f"'{value}'"
 
     def get_application_date(self) -> str:
         return self._application_date
 
     def set_application_date(self, value: str) -> None:
-        self._application_date = value
+        value = value.strip("\'")
+        self._application_date = f"'{value}'"
 
     def get_number_of_general_coefficients(self) -> int:
         return self._number_coefficients
@@ -62,17 +66,19 @@ class GeneralCalHeader:
         return self._calibration_equation
 
     def set_calibration_equation(self, value: str) -> None:
-        self._calibration_equation = value
+        value = value.strip("\'")
+        self._calibration_equation = f"'{value}'"
 
     def get_calibration_comments(self) -> list:
         return self._calibration_comments
 
     def set_calibration_comments(self, calibration_comment: str, comment_number: int = 0) -> None:
+        calibration_comment = calibration_comment.strip("\'")
         number_of_comments = len(self.get_calibration_comments())
         if comment_number == 0 and number_of_comments >= 0:
-            self._calibration_comments.append(calibration_comment)
+            self._calibration_comments.append(f"'{calibration_comment}'")
         elif comment_number <= number_of_comments and number_of_comments > 0:
-            self._calibration_comments[comment_number] = calibration_comment
+            self._calibration_comments[comment_number] = f"'{calibration_comment}'"
         else:
             raise ValueError("The 'calibration_comment' number does not match the number of "
                              "CALIBRATION_COMMENTS lines.")

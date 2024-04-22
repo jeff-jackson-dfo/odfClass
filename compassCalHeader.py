@@ -3,9 +3,9 @@ import odfUtils
 
 class CompassCalHeader:
     def __init__(self):
-        self._parameter_code = None
-        self._calibration_date = None
-        self._application_date = None
+        self._parameter_code = "''"
+        self._calibration_date = "''"
+        self._application_date = "''"
         self._directions = []
         self._corrections = []
 
@@ -13,19 +13,22 @@ class CompassCalHeader:
         return self._parameter_code
 
     def set_parameter_code(self, value: str) -> None:
-        self._parameter_code = value
+        value = value.strip("\'")
+        self._parameter_code = f"'{value}'"
 
     def get_calibration_date(self) -> str:
         return self._calibration_date
 
     def set_calibration_date(self, value: str) -> None:
-        self._calibration_date = value
+        value = value.strip("\'")
+        self._calibration_date = f"'{value}'"
 
     def get_application_date(self) -> str:
         return self._application_date
 
     def set_application_date(self, value: str) -> None:
-        self._application_date = value
+        value = value.strip("\'")
+        self._application_date = f"'{value}'"
 
     def get_directions(self) -> list:
         return self._directions
@@ -62,6 +65,8 @@ class CompassCalHeader:
             tokens = header_line.split('=', maxsplit=1)
             compass_dict = odfUtils.list_to_dict(tokens)
             for key, value in compass_dict.items():
+                key = key.strip()
+                value = value.strip()
                 match key:
                     case 'PARAMETER_NAME':
                         self.set_parameter_code(value)

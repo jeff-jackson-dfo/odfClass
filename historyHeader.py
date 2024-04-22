@@ -9,18 +9,20 @@ class HistoryHeader:
     def get_creation_date(self):
         return self._creation_date
 
-    def set_creation_date(self, creation_date: str) -> None:
-        self._creation_date = creation_date
+    def set_creation_date(self, value: str) -> None:
+        value = value.strip("\'")
+        self._creation_date = f"'{value}'"
 
     def get_process(self):
         return self._process
 
     def set_process(self, process: str, process_number: int = 0) -> None:
+        process = process.strip("\'")
         number_of_processes = len(self._process)
         if process_number == 0 and number_of_processes >= 0:
-            self._process.append(process)
+            self._process.append(f"'{process}'")
         elif process_number <= number_of_processes and number_of_processes > 0:
-            self._process[process_number-1] = process
+            self._process[process_number-1] = f"'{process}'"
         else:
             raise ValueError("The PROCESS number does not match the number of PROCESS lines.")
 

@@ -13,19 +13,22 @@ class PolynomialCalHeader:
         return self._parameter_code
 
     def set_parameter_code(self, value: str) -> None:
-        self._parameter_code = value
+        value = value.strip("\'")
+        self._parameter_code = f"'{value}'"
 
     def get_calibration_date(self) -> str:
         return self._calibration_date
 
     def set_calibration_date(self, value: str) -> None:
-        self._calibration_date = value
+        value = value.strip("\'")
+        self._calibration_date = f"'{value}'"
 
     def get_application_date(self) -> str:
         return self._application_date
 
     def set_application_date(self, value: str) -> None:
-        self._application_date = value
+        value = value.strip("\'")
+        self._application_date = f"'{value}'"
 
     def get_number_of_coefficients(self) -> int:
         return self._number_coefficients

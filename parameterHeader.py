@@ -74,19 +74,22 @@ class ParameterHeader:
         return self._type
 
     def set_type(self, value) -> None:
-        self._type = value
+        value = value.strip("\'")
+        self._type = f"'{value}'"
 
     def get_name(self) -> str:
         return self._name
 
     def set_name(self, value) -> None:
-        self._name = value
+        value = value.strip("\'")
+        self._name = f"'{value}'"
 
     def get_units(self) -> str:
         return self._units
 
     def set_units(self, value) -> None:
-        self._units = value
+        value = value.strip("\'")
+        self._units = f"'{value}'"
 
     def get_code(self) -> str:
         return self._code
@@ -96,13 +99,15 @@ class ParameterHeader:
     these situations.
     '''
     def set_code(self, value) -> None:
-        self._code = value
+        value = value.strip("\'")
+        self._code = f"'{value}'"
 
     def get_wmo_code(self) -> str:
         return self._wmo_code
 
     def set_wmo_code(self, value) -> None:
-        self._wmo_code = value
+        value = value.strip("\'")
+        self._wmo_code = f"'{value}'"
 
     def get_null_value(self) -> float:
         return self._null_value
