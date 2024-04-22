@@ -1,0 +1,130 @@
+import odfUtils
+
+
+class CruiseHeader:
+    def __init__(self):
+        self._country_institute_code = None
+        self._cruise_number = "''"
+        self._organization = "''"
+        self._chief_scientist = "''"
+        self._start_date = None
+        self._end_date = None
+        self._platform = "''"
+        self._area_of_operation = "''"
+        self._cruise_name = "''"
+        self._cruise_description = "''"
+
+    def get_country_institute_code(self) -> int:
+        return self._country_institute_code
+
+    def set_country_institute_code(self, value: int) -> None:
+        self._country_institute_code = value
+
+    def get_cruise_number(self) -> str:
+        return self._cruise_number
+
+    def set_cruise_number(self, value: str) -> None:
+        value = value.strip("\'")
+        self._cruise_number = f"'{value}'"
+
+    def get_organization(self) -> str:
+        return self._organization
+
+    def set_organization(self, value: str) -> None:
+        value = value.strip("\'")
+        self._organization = f"'{value}'"
+
+    def get_chief_scientist(self) -> str:
+        return self._chief_scientist
+
+    def set_chief_scientist(self, value: str) -> None:
+        value = value.strip("\'")
+        self._chief_scientist = f"'{value}'"
+
+    def get_start_date(self) -> str:
+        return self._start_date
+
+    def set_start_date(self, value: str) -> None:
+        value = value.strip("\'")
+        self._start_date = f"'{value}'"
+
+    def get_end_date(self) -> str:
+        return self._end_date
+
+    def set_end_date(self, value: str) -> None:
+        value = value.strip("\'")
+        self._end_date = f"'{value}'"
+
+    def get_platform(self) -> str:
+        return self._platform
+
+    def set_platform(self, value: str) -> None:
+        value = value.strip("\'")
+        self._platform = f"'{value}'"
+
+    def get_area_of_operation(self) -> str:
+        return self._area_of_operation
+
+    def set_area_of_operation(self, value: str) -> None:
+        value = value.strip("\'")
+        self._area_of_operation = f"'{value}'"
+
+    def get_cruise_name(self) -> str:
+        return self._cruise_name
+
+    def set_cruise_name(self, value: str) -> None:
+        value = value.strip("\'")
+        self._cruise_name = f"'{value}'"
+
+    def get_cruise_description(self) -> str:
+        return self._cruise_description
+
+    def set_cruise_description(self, value: str) -> None:
+        value = value.strip("\'")
+        self._cruise_description = f"'{value}'"
+
+    def populate_object(self, cruise_fields: list):
+        for header_line in cruise_fields:
+            tokens = header_line.split('=', maxsplit=1)
+            cruise_dict = odfUtils.list_to_dict(tokens)
+            for key, value in cruise_dict.items():
+                key = key.strip()
+                value = value.strip()
+                match key:
+                    case 'COUNTRY_INSTITUTE_CODE':
+                        self.set_country_institute_code(value)
+                    case 'CRUISE_NUMBER':
+                        self.set_cruise_number(value)
+                    case 'ORGANIZATION':
+                        self.set_organization(value)
+                    case 'CHIEF_SCIENTIST':
+                        self.set_chief_scientist(value)
+                    case 'START_DATE':
+                        self.set_start_date(value)
+                    case 'END_DATE':
+                        self.set_end_date(value)
+                    case 'PLATFORM':
+                        self.set_platform(value)
+                    case 'AREA_OF_OPERATION':
+                        self.set_area_of_operation(value)
+                    case 'CRUISE_NAME':
+                        self.set_cruise_name(value)
+                    case 'CRUISE_DESCRIPTION':
+                        self.set_cruise_description(value)
+        return self
+
+    def print_object(self, file_version: int = 2) -> str:
+        cruise_header_output = "CRUISE_HEADER\n"
+        cruise_header_output += (f"  COUNTRY_INSTITUTE_CODE = "
+                                 f"{odfUtils.check_value(self.get_country_institute_code())}\n")
+        cruise_header_output += f"  CRUISE_NUMBER = {self.get_cruise_number()}\n"
+        cruise_header_output += f"  ORGANIZATION = {self.get_organization()}\n"
+        cruise_header_output += f"  CHIEF_SCIENTIST = {self.get_chief_scientist()}\n"
+        cruise_header_output += f"  START_DATE = {odfUtils.check_datetime(self.get_start_date())}\n"
+        cruise_header_output += f"  END_DATE = {odfUtils.check_datetime(self.get_end_date())}\n"
+        cruise_header_output += f"  PLATFORM = {self.get_platform()}\n"
+        if file_version == 3:
+            cruise_header_output += f"  AREA_OF_OPERATION = {self.get_area_of_operation()}\n"
+        cruise_header_output += f"  CRUISE_NAME = {self.get_cruise_name()}\n"
+        cruise_header_output += f"  CRUISE_DESCRIPTION = {self.get_cruise_description()}\n"
+        return cruise_header_output
