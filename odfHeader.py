@@ -314,8 +314,8 @@ if __name__ == "__main__":
     # Modify some of the odf metadata
     odf.cruise_header.set_organization('DFO BIO')
     odf.cruise_header.set_chief_scientist('GLEN HARRISON')
-    odf.cruise_header.set_start_date('05-10-2010 00:00:00')
-    odf.cruise_header.set_end_date('22-10-2010 00:00:00')
+    odf.cruise_header.set_start_date('05-OCT-2010 00:00:00')
+    odf.cruise_header.set_end_date('22-OCT-2010 00:00:00')
     odf.cruise_header.set_platform('HUDSON')
     odf.event_header.set_station_name('AR7W_15')
     # Add an empty General_Cal_Header for testing purposes

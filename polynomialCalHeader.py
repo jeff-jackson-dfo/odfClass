@@ -6,7 +6,7 @@ class PolynomialCalHeader:
         self._parameter_code = None
         self._calibration_date = None
         self._application_date = None
-        self._number_coefficients = 0
+        self._number_of_coefficients = 0
         self._coefficients = []
 
     def get_parameter_code(self) -> str:
@@ -31,10 +31,10 @@ class PolynomialCalHeader:
         self._application_date = f"'{value}'"
 
     def get_number_of_coefficients(self) -> int:
-        return self._number_coefficients
+        return self._number_of_coefficients
 
     def set_number_of_coefficients(self, value: int) -> None:
-        self._number_coefficients = value
+        self._number_of_coefficients = value
 
     def get_coefficients(self) -> list:
         return self._coefficients
@@ -67,7 +67,7 @@ class PolynomialCalHeader:
                         self.set_calibration_date(value)
                     case 'APPLICATION_DATE':
                         self.set_application_date(value)
-                    case 'NUMBER_COEFFICIENTS':
+                    case 'NUMBER_OF_COEFFICIENTS':
                         self.set_number_of_coefficients(value)
                     case 'COEFFICIENTS':
                         coefficient_list = value.split()
