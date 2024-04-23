@@ -321,8 +321,8 @@ if __name__ == "__main__":
     odf.cruise_header.set_platform('HUDSON')
     odf.event_header.set_station_name('AR7W_15')
     # Add an empty General_Cal_Header for testing purposes
-    gch = generalCalHeader.GeneralCalHeader()
-    odf.general_cal_headers.append(gch)
+    # gch = generalCalHeader.GeneralCalHeader()
+    # odf.general_cal_headers.append(gch)
 
     # odf_file_text = odf.print_object(file_version=3, history_comment='Jeff Jackson made the recent modifications to '
     #                                                                  'this file.')
