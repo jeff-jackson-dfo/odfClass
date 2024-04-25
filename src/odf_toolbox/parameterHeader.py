@@ -73,22 +73,28 @@ class ParameterHeader:
     def get_type(self) -> str:
         return self._type
 
-    def set_type(self, value) -> None:
-        value = value.strip("\'")
+    def set_type(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Type changed from {self._type} to '{value}'")
         self._type = f"'{value}'"
 
     def get_name(self) -> str:
         return self._name
 
-    def set_name(self, value) -> None:
-        value = value.strip("\'")
+    def set_name(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Name changed from {self._name} to '{value}'")
         self._name = f"'{value}'"
 
     def get_units(self) -> str:
         return self._units
 
-    def set_units(self, value) -> None:
-        value = value.strip("\'")
+    def set_units(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Units changed from {self._units} to '{value}'")
         self._units = f"'{value}'"
 
     def get_code(self) -> str:
@@ -98,81 +104,117 @@ class ParameterHeader:
     TODO: this function may have to update other headers that reference the parameter code. Write the code to handle 
     these situations.
     '''
-    def set_code(self, value) -> None:
-        value = value.strip("\'")
+    def set_code(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Code changed from {self._code} to '{value}'")
         self._code = f"'{value}'"
 
     def get_wmo_code(self) -> str:
         return self._wmo_code
 
-    def set_wmo_code(self, value) -> None:
-        value = value.strip("\'")
+    def set_wmo_code(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Wmo_Code changed from {self._wmo_code} to '{value}'")
         self._wmo_code = f"'{value}'"
 
     def get_null_value(self) -> float:
         return self._null_value
 
-    def set_null_value(self, value) -> None:
+    def set_null_value(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Null_Value changed from {self._null_value} to {value}")
         self._null_value = value
 
     def get_print_field_order(self) -> int:
         return self._print_field_order
 
-    def set_print_field_order(self, value) -> None:
+    def set_print_field_order(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Print_Field_Order changed from {self._print_field_order} "
+                                 f"to {value}")
         self._print_field_order = value
 
     def get_print_field_width(self) -> int:
         return self._print_field_width
 
-    def set_print_field_width(self, value) -> None:
+    def set_print_field_width(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Print_Field_Width changed from {self._print_field_width} "
+                                 f"to {value}")
         self._print_field_width = value
 
     def get_print_decimal_places(self) -> int:
         return self._print_decimal_places
 
-    def set_print_decimal_places(self, value) -> None:
+    def set_print_decimal_places(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Print_Decimal_Places changed from {self._print_decimal_places} "
+                                 f"to {value}")
         self._print_decimal_places = value
 
     def get_angle_of_section(self) -> float:
         return self._angle_of_section
 
-    def set_angle_of_section(self, value) -> None:
+    def set_angle_of_section(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Angle_of_Section changed from {self._angle_of_section} "
+                                 f"to {value}")
         self._angle_of_section = value
 
     def get_magnetic_variation(self) -> float:
         return self._magnetic_variation
 
-    def set_magnetic_variation(self, value) -> None:
+    def set_magnetic_variation(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Magnetic_Variation changed from {self._magnetic_variation} "
+                                 f"to {value}")
         self._magnetic_variation = value
 
     def get_depth(self) -> float:
         return self._depth
 
-    def set_depth(self, value) -> None:
+    def set_depth(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Depth changed from {self._depth} "
+                                 f"to {value}")
         self._depth = value
 
     def get_minimum_value(self) -> float:
         return self._minimum_value
 
-    def set_minimum_value(self, value) -> None:
+    def set_minimum_value(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Minimum_Value changed from {self._minimum_value} "
+                                 f"to {value}")
         self._minimum_value = value
 
     def get_maximum_value(self) -> float:
         return self._maximum_value
 
-    def set_maximum_value(self, value) -> None:
+    def set_maximum_value(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Maximum_Value changed from {self._maximum_value} "
+                                 f"to {value}")
         self._maximum_value = value
 
     def get_number_valid(self) -> int:
         return self._number_valid
 
-    def set_number_valid(self, value) -> None:
+    def set_number_valid(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Number_Valid changed from {self._number_valid} "
+                                 f"to {value}")
         self._number_valid = value
 
     def get_number_null(self) -> int:
         return self._number_null
 
-    def set_number_null(self, value) -> None:
+    def set_number_null(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Parameter_Header.Number_Null changed from {self._number_null} "
+                                 f"to {value}")
         self._number_null = value
 
     def populate_object(self, parameter_fields: list):
@@ -184,35 +226,35 @@ class ParameterHeader:
                 value = value.strip()
                 match key:
                     case 'TYPE':
-                        self.set_type(value)
+                        self.set_type(value, read_operation=True)
                     case 'NAME':
-                        self.set_name(value)
+                        self.set_name(value, read_operation=True)
                     case 'UNITS':
-                        self.set_units(value)
+                        self.set_units(value, read_operation=True)
                     case 'CODE':
-                        self.set_code(value)
+                        self.set_code(value, read_operation=True)
                     case 'NULL_VALUE':
-                        self.set_null_value(value)
+                        self.set_null_value(value, read_operation=True)
                     case 'PRINT_FIELD_ORDER':
-                        self.set_print_field_order(value)
+                        self.set_print_field_order(value, read_operation=True)
                     case 'PRINT_FIELD_WIDTH':
-                        self.set_print_field_width(value)
+                        self.set_print_field_width(value, read_operation=True)
                     case 'PRINT_DECIMAL_PLACES':
-                        self.set_print_decimal_places(value)
+                        self.set_print_decimal_places(value, read_operation=True)
                     case 'ANGLE_OF_SECTION':
-                        self.set_angle_of_section(value)
+                        self.set_angle_of_section(value, read_operation=True)
                     case 'MAGNETIC_VARIATION':
-                        self.set_magnetic_variation(value)
+                        self.set_magnetic_variation(value, read_operation=True)
                     case 'DEPTH':
-                        self.set_depth(value)
+                        self.set_depth(value, read_operation=True)
                     case 'MINIMUM_VALUE':
-                        self.set_minimum_value(value)
+                        self.set_minimum_value(value, read_operation=True)
                     case 'MAXIMUM_VALUE':
-                        self.set_maximum_value(value)
+                        self.set_maximum_value(value, read_operation=True)
                     case 'NUMBER_VALID':
-                        self.set_null_value(value)
+                        self.set_null_value(value, read_operation=True)
                     case 'NUMBER_NULL':
-                        self.set_number_null(value)
+                        self.set_number_null(value, read_operation=True)
         return self
 
     def print_object(self, file_version: int = 2) -> str:

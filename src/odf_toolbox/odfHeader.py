@@ -28,8 +28,7 @@ class OdfHeader:
         """
         Method that initializes an OdfHeader class object.
         """
-
-        self._file_specification = None
+        self._file_specification = "''"
         self._odf_specification_version = 3
         self.cruise_header = cruiseHeader.CruiseHeader()
         self.event_header = eventHeader.EventHeader()
@@ -65,6 +64,7 @@ class OdfHeader:
             The file name and possibly path of the OdfHeader object (default is an empty string).
 
         """
+        odfUtils.logger.info(f'Odf_Header.File_Specification changed from {self._file_specification} to {value}')
         self._file_specification = value
 
     def get_odf_specification_version(self) -> float:
@@ -88,6 +88,7 @@ class OdfHeader:
             The version of the ODF specification used to generate this file.
 
         """
+        odfUtils.logger.info(f'Odf_Header.Odf_Specification_version changed from {self._odf_specification_version} to {value}')
         self._odf_specification_version = value
 
     def populate_object(self, odf_dict: dict):
@@ -108,22 +109,13 @@ class OdfHeader:
                     self.set_odf_specification_version(value.strip())
         return self
 
-    def print_object(self, file_version: float = 2, history_comment: str = '') -> str:
+    def print_object(self, file_version: float = 2) -> str:
         """
         Prints the ODF_HEADER of the OdfHeader object
 
         Args:
             file_version : float, optional
-            history_comment: str, optional
         """
-
-        # Add history header to record when the ODF file was created.
-        hh = historyHeader.HistoryHeader()
-        hh.set_creation_date(f"'{odfUtils.get_current_date_time()}'")
-        hh.set_process("'Initial creation of this ODF file.'")
-        if history_comment != '':
-            hh.add_process(history_comment)
-        self.history_headers.append(hh)
 
         odf_output = ""
         if file_version == 2:
@@ -300,16 +292,25 @@ class OdfHeader:
         self.record_header.set_num_param(len(self.parameter_headers))
         self.record_header.set_num_cycle(len(self.data))
 
+    def add_history(self):
+        nhh = historyHeader.HistoryHeader()
+        self.history_headers.append(nhh)
+
+    def add_process(self, history_comment):
+        if history_comment is not None:
+            print(history_comment)
+            self.history_headers[-1].add_process(history_comment)
+
 
 if __name__ == "__main__":
 
     odf = OdfHeader()
 
-    my_file_path = 'test-files/MCM_HUD2010014_1771_1039_3600.ODF'
-    # my_file_path = 'test-files/CTD_CAR2023011_017_496844_DN.ODF'
-    # my_file_path = 'test-files/IML-Example.ODF'
-    # my_file_path = 'test-files/MADCP_HUD2016027_1999_3469-31_3600.ODF'
-    # my_file_path = 'test-files/MCTD_GRP2019001_2104_11689_1800.ODF'
+    my_file_path = '../../test-files/MCM_HUD2010014_1771_1039_3600.ODF'
+    # my_file_path = '../../test-files/CTD_CAR2023011_017_496844_DN.ODF'
+    # my_file_path = '../../test-files/IML-Example.ODF'
+    # my_file_path = '../../test-files/MADCP_HUD2016027_1999_3469-31_3600.ODF'
+    # my_file_path = '../../test-files/MCTD_GRP2019001_2104_11689_1800.ODF'
 
     odf.read_odf(my_file_path)
 
@@ -324,10 +325,15 @@ if __name__ == "__main__":
     # gch = generalCalHeader.GeneralCalHeader()
     # odf.general_cal_headers.append(gch)
 
+    # Access the log records stored in the custom handler
+    log_records = odfUtils.list_handler.log_records
+    for record in log_records:
+        print(record)
+        odf.add_process(record)
+
     # odf_file_text = odf.print_object(file_version=3, history_comment='Jeff Jackson made the recent modifications to '
     #                                                                  'this file.')
-    odf_file_text = odf.print_object(file_version=2, history_comment='Jeff Jackson made the recent modifications to '
-                                                                     'this file.')
+    odf_file_text = odf.print_object(file_version=2)
 
     spec = odf.get_file_specification().strip("'")
     out_file = f"{spec}.ODF"

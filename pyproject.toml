@@ -1,0 +1,27 @@
+[build-system]
+requires = [
+    "setuptools>=61",
+    "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "odf_toolbox"
+dynamic = ["version"]
+authors = [
+  { name="Jeff Jackson", email="jeffrey.jackson@dfo-mpo.gc.ca" },
+]
+description = "A package for working with Ocean Data Format files"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools_scm]
+
+[project.urls]
+Homepage = "https://github.com/jeff-jackson-dfo/odfClass"
+Issues = "https://github.com/jeff-jackson-dfo/odfClass/issues"
+

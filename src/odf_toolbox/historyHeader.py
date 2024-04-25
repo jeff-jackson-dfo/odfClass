@@ -3,25 +3,31 @@ import odfUtils
 
 class HistoryHeader:
     def __init__(self):
-        self._creation_date = None
+        self._creation_date = "''"
         self._process = []
 
     def get_creation_date(self):
         return self._creation_date
 
-    def set_creation_date(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_creation_date(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"HISTORY_HEADER.CREATION_DATE changed from {self._creation_date} to '{value}'")
         self._creation_date = f"'{value}'"
 
     def get_process(self):
         return self._process
 
-    def set_process(self, process: str, process_number: int = 0) -> None:
-        process = process.strip("\'")
+    def set_process(self, process: str, process_number: int = 0, read_operation: bool = False) -> None:
+        process = process.strip("\' ")
         number_of_processes = len(self._process)
         if process_number == 0 and number_of_processes >= 0:
+            if not read_operation:
+                odfUtils.logger.info(f"The following process line was added to the HISTORY_HEADER: '{process}'")
             self._process.append(f"'{process}'")
         elif process_number <= number_of_processes and number_of_processes > 0:
+            odfUtils.logger.info(f"Comment {process_number} in EVENT_HEADER.EVENT_COMMENTS was changed from "
+                                 f"{self._process[process_number - 1]} to '{process}'")
             self._process[process_number-1] = f"'{process}'"
         else:
             raise ValueError("The PROCESS number does not match the number of PROCESS lines.")
@@ -39,9 +45,9 @@ class HistoryHeader:
                 value = value.strip()
                 match key:
                     case 'CREATION_DATE':
-                        self.set_creation_date(value)
+                        self.set_creation_date(value, read_operation=True)
                     case 'PROCESS':
-                        self.set_process(value)
+                        self.set_process(value, read_operation=True)
 
     def print_object(self) -> str:
         history_header_output = "HISTORY_HEADER\n"

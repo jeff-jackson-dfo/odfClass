@@ -7,8 +7,8 @@ class CruiseHeader:
         self._cruise_number = "''"
         self._organization = "''"
         self._chief_scientist = "''"
-        self._start_date = None
-        self._end_date = None
+        self._start_date = "''"
+        self._end_date = "''"
         self._platform = "''"
         self._area_of_operation = "''"
         self._cruise_name = "''"
@@ -17,70 +17,92 @@ class CruiseHeader:
     def get_country_institute_code(self) -> int:
         return self._country_institute_code
 
-    def set_country_institute_code(self, value: int) -> None:
+    def set_country_institute_code(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Country_Institute_Code changed from {self._country_institute_code} "
+                                 f"to {value}")
         self._country_institute_code = value
 
     def get_cruise_number(self) -> str:
         return self._cruise_number
 
-    def set_cruise_number(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_cruise_number(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Cruise_Number changed from {self._cruise_number} to '{value}'")
         self._cruise_number = f"'{value}'"
 
     def get_organization(self) -> str:
         return self._organization
 
-    def set_organization(self, value: str) -> None:
-        value = value.strip("\'")
-        self._organization = f"'{value}'"
+    def set_organization(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Organization changed from {self._organization} to '{value}'")
+        self._organization = f"'{value.strip()}'"
 
     def get_chief_scientist(self) -> str:
         return self._chief_scientist
 
-    def set_chief_scientist(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_chief_scientist(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Chief_Scientist changed from {self._chief_scientist} to '{value}'")
         self._chief_scientist = f"'{value}'"
 
     def get_start_date(self) -> str:
         return self._start_date
 
-    def set_start_date(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_start_date(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Start_Date changed from {self._start_date} to '{value}'")
         self._start_date = f"'{value}'"
 
     def get_end_date(self) -> str:
         return self._end_date
 
-    def set_end_date(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_end_date(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.End_Date changed from {self._end_date} to '{value}'")
         self._end_date = f"'{value}'"
 
     def get_platform(self) -> str:
         return self._platform
 
-    def set_platform(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_platform(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Platform changed from {self._platform} to '{value}'")
         self._platform = f"'{value}'"
 
     def get_area_of_operation(self) -> str:
         return self._area_of_operation
 
-    def set_area_of_operation(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_area_of_operation(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Area_of_Operation changed from {self._area_of_operation} to '{value}'")
         self._area_of_operation = f"'{value}'"
 
     def get_cruise_name(self) -> str:
         return self._cruise_name
 
-    def set_cruise_name(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_cruise_name(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Cruise_Name changed from {self._cruise_name} to '{value}'")
         self._cruise_name = f"'{value}'"
 
     def get_cruise_description(self) -> str:
         return self._cruise_description
 
-    def set_cruise_description(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_cruise_description(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Cruise_Header.Cruise_Description changed from {self._cruise_description} "
+                                 f"to '{value}'")
         self._cruise_description = f"'{value}'"
 
     def populate_object(self, cruise_fields: list):
@@ -92,25 +114,25 @@ class CruiseHeader:
                 value = value.strip()
                 match key:
                     case 'COUNTRY_INSTITUTE_CODE':
-                        self.set_country_institute_code(value)
+                        self.set_country_institute_code(value, read_operation=True)
                     case 'CRUISE_NUMBER':
-                        self.set_cruise_number(value)
+                        self.set_cruise_number(value, read_operation=True)
                     case 'ORGANIZATION':
-                        self.set_organization(value)
+                        self.set_organization(value, read_operation=True)
                     case 'CHIEF_SCIENTIST':
-                        self.set_chief_scientist(value)
+                        self.set_chief_scientist(value, read_operation=True)
                     case 'START_DATE':
-                        self.set_start_date(value)
+                        self.set_start_date(value, read_operation=True)
                     case 'END_DATE':
-                        self.set_end_date(value)
+                        self.set_end_date(value, read_operation=True)
                     case 'PLATFORM':
-                        self.set_platform(value)
+                        self.set_platform(value, read_operation=True)
                     case 'AREA_OF_OPERATION':
-                        self.set_area_of_operation(value)
+                        self.set_area_of_operation(value, read_operation=True)
                     case 'CRUISE_NAME':
-                        self.set_cruise_name(value)
+                        self.set_cruise_name(value, read_operation=True)
                     case 'CRUISE_DESCRIPTION':
-                        self.set_cruise_description(value)
+                        self.set_cruise_description(value, read_operation=True)
         return self
 
     def print_object(self, file_version: int = 2) -> str:

@@ -7,10 +7,10 @@ class EventHeader:
         self._event_number = "''"
         self._event_qualifier1 = "''"
         self._event_qualifier2 = "''"
-        self._creation_date = None
-        self._original_creation_date = None
-        self._start_date_time = None
-        self._end_date_time = None
+        self._creation_date = "''"
+        self._original_creation_date = "''"
+        self._start_date_time = "''"
+        self._end_date_time = "''"
         self._initial_latitude = None
         self._initial_longitude = None
         self._end_latitude = None
@@ -27,137 +27,182 @@ class EventHeader:
     def get_data_type(self) -> str:
         return self._data_type
 
-    def set_data_type(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_data_type(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.DATA_TYPE changed from {self._data_type} to '{value}'")
         self._data_type = f"'{value}'"
 
     def get_event_number(self) -> str:
         return self._event_number
 
-    def set_event_number(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_event_number(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.EVENT_NUMBER changed from {self._event_number} to '{value}'")
         self._event_number = f"'{value}'"
 
     def get_event_qualifier1(self) -> str:
         return self._event_qualifier1
 
-    def set_event_qualifier1(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_event_qualifier1(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.EVENT_QUALIFIER1 changed from {self._event_qualifier1} to '{value}'")
         self._event_qualifier1 = f"'{value}'"
 
     def get_event_qualifier2(self) -> str:
         return self._event_qualifier2
 
-    def set_event_qualifier2(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_event_qualifier2(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.EVENT_QUALIFIER2 changed from {self._event_qualifier2} to '{value}'")
         self._event_qualifier2 = f"'{value}'"
 
     def get_creation_date(self) -> str:
         return self._creation_date
 
-    def set_creation_date(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_creation_date(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.CREATION_DATE changed from {self._creation_date} to '{value}'")
         self._creation_date = f"'{value}'"
 
     def get_original_creation_date(self) -> str:
         return self._original_creation_date
 
-    def set_original_creation_date(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_original_creation_date(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.ORIGINAL_CREATION_DATE changed from {self._original_creation_date} "
+                                 f"to '{value}'")
         self._original_creation_date = f"'{value}'"
 
     def get_start_date_time(self) -> str:
         return self._start_date_time
 
-    def set_start_date_time(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_start_date_time(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.START_DATE_TIME changed from {self._start_date_time} to '{value}'")
         self._start_date_time = f"'{value}'"
 
     def get_end_date_time(self) -> str:
         return self._end_date_time
 
-    def set_end_date_time(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_end_date_time(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.END_DATE_TIME changed from {self._end_date_time} to '{value}'")
         self._end_date_time = f"'{value}'"
 
     def get_initial_latitude(self) -> float:
         return self._initial_latitude
 
-    def set_initial_latitude(self, value: float) -> None:
+    def set_initial_latitude(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.INITIAL_LATITUDE changed from {self._initial_latitude} to {value}")
         self._initial_latitude = value
 
     def get_initial_longitude(self) -> float:
         return self._initial_longitude
 
-    def set_initial_longitude(self, value: float) -> None:
+    def set_initial_longitude(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.INITIAL_LONGITUDE changed from {self._initial_longitude} to {value}")
         self._initial_longitude = value
 
     def get_end_latitude(self) -> float:
         return self._end_latitude
 
-    def set_end_latitude(self, value: float) -> None:
+    def set_end_latitude(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.END_LATITUDE changed from {self._end_latitude} to {value}")
         self._end_latitude = value
 
     def get_end_longitude(self) -> float:
         return self._end_longitude
 
-    def set_end_longitude(self, value: float) -> None:
+    def set_end_longitude(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.END_LONGITUDE changed from {self._end_longitude} to {value}")
         self._end_longitude = value
 
     def get_min_depth(self) -> float:
         return self._min_depth
 
-    def set_min_depth(self, value: float) -> None:
+    def set_min_depth(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.MIN_DEPTH changed from {self._min_depth} to {value}")
         self._min_depth = value
 
     def get_max_depth(self) -> float:
         return self._max_depth
 
-    def set_max_depth(self, value: float) -> None:
+    def set_max_depth(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.MAX_DEPTH changed from {self._max_depth} to {value}")
         self._max_depth = value
 
     def get_sampling_interval(self) -> float:
         return self._sampling_interval
 
-    def set_sampling_interval(self, value: float) -> None:
+    def set_sampling_interval(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.SAMPLING_INTERVAL changed from {self._sampling_interval} to {value}")
         self._sampling_interval = value
 
     def get_sounding(self) -> float:
         return self._sounding
 
-    def set_sounding(self, value: float) -> None:
+    def set_sounding(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.SOUNDING changed from {self._sounding} to {value}")
         self._sounding = value
 
     def get_depth_off_bottom(self) -> float:
         return self._depth_off_bottom
 
-    def set_depth_off_bottom(self, value: float) -> None:
+    def set_depth_off_bottom(self, value: float, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.DEPTH_OFF_BOTTOM changed from {self._depth_off_bottom} to {value}")
         self._depth_off_bottom = value
 
     def get_station_name(self) -> str:
         return self._station_name
 
-    def set_station_name(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_station_name(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.STATION_NAME changed from {self._station_name} to '{value}'")
         self._station_name = f"'{value}'"
 
     def get_set_number(self) -> str:
         return self._set_number
 
-    def set_set_number(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_set_number(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"EVENT_HEADER.SET_NUMBER changed from {self._set_number} to '{value}'")
         self._set_number = f"'{value}'"
 
     def get_event_comments(self) -> list:
         return self._event_comments
 
-    def set_event_comments(self, event_comment: str, comment_number: int = 0) -> None:
+    def set_event_comments(self, event_comment: str, comment_number: int = 0, read_operation: bool = False) -> None:
         event_comment = event_comment.strip("\'")
         number_of_comments = len(self.get_event_comments())
         if comment_number == 0 and number_of_comments >= 0:
+            if not read_operation:
+                odfUtils.logger.info(f"The following comment was added to EVENT_HEADER.EVENT_COMMENTS: "
+                                     f"'{event_comment}'")
             self._event_comments.append(f"'{event_comment}'")
         elif comment_number <= number_of_comments and number_of_comments > 0:
-            self._event_comments[comment_number] = f"'{event_comment}'"
+            if not read_operation:
+                odfUtils.logger.info(f"Comment {comment_number} in EVENT_HEADER.EVENT_COMMENTS was changed from "
+                                     f"{self._event_comments[comment_number-1]} to '{event_comment}'")
+            self._event_comments[comment_number-1] = f"'{event_comment}'"
         else:
             raise ValueError("The 'event_comment' number does not match the number of EVENT_COMMENTS lines.")
 
@@ -170,45 +215,45 @@ class EventHeader:
                 value = value.strip()
                 match key:
                     case 'DATA_TYPE':
-                        self.set_data_type(value)
+                        self.set_data_type(value, read_operation=True)
                     case 'EVENT_NUMBER':
-                        self.set_event_number(value)
+                        self.set_event_number(value, read_operation=True)
                     case 'EVENT_QUALIFIER1':
-                        self.set_event_qualifier1(value)
+                        self.set_event_qualifier1(value, read_operation=True)
                     case 'EVENT_QUALIFIER2':
-                        self.set_event_qualifier2(value)
+                        self.set_event_qualifier2(value, read_operation=True)
                     case 'CREATION_DATE':
-                        self.set_creation_date(value)
+                        self.set_creation_date(value, read_operation=True)
                     case 'ORIGINAL_CREATION_DATE':
-                        self.set_original_creation_date(value)
+                        self.set_original_creation_date(value, read_operation=True)
                     case 'START_DATE_TIME':
-                        self.set_start_date_time(value)
+                        self.set_start_date_time(value, read_operation=True)
                     case 'END_DATE_TIME':
-                        self.set_end_date_time(value)
+                        self.set_end_date_time(value, read_operation=True)
                     case 'INITIAL_LATITUDE':
-                        self.set_initial_latitude(value)
+                        self.set_initial_latitude(value, read_operation=True)
                     case 'INITIAL_LONGITUDE':
-                        self.set_initial_longitude(value)
+                        self.set_initial_longitude(value, read_operation=True)
                     case 'END_LATITUDE':
-                        self.set_end_latitude(value)
+                        self.set_end_latitude(value, read_operation=True)
                     case 'END_LONGITUDE':
-                        self.set_end_longitude(value)
+                        self.set_end_longitude(value, read_operation=True)
                     case 'MIN_DEPTH':
-                        self.set_min_depth(value)
+                        self.set_min_depth(value, read_operation=True)
                     case 'MAX_DEPTH':
-                        self.set_max_depth(value)
+                        self.set_max_depth(value, read_operation=True)
                     case 'SAMPLING_INTERVAL':
-                        self.set_sampling_interval(value)
+                        self.set_sampling_interval(value, read_operation=True)
                     case 'SOUNDING':
-                        self.set_sounding(value)
+                        self.set_sounding(value, read_operation=True)
                     case 'DEPTH_OFF_BOTTOM':
-                        self.set_depth_off_bottom(value)
+                        self.set_depth_off_bottom(value, read_operation=True)
                     case 'STATION_NAME':
-                        self.set_station_name(value)
+                        self.set_station_name(value, read_operation=True)
                     case 'SET_NUMBER':
-                        self.set_set_number(value)
+                        self.set_set_number(value, read_operation=True)
                     case 'EVENT_COMMENTS':
-                        self.set_event_comments(value)
+                        self.set_event_comments(value, read_operation=True)
         return self
 
     def print_object(self) -> str:
