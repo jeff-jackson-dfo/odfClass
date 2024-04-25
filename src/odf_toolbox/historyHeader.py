@@ -4,7 +4,7 @@ import odfUtils
 class HistoryHeader:
     def __init__(self):
         self._creation_date = "''"
-        self._process = []
+        self._processes = []
 
     def get_creation_date(self):
         return self._creation_date
@@ -12,29 +12,29 @@ class HistoryHeader:
     def set_creation_date(self, value: str, read_operation: bool = False) -> None:
         value = value.strip("\' ")
         if not read_operation:
-            odfUtils.logger.info(f"HISTORY_HEADER.CREATION_DATE changed from {self._creation_date} to '{value}'")
+            odfUtils.logger.info(f"History_Header.Creation_Date changed from {self._creation_date} to '{value}'")
         self._creation_date = f"'{value}'"
 
     def get_process(self):
-        return self._process
+        return self._processes
 
     def set_process(self, process: str, process_number: int = 0, read_operation: bool = False) -> None:
         process = process.strip("\' ")
-        number_of_processes = len(self._process)
+        number_of_processes = len(self._processes)
         if process_number == 0 and number_of_processes >= 0:
             if not read_operation:
-                odfUtils.logger.info(f"The following process line was added to the HISTORY_HEADER: '{process}'")
-            self._process.append(f"'{process}'")
+                odfUtils.logger.info(f"The following Process line was added to the History_Header: '{process}'")
+            self._processes.append(f"'{process}'")
         elif process_number <= number_of_processes and number_of_processes > 0:
-            odfUtils.logger.info(f"Comment {process_number} in EVENT_HEADER.EVENT_COMMENTS was changed from "
-                                 f"{self._process[process_number - 1]} to '{process}'")
-            self._process[process_number-1] = f"'{process}'"
+            odfUtils.logger.info(f"Process {process_number} in History_Header.Processes was changed from "
+                                 f"{self._processes[process_number - 1]} to '{process}'")
+            self._processes[process_number-1] = f"'{process}'"
         else:
-            raise ValueError("The PROCESS number does not match the number of PROCESS lines.")
+            raise ValueError("The Process number does not match the number of Process lines.")
 
     def add_process(self, process: str) -> None:
         process = process.strip("\'")
-        self._process.append(f"'{process}'")
+        self._processes.append(f"'{process}'")
 
     def populate_object(self, history_fields: list):
         for header_line in history_fields:

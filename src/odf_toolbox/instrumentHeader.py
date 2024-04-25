@@ -39,29 +39,37 @@ class InstrumentHeader:
     def get_instrument_type(self) -> str:
         return self._instrument_type
 
-    def set_instrument_type(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_instrument_type(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Instrument_Header.Instrument_Type changed from {self._instrument_type} to '{value}'")
         self._instrument_type = f"'{value}'"
 
     def get_model(self) -> str:
         return self._model
 
-    def set_model(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_model(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Instrument_Header.Model changed from {self._model} to '{value}'")
         self._model = f"'{value}'"
 
     def get_serial_number(self) -> str:
         return self._serial_number
 
-    def set_serial_number(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_serial_number(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Instrument_Header.Serial_Number changed from {self._serial_number} to '{value}'")
         self._serial_number = f"'{value}'"
 
     def get_description(self) -> str:
         return self._description
 
-    def set_description(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_description(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Instrument_Header.Description changed from {self._description} to '{value}'")
         self._description = f"'{value}'"
 
     def populate_object(self, instrument_fields: list):
@@ -73,13 +81,13 @@ class InstrumentHeader:
                 value = value.strip()
                 match key:
                     case 'INST_TYPE':
-                        self.set_instrument_type(value)
+                        self.set_instrument_type(value, read_operation=True)
                     case 'MODEL':
-                        self.set_model(value)
+                        self.set_model(value, read_operation=True)
                     case 'SERIAL_NUMBER':
-                        self.set_serial_number(value)
+                        self.set_serial_number(value, read_operation=True)
                     case 'DESCRIPTION':
-                        self.set_description(value)
+                        self.set_description(value, read_operation=True)
         return self
     
     def print_object(self) -> str:

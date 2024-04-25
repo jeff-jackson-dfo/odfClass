@@ -12,16 +12,21 @@ files = glob.glob('*.ODF')
 
 # Query the user for his/her name so he/she may be identified in the
 # history header as the responsible data quality control person.
-# print('\n')
+# print()
 # user = input('Please enter the name of the analyst performing this data processing: ')
 user = 'Jeff Jackson'
-# print('\n')
+# print()
 
 # Loop through the list of ODF files and process both the DN and its
 # corresponding UP version.
 # Iterate through the list of input files.
 for file_name in files:
-    print(file_name)
+
+    print()
+    print('#######################################################################')
+    print('Processing ' + file_name)
+    print('#######################################################################')
+    print()
 
     odf = odfHeader.OdfHeader()
 
@@ -45,6 +50,11 @@ for file_name in files:
     # Update Event_Header
     odf.event_header.set_set_number('999')
     odf.event_header.set_event_comments('Location Antarctica', 1)
+
+    odf.instrument_header.set_model('SBE 911')
+
+    odf.update_parameter('SYTM_01', 'units', 'GMT')
+    odf.update_parameter('SYTM_01', 'print_field_width', 45)
 
     # Access the log records stored in the custom handler and add the logged changes to the History_Header.
     log_records = odfUtils.list_handler.log_records

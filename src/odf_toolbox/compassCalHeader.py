@@ -12,35 +12,53 @@ class CompassCalHeader:
     def get_parameter_code(self) -> str:
         return self._parameter_code
 
-    def set_parameter_code(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_parameter_code(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Compass_Cal_Header.Parameter_Code changed from {self._parameter_code} to '{value}'")
         self._parameter_code = f"'{value}'"
 
     def get_calibration_date(self) -> str:
         return self._calibration_date
 
-    def set_calibration_date(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_calibration_date(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Compass_Cal_Header.Calibration_Date changed from {self._calibration_date}"
+                                 f" to '{value}'")
         self._calibration_date = f"'{value}'"
 
     def get_application_date(self) -> str:
         return self._application_date
 
-    def set_application_date(self, value: str) -> None:
-        value = value.strip("\'")
+    def set_application_date(self, value: str, read_operation: bool = False) -> None:
+        value = value.strip("\' ")
+        if not read_operation:
+            odfUtils.logger.info(f"Compass_Cal_Header.Application_Date changed from {self._application_date}"
+                                 f" to '{value}'")
         self._application_date = f"'{value}'"
 
     def get_directions(self) -> list:
         return self._directions
 
-    def set_directions(self, direction_list: list, direction_number: int = 0) -> None:
+    def set_directions(self, direction_list: list, direction_number: int = 0, read_operation: bool = False) -> None:
         number_of_directions = len(self.get_directions())
         if direction_number == 0 and number_of_directions == 0:
+            if not read_operation:
+                odfUtils.logger.info(f"The following set of directions was added to Compass_Cal_Header.Directions: "
+                                     f"{direction_list}")
             self._directions = direction_list
         elif direction_number == 0 and number_of_directions > 0:
+            if not read_operation:
+                odfUtils.logger.info(f"The following set of directions was added to Compass_Cal_Header.Directions: "
+                                     f"{direction_list}")
             self._directions.extend(direction_list)
         elif direction_number <= number_of_directions and number_of_directions > 0:
             if len(direction_list) == 1:
+                if not read_operation:
+                    odfUtils.logger.info(f"Direction {direction_list.pop()} in Compass_Cal_Header.Directions was "
+                                         f"changed from {self._directions[direction_number - 1]} "
+                                         f"to {direction_list.pop()}")
                 self._directions[direction_number] = direction_list.pop()
         else:
             raise ValueError("The 'direction_number' does not match the number of DIRECTIONS.")
@@ -48,14 +66,24 @@ class CompassCalHeader:
     def get_corrections(self) -> list:
         return self._corrections
 
-    def set_corrections(self, correction_list: list, correction_number: int = 0) -> None:
+    def set_corrections(self, correction_list: list, correction_number: int = 0, read_operation: bool = False) -> None:
         number_of_corrections = len(self.get_corrections())
         if correction_number == 0 and number_of_corrections == 0:
+            if not read_operation:
+                odfUtils.logger.info(f"The following set of corrections was added to Compass_Cal_Header.Corrections: "
+                                     f"{correction_list}")
             self._corrections = correction_list
         elif correction_number == 0 and number_of_corrections > 0:
+            if not read_operation:
+                odfUtils.logger.info(f"The following set of corrections was added to Compass_Cal_Header.Corrections: "
+                                     f"{correction_list}")
             self._corrections.extend(correction_list)
         elif correction_number <= number_of_corrections and number_of_corrections > 0:
             if len(correction_list) == 1:
+                if not read_operation:
+                    odfUtils.logger.info(f"Correction {correction_list.pop()} in Compass_Cal_Header.Corrections was "
+                                         f"changed from {self._corrections[correction_number - 1]} "
+                                         f"to '{correction_list.pop()}'")
                 self._corrections[correction_number] = correction_list.pop()
         else:
             raise ValueError("The 'correction_number' does not match the number of CORRECTIONS.")
@@ -69,21 +97,21 @@ class CompassCalHeader:
                 value = value.strip()
                 match key:
                     case 'PARAMETER_NAME':
-                        self.set_parameter_code(value)
+                        self.set_parameter_code(value, read_operation=True)
                     case 'PARAMETER_CODE':
-                        self.set_parameter_code(value)
+                        self.set_parameter_code(value, read_operation=True)
                     case 'CALIBRATION_DATE':
-                        self.set_calibration_date(value)
+                        self.set_calibration_date(value, read_operation=True)
                     case 'APPLICATION_DATE':
-                        self.set_application_date(value)
+                        self.set_application_date(value, read_operation=True)
                     case 'DIRECTIONS':
                         direction_list = value.split()
                         direction_floats = [float(direction) for direction in direction_list]
-                        self.set_directions(direction_floats)
+                        self.set_directions(direction_floats, read_operation=True)
                     case 'CORRECTIONS':
                         correction_list = value.split()
                         correction_floats = [float(correction) for correction in correction_list]
-                        self.set_corrections(correction_floats)
+                        self.set_corrections(correction_floats, read_operation=True)
         return self
 
     def print_object(self) -> str:

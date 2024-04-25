@@ -88,7 +88,8 @@ class OdfHeader:
             The version of the ODF specification used to generate this file.
 
         """
-        odfUtils.logger.info(f'Odf_Header.Odf_Specification_version changed from {self._odf_specification_version} to {value}')
+        odfUtils.logger.info(
+            f'Odf_Header.Odf_Specification_version changed from {self._odf_specification_version} to {value}')
         self._odf_specification_version = value
 
     def populate_object(self, odf_dict: dict):
@@ -298,8 +299,14 @@ class OdfHeader:
 
     def add_process(self, history_comment):
         if history_comment is not None:
-            print(history_comment)
             self.history_headers[-1].add_process(history_comment)
+
+    def update_parameter(self, parameter_code: str, attribute: str, value):
+        codes = self.data.get_parameter_list()
+        if isinstance(value, str):
+            eval(f"self.parameter_headers[codes.index(parameter_code)].set_{attribute}('{value}')")
+        else:
+            eval(f"self.parameter_headers[codes.index(parameter_code)].set_{attribute}({value})")
 
 
 if __name__ == "__main__":
@@ -324,6 +331,8 @@ if __name__ == "__main__":
     # Add an empty General_Cal_Header for testing purposes
     # gch = generalCalHeader.GeneralCalHeader()
     # odf.general_cal_headers.append(gch)
+
+    odf.update_parameter('SYTM_01', 'units', 'GMT')
 
     # Access the log records stored in the custom handler
     log_records = odfUtils.list_handler.log_records
