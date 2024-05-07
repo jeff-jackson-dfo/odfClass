@@ -22,8 +22,7 @@ files = glob.glob('*.ODF')
 user = 'Jeff Jackson'
 # print()
 
-# Loop through the list of ODF files and process both the DN and its
-# corresponding UP version.
+# Loop through the list of ODF files and process both the DN and UP files.
 # Iterate through the list of input files.
 for file_name in files:
 
