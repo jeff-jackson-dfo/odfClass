@@ -297,7 +297,7 @@ class OdfHeader:
         nhh = historyHeader.HistoryHeader()
         self.history_headers.append(nhh)
 
-    def add_process(self, history_comment):
+    def add_to_history(self, history_comment):
         if history_comment is not None:
             self.history_headers[-1].add_process(history_comment)
 
@@ -307,6 +307,16 @@ class OdfHeader:
             eval(f"self.parameter_headers[codes.index(parameter_code)].set_{attribute}('{value}')")
         else:
             eval(f"self.parameter_headers[codes.index(parameter_code)].set_{attribute}({value})")
+
+    def generate_file_spec(self):
+        dt = self.event_header.get_data_type().strip("'")
+        cn = self.cruise_header.get_cruise_number().strip("'")
+        en = self.event_header.get_event_number().strip("'")
+        eq1 = self.event_header.get_event_qualifier1().strip("'")
+        eq2 = self.event_header.get_event_qualifier2().strip("'")
+        file_spec = f"{dt}_{cn}_{en}_{eq1}_{eq2}"
+        file_spec = file_spec
+        return file_spec
 
 
 if __name__ == "__main__":
@@ -338,7 +348,7 @@ if __name__ == "__main__":
     log_records = odfUtils.list_handler.log_records
     for record in log_records:
         print(record)
-        odf.add_process(record)
+        odf.add_to_history(record)
 
     # odf_file_text = odf.print_object(file_version=3, history_comment='Jeff Jackson made the recent modifications to '
     #                                                                  'this file.')
