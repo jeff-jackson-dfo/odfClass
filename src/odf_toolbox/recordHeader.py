@@ -12,31 +12,41 @@ class RecordHeader:
     def get_num_calibration(self) -> int:
         return self._num_calibration
 
-    def set_num_calibration(self, value: int) -> None:
+    def set_num_calibration(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Record_Header.Num_Calibration changed from {self._num_calibration} to {value}")
         self._num_calibration = value
 
     def get_num_swing(self) -> int:
         return self._num_swing
 
-    def set_num_swing(self, value: int) -> None:
+    def set_num_swing(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Record_Header.Num_Swing changed from {self._num_swing} to {value}")
         self._num_swing = value
 
     def get_num_history(self) -> int:
         return self._num_history
 
-    def set_num_history(self, value: int) -> None:
+    def set_num_history(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Record_Header.Num_History changed from {self._num_history} to {value}")
         self._num_history = value
 
     def get_num_cycle(self) -> int:
         return self._num_cycle
 
-    def set_num_cycle(self, value: int) -> None:
+    def set_num_cycle(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Record_Header.Num_Cycle changed from {self._num_cycle} to {value}")
         self._num_cycle = value
 
     def get_num_param(self) -> int:
         return self._num_param
 
-    def set_num_param(self, value: int) -> None:
+    def set_num_param(self, value: int, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Record_Header.Num_Param changed from {self._num_param} to {value}")
         self._num_param = value
 
     def populate_object(self, record_fields: list) -> None:
@@ -48,15 +58,15 @@ class RecordHeader:
                 value = value.strip()
                 match key:
                     case 'NUM_CALIBRATION':
-                        self.set_num_calibration(value)
+                        self.set_num_calibration(value, read_operation=True)
                     case 'NUM_SWING':
-                        self.set_num_swing(value)
+                        self.set_num_swing(value, read_operation=True)
                     case 'NUM_HISTORY':
-                        self.set_num_history(value)
+                        self.set_num_history(value, read_operation=True)
                     case 'NUM_CYCLE':
-                        self.set_num_cycle(value)
+                        self.set_num_cycle(value, read_operation=True)
                     case 'NUM_PARAM':
-                        self.set_num_param(value)
+                        self.set_num_param(value, read_operation=True)
 
     def print_object(self) -> str:
         record_header_output = "RECORD_HEADER\n"

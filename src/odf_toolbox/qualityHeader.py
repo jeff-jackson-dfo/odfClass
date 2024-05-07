@@ -37,17 +37,25 @@ class QualityHeader:
     def get_quality_date(self):
         return self._quality_date
 
-    def set_quality_date(self, quality_date: str) -> None:
-        self._quality_date = quality_date
+    def set_quality_date(self, value: str, read_operation: bool = False) -> None:
+        if not read_operation:
+            odfUtils.logger.info(f"Event_Header.Quality_Date changed from {self._quality_date} to '{value}'")
+        self._quality_date = value
 
     def get_quality_tests(self):
         return self._quality_tests
 
-    def set_quality_tests(self, quality_test: str, test_number: int = 0) -> None:
+    def set_quality_tests(self, quality_test: str, test_number: int = 0, read_operation: bool = False) -> None:
         number_of_tests = len(self.get_quality_tests())
         if test_number == 0 and number_of_tests >= 0:
+            if not read_operation:
+                odfUtils.logger.info(f"The following quality test was added to Quality_Header.Quality_Tests: "
+                                     f"'{quality_test}'")
             self._quality_tests.append(quality_test)
         elif test_number <= number_of_tests and number_of_tests > 0:
+            if not read_operation:
+                odfUtils.logger.info(f"Quality Test {test_number} in Quality_Header.Quality_Tests was changed from "
+                                     f"{self._quality_tests[test_number-1]} to '{quality_test}'")
             self._quality_tests[test_number] = quality_test
         else:
             raise ValueError("The 'quality_test' number does not match the number of QUALITY_TESTS lines.")
@@ -55,11 +63,17 @@ class QualityHeader:
     def get_quality_comments(self):
         return self._quality_comments
 
-    def set_quality_comments(self, quality_comment: str, comment_number: int = 0) -> None:
+    def set_quality_comments(self, quality_comment: str, comment_number: int = 0, read_operation: bool = False) -> None:
         number_of_comments = len(self.get_quality_comments())
         if comment_number == 0 and number_of_comments >= 0:
+            if not read_operation:
+                odfUtils.logger.info(f"The following quality test was added to Quality_Header.Quality_Comments: "
+                                     f"'{quality_comment}'")
             self._quality_comments.append(quality_comment)
         elif comment_number <= number_of_comments and number_of_comments > 0:
+            if not read_operation:
+                odfUtils.logger.info(f"Quality Comment {comment_number} in Quality_Header.Quality_Comments was "
+                                     f"changed from {self._quality_comments[comment_number-1]} to '{quality_comment}'")
             self._quality_comments[comment_number] = quality_comment
         else:
             raise ValueError("The 'quality_comment' number does not match the number of QUALITY_COMMENTS lines.")
@@ -73,11 +87,11 @@ class QualityHeader:
                 value = value.strip()
                 match key:
                     case 'QUALITY_DATE':
-                        self.set_quality_date(value)
+                        self.set_quality_date(value, read_operation=True)
                     case 'QUALITY_TESTS':
-                        self.set_quality_tests(value)
+                        self.set_quality_tests(value, read_operation=True)
                     case 'QUALITY_COMMENTS':
-                        self.set_quality_comments(value)
+                        self.set_quality_comments(value, read_operation=True)
 
     def print_object(self) -> str:
         quality_header_output = "QUALITY_HEADER\n"
