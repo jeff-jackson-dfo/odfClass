@@ -118,6 +118,9 @@ class OdfHeader:
             file_version : float, optional
         """
 
+        # First add the modifications done to the odfHeader instance before outputting it.
+        self.add_log_to_history()
+
         odf_output = ""
         if file_version == 2:
             odf_output = "ODF_HEADER,\n"
@@ -136,7 +139,6 @@ class OdfHeader:
             for compass in self.compass_cal_headers:
                 odf_output += odfUtils.add_commas(compass.print_object())
             for hist in self.history_headers:
-                self.add_log_to_history()
                 odf_output += odfUtils.add_commas(hist.print_object())
             for param in self.parameter_headers:
                 odf_output += odfUtils.add_commas(param.print_object())
@@ -162,7 +164,6 @@ class OdfHeader:
             for compass in self.compass_cal_headers:
                 odf_output += compass.print_object()
             for hist in self.history_headers:
-                self.add_log_to_history()
                 odf_output += hist.print_object()
             for param in self.parameter_headers:
                 odf_output += param.print_object()
