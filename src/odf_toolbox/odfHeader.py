@@ -136,6 +136,7 @@ class OdfHeader:
             for compass in self.compass_cal_headers:
                 odf_output += odfUtils.add_commas(compass.print_object())
             for hist in self.history_headers:
+                self.add_log_to_history()
                 odf_output += odfUtils.add_commas(hist.print_object())
             for param in self.parameter_headers:
                 odf_output += odfUtils.add_commas(param.print_object())
@@ -161,6 +162,7 @@ class OdfHeader:
             for compass in self.compass_cal_headers:
                 odf_output += compass.print_object()
             for hist in self.history_headers:
+                self.add_log_to_history()
                 odf_output += hist.print_object()
             for param in self.parameter_headers:
                 odf_output += param.print_object()
@@ -301,6 +303,13 @@ class OdfHeader:
         if history_comment is not None:
             self.history_headers[-1].add_process(history_comment)
 
+    def add_log_to_history(self):
+        # Access the log records stored in the custom handler
+        log_records = odfUtils.list_handler.log_records
+        for record in log_records:
+            print(record)
+            self.add_to_history(record)
+
     def update_parameter(self, parameter_code: str, attribute: str, value):
         codes = self.data.get_parameter_list()
         if isinstance(value, str):
@@ -343,12 +352,6 @@ if __name__ == "__main__":
     # odf.general_cal_headers.append(gch)
 
     odf.update_parameter('SYTM_01', 'units', 'GMT')
-
-    # Access the log records stored in the custom handler
-    log_records = odfUtils.list_handler.log_records
-    for record in log_records:
-        print(record)
-        odf.add_to_history(record)
 
     # odf_file_text = odf.print_object(file_version=3, history_comment='Jeff Jackson made the recent modifications to '
     #                                                                  'this file.')
