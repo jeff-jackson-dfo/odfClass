@@ -308,7 +308,6 @@ class OdfHeader:
         # Access the log records stored in the custom handler
         log_records = odfUtils.list_handler.log_records
         for record in log_records:
-            print(record)
             self.add_to_history(record)
 
     def update_parameter(self, parameter_code: str, attribute: str, value):
