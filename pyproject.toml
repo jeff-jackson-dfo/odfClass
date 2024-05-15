@@ -22,3 +22,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/jeff-jackson-dfo/odfClass"
 Issues = "https://github.com/jeff-jackson-dfo/odfClass/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "odf_toolbox.__version__"}

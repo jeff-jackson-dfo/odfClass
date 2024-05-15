@@ -118,7 +118,7 @@ class OdfHeader:
             file_version : float, optional
         """
 
-        # First add the modifications done to the odfHeader instance before outputting it.
+        # Add the modifications done to the odfHeader instance before outputting it.
         self.add_log_to_history()
 
         odf_output = ""
