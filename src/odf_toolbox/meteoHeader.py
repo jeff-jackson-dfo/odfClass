@@ -17,6 +17,8 @@ class MeteoHeader:
         return self._air_temperature
 
     def set_air_temperature(self, value: float, read_operation: bool = False) -> None:
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Meteo_Header.Air_Temperature changed from {self._air_temperature} to '{value}'")
         self._air_temperature = value
@@ -25,6 +27,8 @@ class MeteoHeader:
         return self._atmospheric_pressure
 
     def set_atmospheric_pressure(self, value: float, read_operation: bool = False) -> None:
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Meteo_Header.Atmospheric_Pressure changed from {self._atmospheric_pressure} "
                                  f"to '{value}'")
@@ -34,6 +38,8 @@ class MeteoHeader:
         return self._wind_speed
 
     def set_wind_speed(self, value: float, read_operation: bool = False) -> None:
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Meteo_Header.Wind_Speed changed from {self._wind_speed} to '{value}'")
         self._wind_speed = value
@@ -42,6 +48,8 @@ class MeteoHeader:
         return self._wind_direction
 
     def set_wind_direction(self, value: float, read_operation: bool = False) -> None:
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Meteo_Header.Wind_Direction changed from {self._wind_direction} to '{value}'")
         self._wind_direction = value
@@ -50,6 +58,8 @@ class MeteoHeader:
         return self._sea_state
 
     def set_sea_state(self, value: float, read_operation: bool = False) -> None:
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Meteo_Header.Sea_State changed from {self._sea_state} to '{value}'")
         self._sea_state = value
@@ -58,6 +68,8 @@ class MeteoHeader:
         return self._cloud_cover
 
     def set_cloud_cover(self, value: float, read_operation: bool = False) -> None:
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Meteo_Header.Cloud_Cover changed from {self._cloud_cover} to '{value}'")
         self._cloud_cover = value
@@ -66,6 +78,8 @@ class MeteoHeader:
         return self._ice_thickness
 
     def set_ice_thickness(self, value: float, read_operation: bool = False) -> None:
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Meteo_Header.Ice_Thickness changed from {self._ice_thickness} to '{value}'")
         self._ice_thickness = value
@@ -74,6 +88,10 @@ class MeteoHeader:
         return self._meteo_comments
 
     def set_meteo_comments(self, meteo_comment: str, comment_number: int = 0, read_operation: bool = False) -> None:
+        assert isinstance(meteo_comment, str), \
+               f"Input value is not of type str: {meteo_comment}"
+        assert isinstance(comment_number, int), \
+               f"Input value is not of type int: {comment_number}"
         number_of_comments = len(self.get_meteo_comments())
         if comment_number == 0 and number_of_comments >= 0:
             if not read_operation:
@@ -89,6 +107,8 @@ class MeteoHeader:
             raise ValueError("The 'meteo_comment' number does not match the number of METEO_COMMENTS lines.")
 
     def populate_object(self, meteo_fields: list) -> None:
+        assert isinstance(meteo_fields, list), \
+               f"Input value is not of type list: {meteo_fields}"
         for header_line in meteo_fields:
             tokens = header_line.split('=', maxsplit=1)
             meteo_dict = odfUtils.list_to_dict(tokens)

@@ -18,6 +18,14 @@ class CruiseHeader:
         return self._country_institute_code
 
     def set_country_institute_code(self, value: int, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to int
+            try:
+                value = int(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type int: {value}"
+        assert isinstance(value, int), \
+               f"Input value is not of type int: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Country_Institute_Code changed from {self._country_institute_code} "
                                  f"to {value}")
@@ -27,6 +35,8 @@ class CruiseHeader:
         return self._cruise_number
 
     def set_cruise_number(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Cruise_Number changed from {self._cruise_number} to '{value}'")
@@ -36,6 +46,8 @@ class CruiseHeader:
         return self._organization
 
     def set_organization(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Organization changed from {self._organization} to '{value}'")
@@ -45,6 +57,8 @@ class CruiseHeader:
         return self._chief_scientist
 
     def set_chief_scientist(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Chief_Scientist changed from {self._chief_scientist} to '{value}'")
@@ -54,6 +68,8 @@ class CruiseHeader:
         return self._start_date
 
     def set_start_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Start_Date changed from {self._start_date} to '{value}'")
@@ -63,6 +79,8 @@ class CruiseHeader:
         return self._end_date
 
     def set_end_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.End_Date changed from {self._end_date} to '{value}'")
@@ -72,6 +90,8 @@ class CruiseHeader:
         return self._platform
 
     def set_platform(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Platform changed from {self._platform} to '{value}'")
@@ -81,6 +101,8 @@ class CruiseHeader:
         return self._area_of_operation
 
     def set_area_of_operation(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Area_of_Operation changed from {self._area_of_operation} to '{value}'")
@@ -90,6 +112,8 @@ class CruiseHeader:
         return self._cruise_name
 
     def set_cruise_name(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Cruise_Name changed from {self._cruise_name} to '{value}'")
@@ -99,6 +123,8 @@ class CruiseHeader:
         return self._cruise_description
 
     def set_cruise_description(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Cruise_Header.Cruise_Description changed from {self._cruise_description} "
@@ -106,6 +132,8 @@ class CruiseHeader:
         self._cruise_description = f"'{value}'"
 
     def populate_object(self, cruise_fields: list):
+        assert isinstance(cruise_fields, list), \
+               f"Input value is not of type list: {cruise_fields}"
         for header_line in cruise_fields:
             tokens = header_line.split('=', maxsplit=1)
             cruise_dict = odfUtils.list_to_dict(tokens)
@@ -136,9 +164,11 @@ class CruiseHeader:
         return self
 
     def print_object(self, file_version: int = 2) -> str:
+        assert isinstance(file_version, int), \
+               f"Input file_version is not of type int: {file_version}"
         cruise_header_output = "CRUISE_HEADER\n"
         cruise_header_output += (f"  COUNTRY_INSTITUTE_CODE = "
-                                 f"{odfUtils.check_value(self.get_country_institute_code())}\n")
+                                 f"{odfUtils.check_int_value(self.get_country_institute_code())}\n")
         cruise_header_output += f"  CRUISE_NUMBER = {self.get_cruise_number()}\n"
         cruise_header_output += f"  ORGANIZATION = {self.get_organization()}\n"
         cruise_header_output += f"  CHIEF_SCIENTIST = {self.get_chief_scientist()}\n"

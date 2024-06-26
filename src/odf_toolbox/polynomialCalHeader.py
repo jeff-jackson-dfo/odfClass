@@ -13,6 +13,8 @@ class PolynomialCalHeader:
         return self._parameter_code
 
     def set_parameter_code(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Polynomial_Cal_Header.Parameter_Code changed from "
@@ -23,6 +25,8 @@ class PolynomialCalHeader:
         return self._calibration_date
 
     def set_calibration_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Polynomial_Cal_Header.Calibration_Date changed from "
@@ -33,6 +37,8 @@ class PolynomialCalHeader:
         return self._application_date
 
     def set_application_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Polynomial_Cal_Header.Application_Date changed from "
@@ -43,6 +49,8 @@ class PolynomialCalHeader:
         return self._number_coefficients
 
     def set_number_coefficients(self, value: int, read_operation: bool = False) -> None:
+        assert isinstance(value, int), \
+               f"Input value is not of type int: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Polynomial_Cal_Header.Number_Coefficients changed from "
                                  f"{self._number_coefficients} to {value}")
@@ -52,6 +60,10 @@ class PolynomialCalHeader:
         return self._coefficients
 
     def set_coefficients(self, coefficient_list: list, coefficient_number: int = 0, read_operation: bool = False):
+        assert isinstance(coefficient_list, list), \
+               f"Input value is not of type list: {coefficient_list}"
+        assert isinstance(coefficient_number, int), \
+               f"Input value is not of type int: {coefficient_number}"
         number_coefficients = self.get_number_coefficients()
         if coefficient_number == 0 and number_coefficients == 0:
             if not read_operation:
@@ -75,6 +87,8 @@ class PolynomialCalHeader:
             raise ValueError("The 'coefficient_number' does not match the number of COEFFICIENTS.")
 
     def populate_object(self, polynomial_cal_fields: list):
+        assert isinstance(polynomial_cal_fields, list), \
+               f"Input value is not of type list: {polynomial_cal_fields}"
         for header_line in polynomial_cal_fields:
             tokens = header_line.split('=', maxsplit=1)
             poly_dict = odfUtils.list_to_dict(tokens)
@@ -107,7 +121,7 @@ class PolynomialCalHeader:
         polynomial_header_output += (f"  APPLICATION_DATE = "
                                      f"{odfUtils.check_datetime(self.get_application_date())}\n")
         polynomial_header_output += (f"  NUMBER_COEFFICIENTS = "
-                                     f"{odfUtils.check_value(self.get_number_coefficients())}\n")
+                                     f"{odfUtils.check_int_value(self.get_number_coefficients())}\n")
         coefficients_list = self.get_coefficients()
         coefficients_print = ""
         for coefficient in coefficients_list:

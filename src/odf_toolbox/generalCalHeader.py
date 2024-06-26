@@ -16,6 +16,8 @@ class GeneralCalHeader:
         return self._parameter_code
 
     def set_parameter_code(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"General_Cal_Header.Parameter_Code changed from "
@@ -26,6 +28,8 @@ class GeneralCalHeader:
         return self._calibration_type
 
     def set_calibration_type(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"General_Cal_Header.Calibration_Type changed from "
@@ -36,6 +40,8 @@ class GeneralCalHeader:
         return self._calibration_date
 
     def set_calibration_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"General_Cal_Header.Calibration_Date changed from "
@@ -46,6 +52,8 @@ class GeneralCalHeader:
         return self._application_date
 
     def set_application_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"General_Cal_Header.Application_Date changed from "
@@ -56,6 +64,8 @@ class GeneralCalHeader:
         return self._number_coefficients
 
     def set_number_coefficients(self, value: int, read_operation: bool = False) -> None:
+        assert isinstance(value, int), \
+               f"Input value is not of type int: {value}"
         if not read_operation:
             odfUtils.logger.info(f"General_Cal_Header.Number_Coefficients changed from "
                                  f"{self._number_coefficients} to '{value}'")
@@ -66,6 +76,10 @@ class GeneralCalHeader:
 
     def set_coefficients(self, general_coefficient_list: list, general_coefficient_number: int = 0,
                          read_operation: bool = False) -> None:
+        assert isinstance(general_coefficient_list, list), \
+               f"Input value is not of type list: {general_coefficient_list}"
+        assert isinstance(general_coefficient_number, int), \
+               f"Input value is not of type int: {general_coefficient_number}"
         number_of_general_coefficients = self.get_number_coefficients()
         if general_coefficient_number == 0:
             if number_of_general_coefficients == 0:
@@ -93,6 +107,8 @@ class GeneralCalHeader:
         return self._calibration_equation
 
     def set_calibration_equation(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"General_Cal_Header.Parameter_Code changed from "
@@ -104,6 +120,10 @@ class GeneralCalHeader:
 
     def set_calibration_comments(self, calibration_comment: str, comment_number: int = 0,
                                  read_operation: bool = False) -> None:
+        assert isinstance(calibration_comment, str), \
+               f"Input value is not of type str: {calibration_comment}"
+        assert isinstance(comment_number, int), \
+               f"Input value is not of type int: {comment_number}"
         calibration_comment = calibration_comment.strip("\'")
         number_of_comments = len(self.get_calibration_comments())
         if comment_number == 0 and number_of_comments >= 0:

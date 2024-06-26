@@ -1,5 +1,5 @@
 import io
-import pandas as pd
+import pandas
 import odfUtils
 
 
@@ -20,7 +20,7 @@ class DataRecords:
     -------
     __init__ :
         initialize a QualityHeader class object
-    get_data_frame : pd.DataFrame
+    get_data_frame : pandas.DataFrame
     set_data_frame : None
     get_data_record_count : int
     get_parameter_list : list
@@ -34,34 +34,46 @@ class DataRecords:
     """
 
     def __init__(self):
-        self._data_frame = pd.DataFrame()
+        self._data_frame = pandas.DataFrame()
         self._parameter_list = []
         self._print_formats = {}
 
-    def get_data_frame(self) -> pd.DataFrame:
+    def get_data_frame(self) -> pandas.DataFrame:
         return self._data_frame
 
-    def set_data_frame(self, data_frame):
+    def set_data_frame(self, data_frame: pandas.DataFrame) -> None:
+        assert isinstance(data_frame, pandas.DataFrame), \
+               f"Input value is not of type pandas.DataFrame: {data_frame}"
         self._data_frame = data_frame
 
     def get_parameter_list(self) -> list:
         return self._parameter_list
 
     def set_parameter_list(self, parameters: list):
+        assert isinstance(parameters, list), \
+               f"Input value is not of type list: {parameters}"
         self._parameter_list = parameters
 
     def get_print_formats(self) -> dict:
         return self._print_formats
 
     def set_print_formats(self, formats: dict):
+        assert isinstance(formats, dict), \
+               f"Input value is not of type dict: {formats}"
         self._print_formats = formats
 
     def __len__(self):
         return len(self._data_frame)
 
     def populate_object(self, parameter_list: list, data_formats: dict, data_lines_list: list):
+        assert isinstance(parameter_list, list), \
+               f"Input value is not of type list: {parameter_list}"
+        assert isinstance(data_formats, dict), \
+               f"Input value is not of type dict: {data_formats}"
+        assert isinstance(data_lines_list, list), \
+               f"Input value is not of type list: {data_lines_list}"
         data_record_list = [odfUtils.split_string_with_quotes(s) for s in data_lines_list]
-        df = pd.DataFrame(columns=parameter_list, data=data_record_list)
+        df = pandas.DataFrame(columns=parameter_list, data=data_record_list)
         df = odfUtils.convert_dataframe(df)
         if 'SYTM_01' in df.columns:
             df['SYTM_01'] = df['SYTM_01'].apply(lambda x: f"'{x}'")

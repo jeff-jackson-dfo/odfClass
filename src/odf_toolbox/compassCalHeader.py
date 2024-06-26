@@ -22,6 +22,8 @@ class CompassCalHeader:
         return self._calibration_date
 
     def set_calibration_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Compass_Cal_Header.Calibration_Date changed from {self._calibration_date}"
@@ -32,6 +34,8 @@ class CompassCalHeader:
         return self._application_date
 
     def set_application_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Compass_Cal_Header.Application_Date changed from {self._application_date}"
@@ -42,6 +46,10 @@ class CompassCalHeader:
         return self._directions
 
     def set_directions(self, direction_list: list, direction_number: int = 0, read_operation: bool = False) -> None:
+        assert isinstance(direction_list, list), \
+               f"Input value is not of type list: {direction_list}"
+        assert isinstance(direction_number, int), \
+               f"Input value is not of type int: {direction_number}"
         number_of_directions = len(self.get_directions())
         if direction_number == 0 and number_of_directions == 0:
             if not read_operation:
@@ -67,6 +75,10 @@ class CompassCalHeader:
         return self._corrections
 
     def set_corrections(self, correction_list: list, correction_number: int = 0, read_operation: bool = False) -> None:
+        assert isinstance(correction_list, list), \
+               f"Input value is not of type list: {correction_list}"
+        assert isinstance(correction_number, int), \
+               f"Input value is not of type int: {correction_number}"
         number_of_corrections = len(self.get_corrections())
         if correction_number == 0 and number_of_corrections == 0:
             if not read_operation:

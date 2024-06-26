@@ -28,6 +28,8 @@ class EventHeader:
         return self._data_type
 
     def set_data_type(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Data_Type changed from {self._data_type} to '{value}'")
@@ -37,6 +39,8 @@ class EventHeader:
         return self._event_number
 
     def set_event_number(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Event_Number changed from {self._event_number} to '{value}'")
@@ -46,6 +50,8 @@ class EventHeader:
         return self._event_qualifier1
 
     def set_event_qualifier1(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Event_Qualifier1 changed from {self._event_qualifier1} to '{value}'")
@@ -55,6 +61,8 @@ class EventHeader:
         return self._event_qualifier2
 
     def set_event_qualifier2(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Event_Qualifier2 changed from {self._event_qualifier2} to '{value}'")
@@ -64,6 +72,8 @@ class EventHeader:
         return self._creation_date
 
     def set_creation_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Creation_Date changed from {self._creation_date} to '{value}'")
@@ -73,6 +83,8 @@ class EventHeader:
         return self._original_creation_date
 
     def set_original_creation_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Original_Creation_Date changed from {self._original_creation_date} "
@@ -83,6 +95,8 @@ class EventHeader:
         return self._start_date_time
 
     def set_start_date_time(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Start_Date_Time changed from {self._start_date_time} to '{value}'")
@@ -92,6 +106,8 @@ class EventHeader:
         return self._end_date_time
 
     def set_end_date_time(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.End_Date_Time changed from {self._end_date_time} to '{value}'")
@@ -101,6 +117,14 @@ class EventHeader:
         return self._initial_latitude
 
     def set_initial_latitude(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Initial_Latitude changed from {self._initial_latitude} to {value}")
         self._initial_latitude = value
@@ -109,6 +133,14 @@ class EventHeader:
         return self._initial_longitude
 
     def set_initial_longitude(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Initial_Longitude changed from {self._initial_longitude} to {value}")
         self._initial_longitude = value
@@ -117,6 +149,14 @@ class EventHeader:
         return self._end_latitude
 
     def set_end_latitude(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.End_Latitude changed from {self._end_latitude} to {value}")
         self._end_latitude = value
@@ -125,6 +165,14 @@ class EventHeader:
         return self._end_longitude
 
     def set_end_longitude(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.End_Longitude changed from {self._end_longitude} to {value}")
         self._end_longitude = value
@@ -133,6 +181,14 @@ class EventHeader:
         return self._min_depth
 
     def set_min_depth(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Min_Depth changed from {self._min_depth} to {value}")
         self._min_depth = value
@@ -141,6 +197,14 @@ class EventHeader:
         return self._max_depth
 
     def set_max_depth(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Max_Depth changed from {self._max_depth} to {value}")
         self._max_depth = value
@@ -149,6 +213,14 @@ class EventHeader:
         return self._sampling_interval
 
     def set_sampling_interval(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Sampling_Interval changed from {self._sampling_interval} to {value}")
         self._sampling_interval = value
@@ -157,6 +229,14 @@ class EventHeader:
         return self._sounding
 
     def set_sounding(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Sounding changed from {self._sounding} to {value}")
         self._sounding = value
@@ -165,6 +245,14 @@ class EventHeader:
         return self._depth_off_bottom
 
     def set_depth_off_bottom(self, value: float, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to float
+            try:
+                value = float(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Depth_Off_Bottom changed from {self._depth_off_bottom} to {value}")
         self._depth_off_bottom = value
@@ -173,6 +261,8 @@ class EventHeader:
         return self._station_name
 
     def set_station_name(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Station_Name changed from {self._station_name} to '{value}'")
@@ -182,6 +272,8 @@ class EventHeader:
         return self._set_number
 
     def set_set_number(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         value = value.strip("\' ")
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Set_Number changed from {self._set_number} to '{value}'")
@@ -191,6 +283,10 @@ class EventHeader:
         return self._event_comments
 
     def set_event_comments(self, event_comment: str, comment_number: int = 0, read_operation: bool = False) -> None:
+        assert isinstance(event_comment, str), \
+               f"Input value is not of type str: {event_comment}"
+        assert isinstance(comment_number, int), \
+               f"Input value is not of type int: {comment_number}"
         event_comment = event_comment.strip("\'")
         number_of_comments = len(self.get_event_comments())
         if comment_number == 0 and number_of_comments >= 0:
@@ -207,6 +303,8 @@ class EventHeader:
             raise ValueError("The 'Event_Comment' number does not match the number of Event_Comments lines.")
 
     def populate_object(self, event_fields: list):
+        assert isinstance(event_fields, list), \
+               f"Input value is not of type list: {event_fields}"
         for header_line in event_fields:
             tokens = header_line.split('=', maxsplit=1)
             event_dict = odfUtils.list_to_dict(tokens)
@@ -270,14 +368,14 @@ class EventHeader:
                                 f"{odfUtils.check_long_value(float(self.get_initial_latitude())):.6f}\n")
         event_header_output += (f"  INITIAL_LONGITUDE = "
                                 f"{odfUtils.check_long_value(float(self.get_initial_longitude())):.6f}\n")
-        event_header_output += f"  END_LATITUDE = {odfUtils.check_value(float(self.get_end_latitude())):.6f}\n"
+        event_header_output += f"  END_LATITUDE = {odfUtils.check_float_value(float(self.get_end_latitude())):.6f}\n"
         event_header_output += f"  END_LONGITUDE = {odfUtils.check_long_value(float(self.get_end_longitude())):.6f}\n"
-        event_header_output += f"  MIN_DEPTH = {odfUtils.check_value(float(self.get_min_depth())):.2f}\n"
-        event_header_output += f"  MAX_DEPTH = {odfUtils.check_value(float(self.get_max_depth())):.2f}\n"
+        event_header_output += f"  MIN_DEPTH = {odfUtils.check_float_value(float(self.get_min_depth())):.2f}\n"
+        event_header_output += f"  MAX_DEPTH = {odfUtils.check_float_value(float(self.get_max_depth())):.2f}\n"
         event_header_output += (f"  SAMPLING_INTERVAL = "
-                                f"{odfUtils.check_value(float(self.get_sampling_interval())):.2f}\n")
-        event_header_output += f"  SOUNDING = {odfUtils.check_value(float(self.get_sounding())):.2f}\n"
-        event_header_output += f"  DEPTH_OFF_BOTTOM = {odfUtils.check_value(float(self.get_depth_off_bottom())):.2f}\n"
+                                f"{odfUtils.check_float_value(float(self.get_sampling_interval())):.2f}\n")
+        event_header_output += f"  SOUNDING = {odfUtils.check_float_value(float(self.get_sounding())):.2f}\n"
+        event_header_output += f"  DEPTH_OFF_BOTTOM = {odfUtils.check_float_value(float(self.get_depth_off_bottom())):.2f}\n"
         event_header_output += f"  STATION_NAME = {self.get_station_name()}\n"
         event_header_output += f"  SET_NUMBER = {self.get_set_number()}\n"
         if self.get_event_comments():

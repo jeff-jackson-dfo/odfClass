@@ -38,6 +38,8 @@ class QualityHeader:
         return self._quality_date
 
     def set_quality_date(self, value: str, read_operation: bool = False) -> None:
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Event_Header.Quality_Date changed from {self._quality_date} to '{value}'")
         self._quality_date = value
@@ -46,6 +48,10 @@ class QualityHeader:
         return self._quality_tests
 
     def set_quality_tests(self, quality_test: str, test_number: int = 0, read_operation: bool = False) -> None:
+        assert isinstance(quality_test, str), \
+               f"Input value is not of type str: {quality_test}"
+        assert isinstance(test_number, int), \
+               f"Input value is not of type int: {test_number}"
         number_of_tests = len(self.get_quality_tests())
         if test_number == 0 and number_of_tests >= 0:
             if not read_operation:
@@ -64,6 +70,10 @@ class QualityHeader:
         return self._quality_comments
 
     def set_quality_comments(self, quality_comment: str, comment_number: int = 0, read_operation: bool = False) -> None:
+        assert isinstance(quality_comment, str), \
+               f"Input value is not of type str: {quality_comment}"
+        assert isinstance(comment_number, int), \
+               f"Input value is not of type int: {comment_number}"
         number_of_comments = len(self.get_quality_comments())
         if comment_number == 0 and number_of_comments >= 0:
             if not read_operation:
@@ -79,6 +89,8 @@ class QualityHeader:
             raise ValueError("The 'quality_comment' number does not match the number of QUALITY_COMMENTS lines.")
 
     def populate_object(self, quality_fields: list):
+        assert isinstance(quality_fields, list), \
+               f"Input value is not of type list: {quality_fields}"
         for header_line in quality_fields:
             tokens = header_line.split('=', maxsplit=1)
             quality_dict = odfUtils.list_to_dict(tokens)

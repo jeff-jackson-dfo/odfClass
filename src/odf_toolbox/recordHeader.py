@@ -13,6 +13,14 @@ class RecordHeader:
         return self._num_calibration
 
     def set_num_calibration(self, value: int, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to int
+            try:
+                value = int(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type int: {value}"
+        assert isinstance(value, int), \
+               f"Input value is not of type int: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Record_Header.Num_Calibration changed from {self._num_calibration} to {value}")
         self._num_calibration = value
@@ -21,6 +29,14 @@ class RecordHeader:
         return self._num_swing
 
     def set_num_swing(self, value: int, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to int
+            try:
+                value = int(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type int: {value}"
+        assert isinstance(value, int), \
+               f"Input value is not of type int: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Record_Header.Num_Swing changed from {self._num_swing} to {value}")
         self._num_swing = value
@@ -29,6 +45,14 @@ class RecordHeader:
         return self._num_history
 
     def set_num_history(self, value: int, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to int
+            try:
+                value = int(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type int: {value}"
+        assert isinstance(value, int), \
+               f"Input value is not of type int: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Record_Header.Num_History changed from {self._num_history} to {value}")
         self._num_history = value
@@ -37,6 +61,14 @@ class RecordHeader:
         return self._num_cycle
 
     def set_num_cycle(self, value: int, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to int
+            try:
+                value = int(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type int: {value}"
+        assert isinstance(value, int), \
+               f"Input value is not of type int: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Record_Header.Num_Cycle changed from {self._num_cycle} to {value}")
         self._num_cycle = value
@@ -45,11 +77,21 @@ class RecordHeader:
         return self._num_param
 
     def set_num_param(self, value: int, read_operation: bool = False) -> None:
+        if read_operation:
+            # convert string to int
+            try:
+                value = int(value)
+            except ValueError:
+                f"Input value could not be successfully converted to type int: {value}"
+        assert isinstance(value, int), \
+               f"Input value is not of type int: {value}"
         if not read_operation:
             odfUtils.logger.info(f"Record_Header.Num_Param changed from {self._num_param} to {value}")
         self._num_param = value
 
     def populate_object(self, record_fields: list) -> None:
+        assert isinstance(record_fields, list), \
+               f"Input value is not of type list: {record_fields}"
         for record_line in record_fields:
             tokens = record_line.split('=', maxsplit=1)
             record_dict = odfUtils.list_to_dict(tokens)

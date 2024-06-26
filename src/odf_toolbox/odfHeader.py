@@ -54,7 +54,7 @@ class OdfHeader:
         """
         return self._file_specification
 
-    def set_file_specification(self, value: str):
+    def set_file_specification(self, value: str, read_operation: bool = False) -> None:
         """
         Sets the file specification in the ODF_HEADER of an OdfHeader class object.
 
@@ -62,9 +62,12 @@ class OdfHeader:
         ----------
         value : str
             The file name and possibly path of the OdfHeader object (default is an empty string).
-
+        read_operation: bool (False)
         """
-        odfUtils.logger.info(f'Odf_Header.File_Specification changed from {self._file_specification} to {value}')
+        assert isinstance(value, str), \
+               f"Input value is not of type str: {value}"
+        if not read_operation:
+            odfUtils.logger.info(f'Odf_Header.File_Specification changed from {self._file_specification} to {value}')
         self._file_specification = value
 
     def get_odf_specification_version(self) -> float:
@@ -78,7 +81,7 @@ class OdfHeader:
         """
         return self._odf_specification_version
 
-    def set_odf_specification_version(self, value: float):
+    def set_odf_specification_version(self, value: float, read_operation: bool = False):
         """
         Sets the file specification for the ODF_HEADER of an OdfHeader class object.
 
@@ -86,10 +89,20 @@ class OdfHeader:
         ----------
         value : float
             The version of the ODF specification used to generate this file.
+        read_operation: bool (False)
 
         """
-        odfUtils.logger.info(
-            f'Odf_Header.Odf_Specification_version changed from {self._odf_specification_version} to {value}')
+        # convert input argument to float
+        try:
+            value = float(value)
+        except ValueError:
+            f"Input value could not be successfully converted to type float: {value}"
+        assert isinstance(value, float), \
+               f"Input value is not of type float: {value}"
+        if not read_operation:
+            odfUtils.logger.info(
+                f'Odf_Header.Odf_Specification_version changed from {self._odf_specification_version} to {value}')
+
         self._odf_specification_version = value
 
     def populate_object(self, odf_dict: dict):
@@ -105,9 +118,9 @@ class OdfHeader:
         for key, value in odf_dict.items():
             match key.strip():
                 case 'FILE_SPECIFICATION':
-                    self.set_file_specification(value.strip())
+                    self.set_file_specification(value.strip(), read_operation=True)
                 case 'ODF_SPECIFICATION_VERSION':
-                    self.set_odf_specification_version(value.strip())
+                    self.set_odf_specification_version(value.strip(), read_operation=True)
         return self
 
     def print_object(self, file_version: float = 2) -> str:
@@ -311,7 +324,13 @@ class OdfHeader:
             self.add_to_history(record)
 
     def update_parameter(self, parameter_code: str, attribute: str, value):
+        assert isinstance(parameter_code, str), \
+               f"Input value is not of type str: {parameter_code}"
+        assert isinstance(attribute, str), \
+               f"Input value is not of type str: {attribute}"
         codes = self.data.get_parameter_list()
+        assert isinstance(codes, list), \
+               f"Input value is not of type list: {codes}"
         if isinstance(value, str):
             eval(f"self.parameter_headers[codes.index(parameter_code)].set_{attribute}('{value}')")
         else:
@@ -339,6 +358,9 @@ if __name__ == "__main__":
     # my_file_path = '../../test-files/MCTD_GRP2019001_2104_11689_1800.ODF'
 
     odf.read_odf(my_file_path)
+
+    odf.set_file_specification("Nice one!")
+    odf.set_odf_specification_version(2)
 
     # Modify some of the odf metadata
     odf.cruise_header.set_organization('DFO BIO')
