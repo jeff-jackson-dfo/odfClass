@@ -112,9 +112,9 @@ class RecordHeader:
 
     def print_object(self) -> str:
         record_header_output = "RECORD_HEADER\n"
-        record_header_output += f"  NUM_CALIBRATION = {odfUtils.check_value(self.get_num_calibration())}\n"
-        record_header_output += f"  NUM_HISTORY = {odfUtils.check_value(self.get_num_history())}\n"
-        record_header_output += f"  NUM_SWING = {odfUtils.check_value(self.get_num_swing())}\n"
-        record_header_output += f"  NUM_PARAM = {odfUtils.check_value(self.get_num_param())}\n"
-        record_header_output += f"  NUM_CYCLE = {odfUtils.check_value(self.get_num_cycle())}\n"
+        record_header_output += f"  NUM_CALIBRATION = {odfUtils.check_int_value(self.get_num_calibration())}\n"
+        record_header_output += f"  NUM_HISTORY = {odfUtils.check_int_value(self.get_num_history())}\n"
+        record_header_output += f"  NUM_SWING = {odfUtils.check_int_value(self.get_num_swing())}\n"
+        record_header_output += f"  NUM_PARAM = {odfUtils.check_int_value(self.get_num_param())}\n"
+        record_header_output += f"  NUM_CYCLE = {odfUtils.check_int_value(self.get_num_cycle())}\n"
         return record_header_output

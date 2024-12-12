@@ -162,7 +162,7 @@ class GeneralCalHeader:
                     case 'COEFFICIENTS':
                         coefficient_list = value.split()
                         coefficient_floats = [float(coefficient) for coefficient in coefficient_list]
-                        self.set_coefficients(coefficient_floats)
+                        self.set_coefficients(coefficient_floats, read_operation=True)
                     case 'CALIBRATION_EQUATION':
                         self.set_calibration_equation(value, read_operation=True)
                     case 'CALIBRATION_COMMENTS':
@@ -180,7 +180,7 @@ class GeneralCalHeader:
         general_header_output += (f"  APPLICATION_DATE = "
                                   f"{odfUtils.check_datetime(self.get_application_date())}\n")
         general_header_output += (f"  NUMBER_OF_COEFFICIENTS = "
-                                  f"{odfUtils.check_value(self.get_number_coefficients())}\n")
+                                  f"{odfUtils.check_int_value(self.get_number_coefficients())}\n")
         coefficients_list = self.get_coefficients()
         coefficients_print = ""
         for coefficient in coefficients_list:

@@ -114,7 +114,7 @@ def check_int_value(value: int) -> int:
 
 def check_long_value(value: float) -> float:
     if value is None:
-        value = -999
+        value = -999.0
     return value
 
 

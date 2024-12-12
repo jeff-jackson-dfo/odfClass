@@ -12,6 +12,7 @@ import parameterHeader
 import polynomialCalHeader
 import qualityHeader
 import recordHeader
+import datetime
 
 
 class OdfHeader:
@@ -43,7 +44,7 @@ class OdfHeader:
         self.record_header = recordHeader.RecordHeader()
         self.data = dataRecords.DataRecords()
 
-    def get_file_specification(self):
+    def get_file_specification(self) -> str:
         """
         Returns the file specification from the ODF_HEADER of an OdfHeader class object.
 
@@ -95,10 +96,10 @@ class OdfHeader:
         # convert input argument to float
         try:
             value = float(value)
+            assert isinstance(value, float), \
+                f"Input value is not of type float: {value}"
         except ValueError:
             f"Input value could not be successfully converted to type float: {value}"
-        assert isinstance(value, float), \
-               f"Input value is not of type float: {value}"
         if not read_operation:
             odfUtils.logger.info(
                 f'Odf_Header.Odf_Specification_version changed from {self._odf_specification_version} to {value}')
@@ -136,8 +137,9 @@ class OdfHeader:
 
         odf_output = ""
         if file_version == 2:
+            self.set_odf_specification_version(2.0)
             odf_output = "ODF_HEADER,\n"
-            odf_output += f"  FILE_SPECIFICATION = {odfUtils.check_string(self.get_file_specification())},\n"
+            odf_output += f"  FILE_SPECIFICATION = '{odfUtils.check_string(self.get_file_specification())}',\n"
             odf_output += odfUtils.add_commas(self.cruise_header.print_object())
             odf_output += odfUtils.add_commas(self.event_header.print_object())
             if self.meteo_header is not None:
@@ -159,10 +161,11 @@ class OdfHeader:
             odf_output += "-- DATA --\n"
             odf_output += self.data.print_object_old_style()
         elif file_version >= 3:
+            self.set_odf_specification_version(3.0)
             odf_output = "ODF_HEADER\n"
-            odf_output += f"  FILE_SPECIFICATION = {odfUtils.check_string(self.get_file_specification())}\n"
+            odf_output += f"  FILE_SPECIFICATION = '{odfUtils.check_string(self.get_file_specification())}'\n"
             odf_output += (f"  ODF_SPECIFICATION_VERSION = "
-                           f"{odfUtils.check_value(self.get_odf_specification_version())}\n")
+                           f"{odfUtils.check_float_value(self.get_odf_specification_version())}\n")
             odf_output += self.cruise_header.print_object()
             odf_output += self.event_header.print_object()
             if self.meteo_header is not None:
@@ -311,11 +314,16 @@ class OdfHeader:
 
     def add_history(self):
         nhh = historyHeader.HistoryHeader()
+        dt = datetime.datetime.now().strftime("%d-%b-%Y %H:%M:%S.%f").upper()
+        nhh.set_creation_date(dt[:-4])
         self.history_headers.append(nhh)
 
     def add_to_history(self, history_comment):
         if history_comment is not None:
-            self.history_headers[-1].add_process(history_comment)
+            if len(self.history_headers) > 0:
+                self.history_headers[-1].add_process(history_comment)
+            else:
+                self.history_headers.append(history_comment)
 
     def add_log_to_history(self):
         # Access the log records stored in the custom handler
@@ -336,6 +344,12 @@ class OdfHeader:
         else:
             eval(f"self.parameter_headers[codes.index(parameter_code)].set_{attribute}({value})")
 
+    def get_parameters(self):
+        params = list()
+        for ph in self.parameter_headers:
+            params.append(ph.get_code())
+        return params
+
     def generate_file_spec(self):
         dt = self.event_header.get_data_type().strip("'")
         cn = self.cruise_header.get_cruise_number().strip("'")
@@ -351,35 +365,36 @@ if __name__ == "__main__":
 
     odf = OdfHeader()
 
-    my_file_path = '../../test-files/MCM_HUD2010014_1771_1039_3600.ODF'
+    # my_file_path = '../../test-files/MCM_HUD2010014_1771_1039_3600.ODF'
     # my_file_path = '../../test-files/CTD_CAR2023011_017_496844_DN.ODF'
-    # my_file_path = '../../test-files/IML-Example.ODF'
+    my_file_path = '../../test-files/IML-Example.ODF'
     # my_file_path = '../../test-files/MADCP_HUD2016027_1999_3469-31_3600.ODF'
     # my_file_path = '../../test-files/MCTD_GRP2019001_2104_11689_1800.ODF'
 
     odf.read_odf(my_file_path)
 
-    odf.set_file_specification("Nice one!")
-    odf.set_odf_specification_version(2)
-
     # Modify some of the odf metadata
+    odf.add_history()
     odf.cruise_header.set_organization('DFO BIO')
     odf.cruise_header.set_chief_scientist('GLEN HARRISON')
     odf.cruise_header.set_start_date('05-OCT-2010 00:00:00')
     odf.cruise_header.set_end_date('22-OCT-2010 00:00:00')
     odf.cruise_header.set_platform('HUDSON')
     odf.event_header.set_station_name('AR7W_15')
-    # Add an empty General_Cal_Header for testing purposes
-    # gch = generalCalHeader.GeneralCalHeader()
-    # odf.general_cal_headers.append(gch)
 
-    odf.update_parameter('SYTM_01', 'units', 'GMT')
+    codes = odf.get_parameters()
+    if 'SYTM_01' in codes:
+        odf.update_parameter('SYTM_01', 'units', 'GMT')
 
-    # odf_file_text = odf.print_object(file_version=3, history_comment='Jeff Jackson made the recent modifications to '
-    #                                                                  'this file.')
-    odf_file_text = odf.print_object(file_version=2)
+    cspec = odf.get_file_specification()
+    cspec = cspec.strip("\'")
+    spec = odf.generate_file_spec()
+    if cspec != spec:
+        print('cspec and spec do not match')
+        odf.set_file_specification(spec)
 
-    spec = odf.get_file_specification().strip("'")
+    odf_file_text = odf.print_object(file_version=3)
+
     out_file = f"{spec}.ODF"
     file1 = open(out_file, "w")
     file1.write(odf_file_text)

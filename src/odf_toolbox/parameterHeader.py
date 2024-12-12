@@ -134,18 +134,24 @@ class ParameterHeader:
                                  f"parameter {self.get_code()}.")
         self._wmo_code = f"'{value}'"
 
-    def get_null_value(self) -> float:
+    def get_null_value(self):
+        # print(self._null_value)
+        # print(type(self._null_value))
+        # if self._null_value == None:
+        #     self._null_value = str(self._null_value)
+        # if type(self._null_value) == 'float':
+        #     self._null_value = str(self._null_value)
         return self._null_value
 
-    def set_null_value(self, value: float, read_operation: bool = False) -> None:
-        if read_operation:
-            # convert string to float
-            try:
-                value = float(value)
-            except ValueError:
-                f"Input value could not be successfully converted to type float: {value}"
-        assert isinstance(value, float), \
-               f"Input value is not of type float: {value}"
+    def set_null_value(self, value: str, null_type: str, read_operation: bool = False) -> None:
+        null_type = 'str'
+        try:
+            value = float(value)
+            assert isinstance(value, float), \
+                f"Input value is not of type float: {value}"
+            null_type = 'float'
+        except ValueError:
+            f"Input value could not be successfully converted to type float: {value}"
         if not read_operation:
             odfUtils.logger.info(f"The Null_Value changed from {self.get_null_value()} to {value} for "
                                  f"parameter {self.get_code()}.")
@@ -253,14 +259,15 @@ class ParameterHeader:
                                  f"to {value} for parameter {self.get_code()}")
         self._depth = value
 
-    def get_minimum_value(self) -> float:
+    def get_minimum_value(self):
         return self._minimum_value
 
     def set_minimum_value(self, value, read_operation: bool = False) -> None:
-        if not odfUtils.check_datetime(value):
+        try:
+            value = float(value)
             assert isinstance(value, float), \
                 f"Input value is not of type float: {value}"
-        elif odfUtils.check_datetime(value):
+        except ValueError:
             assert isinstance(value, str), \
                 f"Input value is not of type str: {value}"
         if not read_operation:
@@ -268,14 +275,15 @@ class ParameterHeader:
                                  f"to {value} for parameter {self.get_code()}")
         self._minimum_value = value
 
-    def get_maximum_value(self) -> float:
+    def get_maximum_value(self):
         return self._maximum_value
 
     def set_maximum_value(self, value, read_operation: bool = False) -> None:
-        if not odfUtils.check_datetime(value):
+        try:
+            value = float(value)
             assert isinstance(value, float), \
                 f"Input value is not of type float: {value}"
-        elif odfUtils.check_datetime(value):
+        except ValueError:
             assert isinstance(value, str), \
                 f"Input value is not of type str: {value}"
         if not read_operation:
@@ -336,7 +344,10 @@ class ParameterHeader:
                     case 'CODE':
                         self.set_code(value, read_operation=True)
                     case 'NULL_VALUE':
-                        self.set_null_value(value, read_operation=True)
+                        if type(self._null_value) == 'string':
+                            self.set_null_value(value, 'string', read_operation=True)
+                        else:
+                            self.set_null_value(value, 'float', read_operation=True)
                     case 'PRINT_FIELD_ORDER':
                         self.set_print_field_order(value, read_operation=True)
                     case 'PRINT_FIELD_WIDTH':
@@ -354,7 +365,7 @@ class ParameterHeader:
                     case 'MAXIMUM_VALUE':
                         self.set_maximum_value(value, read_operation=True)
                     case 'NUMBER_VALID':
-                        self.set_null_value(value, read_operation=True)
+                        self.set_null_value(value, null_type='float', read_operation=True)
                     case 'NUMBER_NULL':
                         self.set_number_null(value, read_operation=True)
         return self
@@ -369,11 +380,11 @@ class ParameterHeader:
         parameter_header_output += f"  NAME = {self.get_name()}\n"
         parameter_header_output += f"  UNITS = {self.get_units()}\n"
         parameter_header_output += f"  CODE = {self.get_code()}\n"
-        print(self.get_name())
-        print(print(type(self.get_null_value())))
-        print(print(self.get_null_value()))
+        # print(self.get_name())
+        # print(print(type(self.get_null_value())))
+        # print(print(self.get_null_value()))
         if type(self.get_null_value()) == float:
-            parameter_header_output += f"  NULL_VALUE = {odfUtils.check_value(float(self.get_null_value())):.2f}\n"
+            parameter_header_output += f"  NULL_VALUE = {odfUtils.check_float_value(self.get_null_value()):.2f}\n"
         elif type(self.get_null_value()) == str:
             parameter_header_output += f"  NULL_VALUE = {odfUtils.check_value(self.get_null_value())}\n"
         if file_version == 3:
@@ -383,18 +394,18 @@ class ParameterHeader:
         parameter_header_output += (f"  PRINT_DECIMAL_PLACES = "
                                     f"{odfUtils.check_int_value(self.get_print_decimal_places())}\n")
         parameter_header_output += (f"  ANGLE_OF_SECTION = "
-                                    f"{odfUtils.check_value(float(self.get_angle_of_section())):.6f}\n")
+                                    f"{odfUtils.check_float_value(self.get_angle_of_section()):.6f}\n")
         parameter_header_output += (f"  MAGNETIC_VARIATION = "
-                                    f"{odfUtils.check_value(float(self.get_magnetic_variation())):.6f}\n")
-        parameter_header_output += f"  DEPTH = {odfUtils.check_value(float(self.get_depth())):.6f}\n"
+                                    f"{odfUtils.check_float_value(self.get_magnetic_variation()):.6f}\n")
+        parameter_header_output += f"  DEPTH = {odfUtils.check_float_value(self.get_depth()):.6f}\n"
         if self.get_units() == "'GMT'" or self.get_units() == "'UTC'" or self.get_type() == "'SYTM'":
             parameter_header_output += f"  MINIMUM_VALUE = {odfUtils.check_value(self.get_minimum_value())}\n"
             parameter_header_output += f"  MAXIMUM_VALUE = {odfUtils.check_value(self.get_maximum_value())}\n"
         else:
             parameter_header_output += (f"  MINIMUM_VALUE = "
-                                        f"{odfUtils.check_value(float(self.get_minimum_value())):.1f}\n")
+                                        f"{odfUtils.check_float_value(self.get_minimum_value()):.1f}\n")
             parameter_header_output += (f"  MAXIMUM_VALUE = "
-                                        f"{odfUtils.check_value(float(self.get_maximum_value())):.1f}\n")
+                                        f"{odfUtils.check_float_value(self.get_maximum_value()):.1f}\n")
         parameter_header_output += f"  NUMBER_VALID = {odfUtils.check_int_value(self.get_number_valid())}\n"
         parameter_header_output += f"  NUMBER_NULL = {odfUtils.check_int_value(self.get_number_null())}\n"
         return parameter_header_output

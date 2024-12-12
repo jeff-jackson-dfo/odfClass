@@ -365,17 +365,17 @@ class EventHeader:
         event_header_output += f"  START_DATE_TIME = {odfUtils.check_datetime(self.get_start_date_time())}\n"
         event_header_output += f"  END_DATE_TIME = {odfUtils.check_datetime(self.get_end_date_time())}\n"
         event_header_output += (f"  INITIAL_LATITUDE = "
-                                f"{odfUtils.check_long_value(float(self.get_initial_latitude())):.6f}\n")
+                                f"{odfUtils.check_long_value(self.get_initial_latitude()):.6f}\n")
         event_header_output += (f"  INITIAL_LONGITUDE = "
-                                f"{odfUtils.check_long_value(float(self.get_initial_longitude())):.6f}\n")
-        event_header_output += f"  END_LATITUDE = {odfUtils.check_float_value(float(self.get_end_latitude())):.6f}\n"
-        event_header_output += f"  END_LONGITUDE = {odfUtils.check_long_value(float(self.get_end_longitude())):.6f}\n"
-        event_header_output += f"  MIN_DEPTH = {odfUtils.check_float_value(float(self.get_min_depth())):.2f}\n"
-        event_header_output += f"  MAX_DEPTH = {odfUtils.check_float_value(float(self.get_max_depth())):.2f}\n"
+                                f"{odfUtils.check_long_value(self.get_initial_longitude()):.6f}\n")
+        event_header_output += f"  END_LATITUDE = {odfUtils.check_float_value(self.get_end_latitude()):.6f}\n"
+        event_header_output += f"  END_LONGITUDE = {odfUtils.check_long_value(self.get_end_longitude()):.6f}\n"
+        event_header_output += f"  MIN_DEPTH = {odfUtils.check_float_value(self.get_min_depth()):.2f}\n"
+        event_header_output += f"  MAX_DEPTH = {odfUtils.check_float_value(self.get_max_depth()):.2f}\n"
         event_header_output += (f"  SAMPLING_INTERVAL = "
-                                f"{odfUtils.check_float_value(float(self.get_sampling_interval())):.2f}\n")
-        event_header_output += f"  SOUNDING = {odfUtils.check_float_value(float(self.get_sounding())):.2f}\n"
-        event_header_output += f"  DEPTH_OFF_BOTTOM = {odfUtils.check_float_value(float(self.get_depth_off_bottom())):.2f}\n"
+                                f"{odfUtils.check_float_value(self.get_sampling_interval()):.2f}\n")
+        event_header_output += f"  SOUNDING = {odfUtils.check_float_value(self.get_sounding()):.2f}\n"
+        event_header_output += f"  DEPTH_OFF_BOTTOM = {odfUtils.check_float_value(self.get_depth_off_bottom()):.2f}\n"
         event_header_output += f"  STATION_NAME = {self.get_station_name()}\n"
         event_header_output += f"  SET_NUMBER = {self.get_set_number()}\n"
         if self.get_event_comments():
