@@ -1,9 +1,5 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
-name = "odf_toolbox"
+name = "odfClass"
 dynamic = ["version"]
 authors = [
   { name="Jeff Jackson", email="jeffrey.jackson@dfo-mpo.gc.ca" },
@@ -21,5 +17,9 @@ classifiers = [
 Homepage = "https://github.com/jeff-jackson-dfo/odfClass"
 Issues = "https://github.com/jeff-jackson-dfo/odfClass/issues"
 
-[tool.hatch.version]
-path = "__about__.py"
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "odfClass.__version__"}
