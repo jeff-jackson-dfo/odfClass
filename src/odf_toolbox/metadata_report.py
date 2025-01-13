@@ -11,7 +11,7 @@ import openpyxl
 import odfHeader
 
 
-def generate_report(file_path: str, wildcard: str, outfile: str):
+def generate_report(file_path: str, wildcard: str, outfile: str) -> None:
     """
     Generates a report based on the metadata from ODF files as an Excel file.
 
@@ -122,6 +122,6 @@ def generate_report(file_path: str, wildcard: str, outfile: str):
     # Print a success message
     print("Excel file created successfully!")
 
-if __name__ == "__main__":
 
-    generate_report("C:\\DEV\\EdHorne\\CTD\Backlog\\bdor_2016_aug2017\\ODF\\", "D*.ODF", "ODF_Report.xlsx")
+if __name__ == "__main__":
+    generate_report("C:\\DEV\\EdHorne\\CTD\Backlog\\bdor_2016_aug2017\\ODF\\", "D*.ODF", "A_Metadata_Report.xlsx")

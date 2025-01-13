@@ -322,7 +322,7 @@ class EventHeader:
                         self.set_event_qualifier2(value, read_operation=True)
                     case 'CREATION_DATE':
                         self.set_creation_date(value, read_operation=True)
-                    case 'ORIGINAL_CREATION_DATE':
+                    case 'ORIG_CREATION_DATE':
                         self.set_original_creation_date(value, read_operation=True)
                     case 'START_DATE_TIME':
                         self.set_start_date_time(value, read_operation=True)
@@ -360,8 +360,10 @@ class EventHeader:
         event_header_output += f"  EVENT_NUMBER = {self.get_event_number()}\n"
         event_header_output += f"  EVENT_QUALIFIER1 = {self.get_event_qualifier1()}\n"
         event_header_output += f"  EVENT_QUALIFIER2 = {self.get_event_qualifier2()}\n"
-        event_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(odfUtils.get_current_date_time())}\n"
-        event_header_output += f"  ORIG_CREATION_DATE = {odfUtils.check_datetime(self.get_creation_date())}\n"
+        # event_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(odfUtils.get_current_date_time())}\n"
+        # event_header_output += f"  ORIG_CREATION_DATE = {odfUtils.check_datetime(self.get_creation_date())}\n"
+        event_header_output += f"  CREATION_DATE = {odfUtils.check_datetime(self.get_creation_date())}\n"
+        event_header_output += f"  ORIG_CREATION_DATE = {odfUtils.check_datetime(self.get_original_creation_date())}\n"
         event_header_output += f"  START_DATE_TIME = {odfUtils.check_datetime(self.get_start_date_time())}\n"
         event_header_output += f"  END_DATE_TIME = {odfUtils.check_datetime(self.get_end_date_time())}\n"
         event_header_output += (f"  INITIAL_LATITUDE = "
