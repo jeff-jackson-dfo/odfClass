@@ -4,6 +4,8 @@ import os
 
 # Load required installed libraries
 import openpyxl
+from openpyxl.styles import Alignment
+from openpyxl.utils import get_column_letter
 
 # Import required odfClass libraries
 import odfHeader
@@ -64,10 +66,10 @@ def generate_report(file_path: str, wildcard: str, outfile: str) -> None:
     workbook = openpyxl.Workbook()
 
     # Select the default sheet (usually named 'Sheet')
-    sheet = workbook.active
+    worksheet = workbook.active
 
     # Add the report headings as the first row
-    sheet.append(report_headings)
+    worksheet.append(report_headings)
 
     os.chdir(file_path)
     odfFiles = glob.glob(wildcard)
@@ -112,7 +114,24 @@ def generate_report(file_path: str, wildcard: str, outfile: str) -> None:
         meta.append(odf.instrument_header.get_description().strip("'"))
 
         # Add the metadata from the current ODF file to the report
-        sheet.append(meta)
+        worksheet.append(meta)
+
+        for col in worksheet.columns:
+            max_length = 0
+            column = col[0].column_letter  # Get the column name
+            for cell in col:
+                try:  # Necessary to avoid error on empty cells
+                    max_length = max(len(str(cell.value)), max_length)
+                finally:
+                    pass
+            adjusted_width = (max_length + 2) * 1.1
+            worksheet.column_dimensions[column].width = adjusted_width
+
+    # Center text horizontally and vertically
+    for col, cname in enumerate(worksheet.columns):
+        column_letter = get_column_letter(col + 1)
+        for cell in worksheet[column_letter + ":" + column_letter]:
+            cell.alignment = Alignment(horizontal='center')
 
     # Save the workbook to a file
     workbook.save(outfile)
