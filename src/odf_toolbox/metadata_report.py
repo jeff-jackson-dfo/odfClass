@@ -1,11 +1,9 @@
 # Load required base libraries
-# import sys
 import glob
 import os
 
 # Load required installed libraries
 import openpyxl
-# import pandas as pd
 
 # Import required odfClass libraries
 import odfHeader

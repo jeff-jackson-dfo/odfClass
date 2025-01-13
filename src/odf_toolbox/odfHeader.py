@@ -1,5 +1,3 @@
-from pystac.utils import now_in_utc
-
 import compassCalHeader
 import cruiseHeader
 import dataRecords
