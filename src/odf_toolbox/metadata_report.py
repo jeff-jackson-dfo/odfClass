@@ -141,4 +141,4 @@ def generate_report(file_path: str, wildcard: str, outfile: str) -> None:
 
 
 if __name__ == "__main__":
-    generate_report("C:\\DEV\\EdHorne\\CTD\Backlog\\bdor_2016_aug2017\\ODF\\", "D*.ODF", "A_Metadata_Report.xlsx")
+    generate_report("C:\\DEV\\EdHorne\\CTD\\Backlog\\bdor_2016_aug2017\\ODF\\", "D*.ODF", "BCD2016913_CTD_Metadata.xlsx")
